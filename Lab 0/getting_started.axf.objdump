@@ -1,0 +1,77 @@
+
+C:/Users/Alex/Documents/McGill/ECSE_324/Labs/Lab 0/getting_started.axf:     file format elf32-littlearm
+
+
+Disassembly of section .text:
+
+00000000 <__cs3_interrupt_vector>:
+ * 	3. if KEY[3..0] is pressed, uses the SW switches as the pattern
+ ********************************************************************************/
+				.text									// executable code follows
+				.global	_start
+_start:		
+				MOV		R0, #31					// used to rotate a bit pattern: 31 positions to the
+   0:	e3a0001f 	mov	r0, #31
+														// right is equivalent to 1 position to the left
+				LDR		R1, =LEDR_BASE			// base address of LEDR lights
+   4:	e59f104c 	ldr	r1, [pc, #76]	; 58 <HEX_bits+0x4>
+				LDR		R2, =HEX3_HEX0_BASE	// base address of HEX3_HEX0 7-segs
+   8:	e59f204c 	ldr	r2, [pc, #76]	; 5c <HEX_bits+0x8>
+				LDR		R3, =SW_BASE			// base address of SW switches
+   c:	e59f304c 	ldr	r3, [pc, #76]	; 60 <HEX_bits+0xc>
+				LDR		R4, =KEY_BASE			// base address of KEY pushbuttons
+  10:	e59f404c 	ldr	r4, [pc, #76]	; 64 <HEX_bits+0x10>
+				LDR		R5, HEX_bits
+  14:	e59f5038 	ldr	r5, [pc, #56]	; 54 <HEX_bits>
+
+00000018 <DO_DISPLAY>:
+
+DO_DISPLAY:	LDR		R6, [R3]					// load SW switches
+  18:	e5936000 	ldr	r6, [r3]
+				STR		R6, [R1]					// write to red LEDs
+  1c:	e5816000 	str	r6, [r1]
+
+				LDR		R7, [R4]					// load pushbutton keys
+  20:	e5947000 	ldr	r7, [r4]
+				CMP		R7, #0					// check if any key is presssed
+  24:	e3570000 	cmp	r7, #0
+				BEQ		NO_BUTTON
+  28:	0a000003 	beq	3c <NO_BUTTON>
+				MOV		R5, R6					// copy SW switch values onto HEX displays
+  2c:	e1a05006 	mov	r5, r6
+
+00000030 <WAIT>:
+WAIT:
+				LDR		R7, [R4]					// load pushbuttons
+  30:	e5947000 	ldr	r7, [r4]
+				CMP		R7, #0
+  34:	e3570000 	cmp	r7, #0
+				BNE		WAIT 						// wait for button release
+  38:	1afffffc 	bne	30 <WAIT>
+
+0000003c <NO_BUTTON>:
+
+NO_BUTTON:	STR		R5, [R2]					// store to HEX3 ... HEX0
+  3c:	e5825000 	str	r5, [r2]
+				ROR		R5, R0					// rotate the displayed pattern to the left
+  40:	e1a05075 	ror	r5, r5, r0
+
+				LDR		R6, =50000000			// delay counter
+  44:	e59f601c 	ldr	r6, [pc, #28]	; 68 <HEX_bits+0x14>
+
+00000048 <SUB_LOOP>:
+SUB_LOOP:	SUBS		R6, R6, #1
+  48:	e2566001 	subs	r6, r6, #1
+				BNE		SUB_LOOP
+  4c:	1afffffd 	bne	48 <SUB_LOOP>
+
+				B 			DO_DISPLAY
+  50:	eafffff0 	b	18 <DO_DISPLAY>
+
+00000054 <HEX_bits>:
+  54:	0000000f 	.word	0x0000000f
+  58:	ff200000 	.word	0xff200000
+  5c:	ff200020 	.word	0xff200020
+  60:	ff200040 	.word	0xff200040
+  64:	ff200050 	.word	0xff200050
+  68:	02faf080 	.word	0x02faf080

@@ -1,0 +1,107 @@
+
+C:/Users/Alex/Documents/McGill/ECSE_324/Labs/Lab 1/G12_Lab1/part1.axf:     file format elf32-littlearm
+
+
+Disassembly of section .text:
+
+00000000 <__cs3_interrupt_vector>:
+// SORT
+			.text
+			.global _start
+
+_start:
+			LDR R10, =ZERO		// get address of zero
+   0:	e59fa094 	ldr	r10, [pc, #148]	; 9c <NUMBERS+0x1c>
+			LDR R10, [R10]		// hold value of zero
+   4:	e59aa000 	ldr	r10, [r10]
+			LDR R11, =ONE		// get address of one
+   8:	e59fb090 	ldr	r11, [pc, #144]	; a0 <NUMBERS+0x20>
+			LDR R11, [R11]		// hold address of one
+   c:	e59bb000 	ldr	r11, [r11]
+			LDR R12, =N			// get address of signal length
+  10:	e59fc08c 	ldr	r12, [pc, #140]	; a4 <NUMBERS+0x24>
+			LDR R9, [R12]		// hold value of signal length (constant, never changed)
+  14:	e59c9000 	ldr	r9, [r12]
+			LDR R12, [R12]		// hold value of signal length (used as counter)
+  18:	e59cc000 	ldr	r12, [r12]
+
+0000001c <OUTER>:
+
+OUTER:		SUBS R12, R12, #1	// reduce outer counter by one
+  1c:	e25cc001 	subs	r12, r12, #1
+			BEQ END				// if counter reaches zero, go to end
+  20:	0a000012 	beq	70 <END>
+			LDR R2, =NUMBERS	// get address of first number
+  24:	e59f207c 	ldr	r2, [pc, #124]	; a8 <NUMBERS+0x28>
+			ADD R3, R2, #4		// get address of second number
+  28:	e2823004 	add	r3, r2, #4
+			LDR R0, [R2]		// hold first number in R0
+  2c:	e5920000 	ldr	r0, [r2]
+			LDR R1, [R3]		// hold second number in R1
+  30:	e5931000 	ldr	r1, [r3]
+			CPY R8, R9			// copy signal length to R8 to be used as inner counter
+  34:	e1a08009 	mov	r8, r9
+
+00000038 <INNER>:
+			
+INNER: 		SUBS R8, R8, #1		// reducer inner counter by one
+  38:	e2588001 	subs	r8, r8, #1
+			BEQ OUTER			// if counter reaches zero, go to outer loop
+  3c:	0afffff6 	beq	1c <OUTER>
+
+00000040 <COMPARE>:
+
+COMPARE:	CMP R1, R0			// check which value is greater
+  40:	e1510000 	cmp	r1, r0
+			BGE FORWARD			// if second value greater, don't need to swap => skip forward
+  44:	aa000002 	bge	54 <FORWARD>
+			MOV R7, R1			// move second value to holding register
+  48:	e1a07001 	mov	r7, r1
+			MOV R1, R0			// move first value to second register
+  4c:	e1a01000 	mov	r1, r0
+			MOV R0, R7			// move holding value to first register
+  50:	e1a00007 	mov	r0, r7
+
+00000054 <FORWARD>:
+
+FORWARD:	STR R0, [R2]		// store values back to the same memory addresses
+  54:	e5820000 	str	r0, [r2]
+			STR R1, [R3]
+  58:	e5831000 	str	r1, [r3]
+			ADD R2, R2, #4		// increment pointers
+  5c:	e2822004 	add	r2, r2, #4
+			ADD R3, R3, #4
+  60:	e2833004 	add	r3, r3, #4
+			LDR R0, [R2]		// load next values
+  64:	e5920000 	ldr	r0, [r2]
+			LDR R1, [R3]
+  68:	e5931000 	ldr	r1, [r3]
+			B INNER
+  6c:	eafffff1 	b	38 <INNER>
+
+00000070 <END>:
+
+END:		B END
+  70:	eafffffe 	b	70 <END>
+
+00000074 <ZERO>:
+  74:	00000000 	.word	0x00000000
+
+00000078 <ONE>:
+  78:	00000001 	.word	0x00000001
+
+0000007c <N>:
+  7c:	00000007 	.word	0x00000007
+
+00000080 <NUMBERS>:
+  80:	00000004 	.word	0x00000004
+  84:	00000005 	.word	0x00000005
+  88:	00000003 	.word	0x00000003
+  8c:	00000006 	.word	0x00000006
+  90:	00000001 	.word	0x00000001
+  94:	00000008 	.word	0x00000008
+  98:	00000002 	.word	0x00000002
+  9c:	00000074 	.word	0x00000074
+  a0:	00000078 	.word	0x00000078
+  a4:	0000007c 	.word	0x0000007c
+  a8:	00000080 	.word	0x00000080
