@@ -5,87 +5,57 @@ C:/Users/Alex/Documents/McGill/ECSE_324/Labs/ECSE324/Lab2/G12_Lab2_Part1/stack1a
 Disassembly of section .text:
 
 00000000 <__cs3_interrupt_vector>:
-.text
-.global _start
 
-_start:		
+_start:	
+			// create our own stack pointer
+			// stack pointer points to the top of the stack
+			// the stack has no data yet, so the top is also the bottom
+			LDR R12, =BOTTOMSTACK
+   0:	e59fc040 	ldr	r12, [pc, #64]	; 48 <BOTTOMSTACK+0x4>
 
-	LDR R4, = LASTNUMBER // Memory for the final number
-   0:	e59f4070 	ldr	r4, [pc, #112]	; 78 <ONE+0x4>
-	LDR R2,[R4, #4] // Number of iterations of fibonacci
-   4:	e5942004 	ldr	r2, [r4, #4]
-	LDR R3,[R4, #8] //Comparing value for the number of iterations
-   8:	e5943008 	ldr	r3, [r4, #8]
-	LDR R6,[R4, #12] //Initializes value of 2
-   c:	e594600c 	ldr	r6, [r4, #12]
-	LDR R5, = POINTER // Initiates Pointer
-  10:	e59f5064 	ldr	r5, [pc, #100]	; 7c <ONE+0x8>
-	LDR R0, [R5] //Initiates F(0)
-  14:	e5950000 	ldr	r0, [r5]
-	LDR R0, = ONE
-  18:	e59f0060 	ldr	r0, [pc, #96]	; 80 <ONE+0xc>
-	SUB R5, R5, #4
-  1c:	e2455004 	sub	r5, r5, #4
-	LDR R1,[R5] // Initiates F(1)
-  20:	e5951000 	ldr	r1, [r5]
-LDR R1, = ONE
-  24:	e59f1054 	ldr	r1, [pc, #84]	; 80 <ONE+0xc>
+			LDR R10, =N			//R10 points to the number of elements in the list
+   4:	e59fa040 	ldr	r10, [pc, #64]	; 4c <BOTTOMSTACK+0x8>
+			LDR R10, [R10]		// R10 holds the number of elements in the list
+   8:	e59aa000 	ldr	r10, [r10]
+			LDR R11, =NUMBERS	//R1 points to the first number
+   c:	e59fb03c 	ldr	r11, [pc, #60]	; 50 <BOTTOMSTACK+0xc>
 
-00000028 <INIT>:
-	
-INIT:	CMP R6, R2
-  28:	e1560002 	cmp	r6, r2
-	BLE FIB
-  2c:	da000001 	ble	38 <FIB>
-	LDR R5, [R1]
-  30:	e5915000 	ldr	r5, [r1]
-	B END
-  34:	ea000008 	b	5c <END>
+00000010 <LOOP>:
 
-00000038 <FIB>:
+LOOP: 		LDR R0, [R11]			//R0 holds the next number in the list
+  10:	e59b0000 	ldr	r0, [r11]
+			STR R0, [R12, #4]!		// push value from R0 to top of stack, increment stack pointer
+  14:	e5ac0004 	str	r0, [r12, #4]!
+			ADD R11, R11, #4		// point to next number
+  18:	e28bb004 	add	r11, r11, #4
+			SUBS R10, R10, #1		// decrement loop counter
+  1c:	e25aa001 	subs	r10, r10, #1
+			BEQ NEXT				// leave loop if finished
+  20:	0a000000 	beq	28 <NEXT>
+			B LOOP					// back to start of loop
+  24:	eafffff9 	b	10 <LOOP>
 
-FIB: 	SUBS R2, R2, #1
-  38:	e2522001 	subs	r2, r2, #1
-	CMP R3, R2 
-  3c:	e1530002 	cmp	r3, r2
-	BLE FIB
-  40:	dafffffc 	ble	38 <FIB>
-	LDR R0, [R5, #-4]
-  44:	e5150004 	ldr	r0, [r5, #-4]
-	LDR R1, [R5] 
-  48:	e5951000 	ldr	r1, [r5]
-	SUBS R5, R5, #-4
-  4c:	e2955004 	adds	r5, r5, #4
-	ADD R7, R1, R0
-  50:	e0817000 	add	r7, r1, r0
-	LDR R5, [R7]
-  54:	e5975000 	ldr	r5, [r7]
-	B END
-  58:	eaffffff 	b	5c <END>
+00000028 <NEXT>:
 
-0000005c <END>:
+NEXT: 		LDMDA	R12!, {R0-R2}	// pop top 3 values of stack to R0, R1, and R2; decrement stack pointer after each pop
+  28:	e83c0007 	ldmda	r12!, {r0, r1, r2}
 
+0000002c <END>:
 
-END: B END
-  5c:	eafffffe 	b	5c <END>
+END: 		B END					// infinite loop
+  2c:	eafffffe 	b	2c <END>
 
-00000060 <LASTNUMBER>:
-  60:	00000000 	.word	0x00000000
+00000030 <N>:
+  30:	00000004 	.word	0x00000004
 
-00000064 <N>:
-  64:	00000005 	.word	0x00000005
+00000034 <NUMBERS>:
+  34:	00000004 	.word	0x00000004
+  38:	00000005 	.word	0x00000005
+  3c:	00000003 	.word	0x00000003
+  40:	00000006 	.word	0x00000006
 
-00000068 <ZERO>:
-  68:	00000000 	.word	0x00000000
-
-0000006c <TWO>:
-  6c:	00000002 	.word	0x00000002
-
-00000070 <POINTER>:
-  70:	00000000 	.word	0x00000000
-
-00000074 <ONE>:
-  74:	00000001 	.word	0x00000001
-  78:	00000060 	.word	0x00000060
-  7c:	00000070 	.word	0x00000070
-  80:	00000074 	.word	0x00000074
+00000044 <BOTTOMSTACK>:
+  44:	00000000 	.word	0x00000000
+  48:	00000044 	.word	0x00000044
+  4c:	00000030 	.word	0x00000030
+  50:	00000034 	.word	0x00000034

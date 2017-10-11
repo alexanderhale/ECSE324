@@ -5,17 +5,17 @@
         <cable>DE-SoC [USB-1]</cable>
         <processor>ARM_A9_HPS_arm_a9_0</processor>
         <reset_processor_during_load>true</reset_processor_during_load>
-        <terminal>JTAG_UART_for_ARM_0</terminal>
+        <terminal>Semihosting</terminal>
     </system>
     <program>
         <type>C Program</type>
         <source_files>
-            <source_file filepath="true">getting_started.c</source_file>
+            <source_file filepath="true">assemblyfromc.c</source_file>
             <source_file filepath="true">subroutine.s</source_file>
         </source_files>
         <options>
-            <compiler_flags>-g -O1</compiler_flags>
-            <emulate_unimpl_instructions>false</emulate_unimpl_instructions>
+            <compiler_flags>-g -O0</compiler_flags>
+            <emulate_unimpl_instructions>true</emulate_unimpl_instructions>
             <use_small_c_library>false</use_small_c_library>
         </options>
         <linker_sections>
