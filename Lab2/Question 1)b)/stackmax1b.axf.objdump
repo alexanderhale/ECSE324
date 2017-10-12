@@ -1,0 +1,79 @@
+
+C:/Users/Alex/Documents/McGill/ECSE_324/Labs/ECSE324/Lab2/Question 1)b)/stackmax1b.axf:     file format elf32-littlearm
+
+
+Disassembly of section .text:
+
+00000000 <__cs3_interrupt_vector>:
+// 1.2 - find max with stack
+		.text
+		.global _start
+
+_start:	LDR R10, =N 		// R10 points to the number of elements in the list
+   0:	e59fa064 	ldr	r10, [pc, #100]	; 6c <NUMBERS+0x10>
+		LDR R0, [R10, #4]	// R0 holds the first number
+   4:	e59a0004 	ldr	r0, [r10, #4]
+		LDR R1, [R10, #8]	// R1 holds the second number
+   8:	e59a1008 	ldr	r1, [r10, #8]
+		LDR R2, [R10, #12]	// R2 holds the third number
+   c:	e59a200c 	ldr	r2, [r10, #12]
+		LDR R3, [R10, #16]	// R3 holds the fourth number
+  10:	e59a3010 	ldr	r3, [r10, #16]
+		LDR R10, [R10]		// R10 holds the number of elements in the list
+  14:	e59aa000 	ldr	r10, [r10]
+		BL FINDMAX 			// branch to the subroutine
+  18:	eb000002 	bl	28 <FINDMAX>
+		LDR R11, =RESULT 	// R11 points to the result location
+  1c:	e59fb04c 	ldr	r11, [pc, #76]	; 70 <NUMBERS+0x14>
+		STR R0, [R11]		// store the result in the defined location
+  20:	e58b0000 	str	r0, [r11]
+
+00000024 <END>:
+
+END: 	B END 	// infinite loop
+  24:	eafffffe 	b	24 <END>
+
+00000028 <FINDMAX>:
+
+FINDMAX:	STR R1, [SP, #-4]!	// push R1 onto stack
+  28:	e52d1004 	push	{r1}		; (str r1, [sp, #-4]!)
+			STR R2, [SP, #-4]!	// push R2 onto stack
+  2c:	e52d2004 	push	{r2}		; (str r2, [sp, #-4]!)
+			STR R3, [SP, #-4]!	// push R3 onto stack
+  30:	e52d3004 	push	{r3}		; (str r3, [sp, #-4]!)
+
+00000034 <LOOP>:
+
+LOOP:		SUBS R10, R10, #1	// decrement loop counter
+  34:	e25aa001 	subs	r10, r10, #1
+			BEQ DONE			// end loop if counter reaches 0
+  38:	0a000004 	beq	50 <DONE>
+			LDR R12, [SP], #4	// pop top of stack into R12
+  3c:	e49dc004 	pop	{r12}		; (ldr r12, [sp], #4)
+			CMP R0, R12			// compare R0 to R12
+  40:	e150000c 	cmp	r0, r12
+			BGE	LOOP			// if R0 > R12, branch to loop
+  44:	aafffffa 	bge	34 <LOOP>
+			MOV R0, R12			// else, replace with new max
+  48:	e1a0000c 	mov	r0, r12
+			B LOOP 				// branch back to loop
+  4c:	eafffff8 	b	34 <LOOP>
+
+00000050 <DONE>:
+
+DONE:		BX LR
+  50:	e12fff1e 	bx	lr
+
+00000054 <RESULT>:
+  54:	00000000 	.word	0x00000000
+
+00000058 <N>:
+  58:	00000004 	.word	0x00000004
+
+0000005c <NUMBERS>:
+  5c:	00000004 	.word	0x00000004
+  60:	00000005 	.word	0x00000005
+  64:	00000003 	.word	0x00000003
+  68:	00000006 	.word	0x00000006
+  6c:	00000058 	.word	0x00000058
+  70:	00000054 	.word	0x00000054

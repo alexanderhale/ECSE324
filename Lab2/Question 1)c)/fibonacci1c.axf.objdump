@@ -1,0 +1,98 @@
+
+C:/Users/Alex/Documents/McGill/ECSE_324/Labs/ECSE324/Lab2/Question 1)c)/fibonacci1c.axf:     file format elf32-littlearm
+
+
+Disassembly of section .text:
+
+00000000 <__cs3_interrupt_vector>:
+.text
+.global _start
+
+_start:		
+
+	LDR R4, = LASTNUMBER 	// memory reference for other values
+   0:	e59f407c 	ldr	r4, [pc, #124]	; 84 <ONE+0x4>
+	LDR R2, [R4, #4] 		// Number of iterations of fibonacci
+   4:	e5942004 	ldr	r2, [r4, #4]
+	LDR R3, [R4, #12] 		// Comparing value for the inner loop
+   8:	e594300c 	ldr	r3, [r4, #12]
+	LDR R6, [R4, #8] 		// Comparing value for init
+   c:	e5946008 	ldr	r6, [r4, #8]
+	LDR R0, [R4, #12] 		// Lower value of the 2 most recent fibonacci numbers
+  10:	e594000c 	ldr	r0, [r4, #12]
+	LDR R5, = POINTER 		// Pointer memory
+  14:	e59f506c 	ldr	r5, [pc, #108]	; 88 <ONE+0x8>
+	STR R0, [R5] 			// Assigns 1 to initial pointer memory
+  18:	e5850000 	str	r0, [r5]
+	SUB R5, R5, #4 			// Reassigns pointer's memory location
+  1c:	e2455004 	sub	r5, r5, #4
+	LDR R1, [R4, #12]  		// Higher value of the 2 most recent fibonacci numbers
+  20:	e594100c 	ldr	r1, [r4, #12]
+	STR R1, [R5] 			// Assigns more recent 1 to pointer
+  24:	e5851000 	str	r1, [r5]
+
+00000028 <INIT>:
+	
+INIT:	CMP R6, R2 			// Initial compare to see if n<2 , returns 1 
+  28:	e1560002 	cmp	r6, r2
+		BLE FIB
+  2c:	da000000 	ble	34 <FIB>
+		B DONE
+  30:	ea00000c 	b	68 <DONE>
+
+00000034 <FIB>:
+
+FIB: 	
+		CMP R3, R2 			// Initial compare statements, outer compare serves as a flag to see if the fibonacci sequence is done
+  34:	e1530002 	cmp	r3, r2
+		BEQ DONE
+  38:	0a00000a 	beq	68 <DONE>
+		SUBS R2, R2, #1
+  3c:	e2522001 	subs	r2, r2, #1
+		CMP R2, R3  		// Inner loop, acts as a down counter for the inner loop 
+  40:	e1520003 	cmp	r2, r3
+		BGT FIB 
+  44:	cafffffa 	bgt	34 <FIB>
+		LDR R0, [R5, #4] 	// Reloads R0 and R1 values, necessary to reassign what R0 and R1 are after each number iteration
+  48:	e5950004 	ldr	r0, [r5, #4]
+		LDR R1, [R5]
+  4c:	e5951000 	ldr	r1, [r5]
+		ADD R7, R0, R1
+  50:	e0807001 	add	r7, r0, r1
+		SUB R5, R5, #4 		// Changes pointer position
+  54:	e2455004 	sub	r5, r5, #4
+		STR R7, [R5] 		// Stores new highest number at the pointer head
+  58:	e5857000 	str	r7, [r5]
+		LDR R2, [R4,#4] 	// Reloads outer loop counter
+  5c:	e5942004 	ldr	r2, [r4, #4]
+		ADD R3, R3, #1 		// Increases inner loop counter
+  60:	e2833001 	add	r3, r3, #1
+		B FIB
+  64:	eafffff2 	b	34 <FIB>
+
+00000068 <DONE>:
+
+DONE:  LDR R10, [R5] 		// Stores the Fibonacci value in R10, makes it a bit easier to find the value 
+  68:	e595a000 	ldr	r10, [r5]
+
+0000006c <END>:
+
+END: B END
+  6c:	eafffffe 	b	6c <END>
+
+00000070 <POINTER>:
+  70:	00000000 	.word	0x00000000
+
+00000074 <LASTNUMBER>:
+  74:	00000000 	.word	0x00000000
+
+00000078 <N>:
+  78:	0000000d 	.word	0x0000000d
+
+0000007c <TWO>:
+  7c:	00000002 	.word	0x00000002
+
+00000080 <ONE>:
+  80:	00000001 	.word	0x00000001
+  84:	00000074 	.word	0x00000074
+  88:	00000070 	.word	0x00000070
