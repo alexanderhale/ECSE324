@@ -181,20 +181,19 @@ int main() {
  284:	e8ac000f 	stmia	r12!, {r0, r1, r2, r3}
  288:	e8940007 	ldm	r4, {r0, r1, r2}
  28c:	e88c0007 	stm	r12, {r0, r1, r2}
-	int c, n, i, b;									// working variables
-														// remove b
+	int c, n, i;									// working variables
 	c = a[0];										// get first array value
  290:	e51b3044 	ldr	r3, [r11, #-68]	; 0xffffffbc
  294:	e50b3010 	str	r3, [r11, #-16]
 	n = sizeof(a) / sizeof(int);					// length of array
  298:	e3a0300b 	mov	r3, #11
  29c:	e50b3018 	str	r3, [r11, #-24]	; 0xffffffe8
+
 	for (i = 1; i < n; i++){						// count from element 1 to end of array
  2a0:	e3a03001 	mov	r3, #1
  2a4:	e50b3014 	str	r3, [r11, #-20]	; 0xffffffec
  2a8:	ea00000d 	b	2e4 <main+0x88>
-		// b = MAX_2(a[i-1], a[i]);					// check whether current element is greater than current max
-		c = MAX_2(c, a[i]);							// should be c = MAX_2(c, a[i]);
+		c = MAX_2(c, a[i]);							// check whether current element is greater than current max
  2ac:	e51b2014 	ldr	r2, [r11, #-20]	; 0xffffffec
  2b0:	e3e03037 	mvn	r3, #55	; 0x37
  2b4:	e1a02102 	lsl	r2, r2, #2
@@ -207,10 +206,10 @@ int main() {
  2d0:	eb00000b 	bl	304 <MAX_2>
  2d4:	e50b0010 	str	r0, [r11, #-16]
 	int a[11]={1,20,3,4,5,25,43,23,53,128,92};		// array
-	int c, n, i, b;									// working variables
-														// remove b
+	int c, n, i;									// working variables
 	c = a[0];										// get first array value
 	n = sizeof(a) / sizeof(int);					// length of array
+
 	for (i = 1; i < n; i++){						// count from element 1 to end of array
  2d8:	e51b3014 	ldr	r3, [r11, #-20]	; 0xffffffec
  2dc:	e2833001 	add	r3, r3, #1
@@ -219,10 +218,7 @@ int main() {
  2e8:	e51b3018 	ldr	r3, [r11, #-24]	; 0xffffffe8
  2ec:	e1520003 	cmp	r2, r3
  2f0:	baffffed 	blt	2ac <main+0x50>
-		c = MAX_2(c, a[i]);							// should be c = MAX_2(c, a[i]);
-		//if (b > c){									
-		//	c = b;
-		//}
+		c = MAX_2(c, a[i]);							// check whether current element is greater than current max
 	}
 	return c;
  2f4:	e51b3010 	ldr	r3, [r11, #-16]
