@@ -20,6 +20,6 @@ write_LEDs_ASM:
 	STR R0, [R1]		// store value of R0 to memory address in R1
 	POP {LR}
 	POP {R1}
-	BX LR
+	BX LR				// leave
 
 	.end

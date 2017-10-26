@@ -1,10 +1,16 @@
   	.text
 	.equ HEX_0to3, 0xFF200020
 	.equ HEX_4to5, 0xFF200030
-	.global HEX_clear_ASM
-	.global HEX_flood_ASM
-	.global HEX_write_ASM
+	// .global HEX_clear_ASM
+	// .global HEX_flood_ASM
+	// .global HEX_write_ASM
+	.global _start
 
+_start:
+	MOV R0, #63
+	B HEX_flood_ASM
+
+CLEAR:	MOV R0, #63
 
 HEX_clear_ASM:						// turn off all the segments of all the HEX displays passed in
 					PUSH {LR}
@@ -26,7 +32,7 @@ SKIPFOURTOFIVE:			LSR R2, #1			// decrease power of 2 counter by one power of 2
 						LSR R3, #8			// move the block of 1s 8 spots right
 						B CLEARFOURTOFIVE  // branch back to start of loop
 
-CLEARDONE:				STR R4, [R5]	// store the finished value back to the memory location
+CLEARDONE:				STR R5, [R4]	// store the finished value back to the memory location
 
 ZEROTOTHREE:			MOV R2, #8			// R2 holds the current power of 2 that is being used for comparison
 						MOV R3, #255		// R3 holds a block of 1s that is 8 bits long, starting at positions 0 to 7
@@ -38,13 +44,15 @@ CLEARZEROTOTHREE:		CMP R2, #0			// check value of counter
 						BEQ	CLEAREND		// go to end if we've run through all HEX displays
 						CMP R0, R2			// check if leftmost bit is 1 or 0 by checking the the value in R0 is <= 2^n. Skip a line if 0.
 						BLT SKIPZEROTOTHREE	// if 0, branch to SKIP:
-						SUB R5, R5, R3 		// clear all bits in nth hex spot
+						SUB R5, R5, R3 		// clear all bits in nth hex spot			// TODO THIS WILL NOT WORK UNLESS BITS ARE ALL 1 BEFORE!
 SKIPZEROTOTHREE:		LSR R2, #1			// decrease power of 2 counter by one power of 2
 						LSR R3, #8			// move the block of 1s 8 spots right
 						B CLEARZEROTOTHREE  // branch back to start of loop
 
 
-CLEAREND:	STR R4, [R5]	// store the finished value back to the memory location
+CLEAREND:	STR R5, [R4]	// store the finished value back to the memory location
+STOPEND:	B STOPEND
+
 			POP {LR}
  			BX LR			// leave
 
@@ -70,7 +78,7 @@ FLDSKIPFOURTOFIVE:		LSR R2, #1			// decrease power of 2 counter by one power of 
 						LSR R3, #8			// move the block of 1s 8 spots right
 						B FLOODFOURTOFIVE  // branch back to start of loop
 
-FLOODDONE:				STR R4, [R5]	// store the finished value back to the memory location
+FLOODDONE:				STR R5, [R4]	// store the finished value back to the memory location
 
 FLDZEROTOTHREE:			MOV R2, #8			// R2 holds the current power of 2 that is being used for comparison
 						MOV R3, #255		// R3 holds a block of 1s that is 8 bits long, starting at positions 0 to 7
@@ -82,15 +90,16 @@ FLOODZEROTOTHREE:		CMP R2, #0			// check value of counter
 						BEQ	FLOODEND		// go to end if we've run through all HEX displays
 						CMP R0, R2			// check if leftmost bit is 1 or 0 by checking the the value in R0 is <= 2^n
 						BLT FLDSKIPZEROTOTHREE	// if 0, branch to SKIP:
-						SUB R5, R5, R3 		// FLOOD all bits in nth hex spot
+						ADD R5, R5, R3 		// FLOOD all bits in nth hex spot
 FLDSKIPZEROTOTHREE:		LSR R2, #1			// decrease power of 2 counter by one power of 2
 						LSR R3, #8			// move the block of 1s 8 spots right
 						B FLOODZEROTOTHREE  // branch back to start of loop
 
 
-FLOODEND:	STR R4, [R5]	// store the finished value back to the memory location
+FLOODEND:	STR R5, [R4]	// store the finished value back to the memory location
 			POP {LR}
- 			BX LR			// leave
+ 			// BX LR			// leave
+			B CLEAR
 
 /*------------------------------------------------------------------------------------*/
 

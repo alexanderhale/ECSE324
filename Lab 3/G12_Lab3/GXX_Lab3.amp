@@ -15,6 +15,10 @@
             <source_file filepath="true">drivers/inc/slider_switches.h</source_file>
             <source_file filepath="true">drivers/asm/LEDs.s</source_file>
             <source_file filepath="true">drivers/inc/LEDs.h</source_file>
+            <source_file filepath="true">drivers/asm/HEX_displays.s</source_file>
+            <source_file filepath="true">drivers/asm/pushbuttons.s</source_file>
+            <source_file filepath="true">drivers/inc/HEX_displays.h</source_file>
+            <source_file filepath="true">drivers/inc/pushbuttons.h</source_file>
         </source_files>
         <options>
             <compiler_flags>-g -O0</compiler_flags>
