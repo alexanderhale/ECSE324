@@ -8,11 +8,12 @@
 
 _start:
 	MOV R0, #63
-	B HEX_flood_ASM
+	MOV R1, #10
+	B HEX_write_ASM
 
 CLEAR:	MOV R0, #63
 
-HEX_clear_ASM:						// turn off all the segments of all the HEX displays passed in
+/*HEX_clear_ASM:						// turn off all the segments of all the HEX displays passed in
 					PUSH {LR}
 					CMP R0, #16		// if HEX4 and HEX 5 aren't requested, skip the first section
 					BLT ZEROTOTHREE
@@ -56,7 +57,7 @@ STOPEND:	B STOPEND
 			POP {LR}
  			BX LR			// leave
 
-/*------------------------------------------------------------------------------------*/
+///////////////////////////////////////////////////////////////////////////
 
 HEX_flood_ASM:			// turn on all the segments of all the HEX displays passed in
 					PUSH {LR}
@@ -103,18 +104,51 @@ FLOODEND:	STR R5, [R4]	// store the finished value back to the memory location
 
 /*------------------------------------------------------------------------------------*/
 
-HEX_write_ASM:			// display the corresponding hexadecimal digit
+HEX_clear_ASM:			// turn off everything in the requested hex displays
+	LDRB R2, #0			// load 00000000 into R2
+	B RUN
+
+HEX_flood_ASM:			// light up everything in the requested hex displays
+	LDRB R2, #128		// load 11111111 into R1
+	B RUN
+
+HEX_write_ASM:			// display the corresponding hexadecimal digit in the requested hex displays
+	LDR R2, =LIGHTS		// hold address of first encoded light sequence
+	LDRB R2, [R2, R1]	// put appropriate 1 byte encoded light sequence into R2, using base address + shift according to input
+	B RUN
+
+RUN:
 	PUSH {LR}
-						// check which displays are to be altered
+	MOV R8, #32			// R8 holds the current power of 2 that is being used for comparison
+	MOV R9, #20			// R9 holds the memory offset counter
+	LDR R10, =HEX_0to3	// R10 holds the starting address of the area in memory
+	
+LOOP:
+	CMP R8, #0			// check if power-of-2 counter has reached zero
+	BEQ	END				// if so, branch to end
+	CMP R0, R8			// check if input value >= power-of-2 counter
+	BLT S				// if no, the leftmost bit must be zero => skip a line
+	LDRB R10, [R10, R9]	// if yes, leftmost bit is 1 => load the predetermined byte into the base memory location + the offset
+S:  LSR R8, #1			// decrease power-of-2 counter by one power of 2
+	SUB R9, R9, #4		// decrease memory offset counter by four
+	B LOOP
 
-						// get the number that will be displayed on those displays
 
-						// decide the segments that need to be illuminated
+END:	POP {LR}
+		BX LR			// leave
 
-						// loop through those displays, turning on the appropriate
-						// segments on each of the specified displays
-
-	POP {LR}
-WRITEEND: BX LR			// leave
-
+// ZEROS:		.word 0
+// ONES:		.word 127
+LIGHTS:		.word 31, 6, 91, 79
+				// 00011111	00000110 01011011 01001111
+				//	   0        1        2        3
+			.word 102, 109, 125, 7
+				// 01100110	01101101 01111101 00000111
+				//	   4	    5        6        7
+			.word 63, 103, 119, 124
+				// 00111111	01100111 01110111 01111100
+				//	   8	    9        A        b
+			.word 60, 6, 124, 120
+				// 00111100	00000110 01111100 01111000
+				//	   C	    d        E        F
 	.end
