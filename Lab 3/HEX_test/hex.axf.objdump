@@ -1,5 +1,5 @@
 
-C:/Users/Alex/Documents/McGill/ECSE_324/Labs/ECSE324/Lab 3/hex.axf:     file format elf32-littlearm
+C:/Users/Alex/Documents/McGill/ECSE_324/Labs/ECSE324/Lab 3/HEX_test/hex.axf:     file format elf32-littlearm
 
 
 Disassembly of section .text:
@@ -12,221 +12,116 @@ Disassembly of section .text:
 _start:
 	MOV R0, #63
    0:	e3a0003f 	mov	r0, #63	; 0x3f
-	B HEX_flood_ASM
-   4:	ea000022 	b	94 <HEX_flood_ASM>
+	MOV R1, #10
+   4:	e3a0100a 	mov	r1, #10
+	B HEX_write_ASM
+   8:	ea000004 	b	20 <HEX_write_ASM>
 
-00000008 <CLEAR>:
+0000000c <CLEAR>:
 
 CLEAR:	MOV R0, #63
-   8:	e3a0003f 	mov	r0, #63	; 0x3f
+   c:	e3a0003f 	mov	r0, #63	; 0x3f
 
-0000000c <HEX_clear_ASM>:
-
-HEX_clear_ASM:						// turn off all the segments of all the HEX displays passed in
-					PUSH {LR}
-   c:	e52de004 	push	{lr}		; (str lr, [sp, #-4]!)
-					CMP R0, #16		// if HEX4 and HEX 5 aren't requested, skip the first section
-  10:	e3500010 	cmp	r0, #16
-					BLT ZEROTOTHREE
-  14:	ba00000d 	blt	50 <ZEROTOTHREE>
-
-					MOV R2, #32			// R2 holds the current power of 2 that is being used for comparison
-  18:	e3a02020 	mov	r2, #32
-					MOV R3, #255		// R3 holds a block of 1s that is 8 bits long, starting at positions 0 to 7
-  1c:	e3a030ff 	mov	r3, #255	; 0xff
-					LSL R3, #8			// move the block of 1s to positions 24 to 31
-  20:	e1a03403 	lsl	r3, r3, #8
-					LDR R4, =HEX_4to5	// R4 holds the starting address of the area in memory
-  24:	e59f40f8 	ldr	r4, [pc, #248]	; 124 <WRITEEND+0x4>
-					LDR R5, [R4]		// load the value stored at that address
-  28:	e5945000 	ldr	r5, [r4]
-
-0000002c <CLEARFOURTOFIVE>:
-
-CLEARFOURTOFIVE:		CMP R2, #8			// check value of counter
-  2c:	e3520008 	cmp	r2, #8
-						BEQ	ZEROTOTHREE		// go to end if we've run through all HEX displays
-  30:	0a000006 	beq	50 <ZEROTOTHREE>
-						CMP R0, R2			// check if leftmost bit is 1 or 0 by checking the the value in R0 is <= 2^n. Skip a line if 0.
-  34:	e1500002 	cmp	r0, r2
-						BLT CLEARDONE		// if 0, branch to SKIP:
-  38:	ba000003 	blt	4c <CLEARDONE>
-						SUB R5, R5, R3 		// clear all bits in nth hex spot
-  3c:	e0455003 	sub	r5, r5, r3
-
-00000040 <SKIPFOURTOFIVE>:
-SKIPFOURTOFIVE:			LSR R2, #1			// decrease power of 2 counter by one power of 2
-  40:	e1a020a2 	lsr	r2, r2, #1
-						LSR R3, #8			// move the block of 1s 8 spots right
-  44:	e1a03423 	lsr	r3, r3, #8
-						B CLEARFOURTOFIVE  // branch back to start of loop
-  48:	eafffff7 	b	2c <CLEARFOURTOFIVE>
-
-0000004c <CLEARDONE>:
-
-CLEARDONE:				STR R5, [R4]	// store the finished value back to the memory location
-  4c:	e5845000 	str	r5, [r4]
-
-00000050 <ZEROTOTHREE>:
-
-ZEROTOTHREE:			MOV R2, #8			// R2 holds the current power of 2 that is being used for comparison
-  50:	e3a02008 	mov	r2, #8
-						MOV R3, #255		// R3 holds a block of 1s that is 8 bits long, starting at positions 0 to 7
-  54:	e3a030ff 	mov	r3, #255	; 0xff
-						LSL R3, #24			// move the block of 1s to positions 24 to 31
-  58:	e1a03c03 	lsl	r3, r3, #24
-						LDR R4, =HEX_0to3	// R4 holds the starting address of the area in memory
-  5c:	e59f40c4 	ldr	r4, [pc, #196]	; 128 <WRITEEND+0x8>
-						LDR R5, [R4]		// load the value stored at that address
-  60:	e5945000 	ldr	r5, [r4]
-
-00000064 <CLEARZEROTOTHREE>:
-
-CLEARZEROTOTHREE:		CMP R2, #0			// check value of counter
-  64:	e3520000 	cmp	r2, #0
-						BEQ	CLEAREND		// go to end if we've run through all HEX displays
-  68:	0a000005 	beq	84 <CLEAREND>
-						CMP R0, R2			// check if leftmost bit is 1 or 0 by checking the the value in R0 is <= 2^n. Skip a line if 0.
-  6c:	e1500002 	cmp	r0, r2
-						BLT SKIPZEROTOTHREE	// if 0, branch to SKIP:
-  70:	ba000000 	blt	78 <SKIPZEROTOTHREE>
-						SUB R5, R5, R3 		// clear all bits in nth hex spot			// TODO THIS WILL NOT WORK!
-  74:	e0455003 	sub	r5, r5, r3
-
-00000078 <SKIPZEROTOTHREE>:
-SKIPZEROTOTHREE:		LSR R2, #1			// decrease power of 2 counter by one power of 2
-  78:	e1a020a2 	lsr	r2, r2, #1
-						LSR R3, #8			// move the block of 1s 8 spots right
-  7c:	e1a03423 	lsr	r3, r3, #8
-						B CLEARZEROTOTHREE  // branch back to start of loop
-  80:	eafffff7 	b	64 <CLEARZEROTOTHREE>
-
-00000084 <CLEAREND>:
-
-
-CLEAREND:	STR R5, [R4]	// store the finished value back to the memory location
-  84:	e5845000 	str	r5, [r4]
-
-00000088 <STOPEND>:
-STOPEND:	B STOPEND
-  88:	eafffffe 	b	88 <STOPEND>
-
-			POP {LR}
-  8c:	e49de004 	pop	{lr}		; (ldr lr, [sp], #4)
- 			BX LR			// leave
-  90:	e12fff1e 	bx	lr
-
-00000094 <HEX_flood_ASM>:
-
-/*------------------------------------------------------------------------------------*/
-
-HEX_flood_ASM:			// turn on all the segments of all the HEX displays passed in
-					PUSH {LR}
-  94:	e52de004 	push	{lr}		; (str lr, [sp, #-4]!)
-					CMP R0, #16			// if HEX4 and HEX 5 aren't requested, skip the first section
-  98:	e3500010 	cmp	r0, #16
-					BLT FLDZEROTOTHREE
-  9c:	ba00000d 	blt	d8 <FLDZEROTOTHREE>
-
-					MOV R2, #32			// R2 holds the current power of 2 that is being used for comparison
-  a0:	e3a02020 	mov	r2, #32
-					MOV R3, #255		// R3 holds a block of 1s that is 8 bits long, starting at positions 0 to 7
-  a4:	e3a030ff 	mov	r3, #255	; 0xff
-					LSL R3, #8			// move the block of 1s to positions 24 to 31
-  a8:	e1a03403 	lsl	r3, r3, #8
-					LDR R4, =HEX_4to5	// R4 holds the starting address of the area in memory
-  ac:	e59f4070 	ldr	r4, [pc, #112]	; 124 <WRITEEND+0x4>
-					LDR R5, [R4]		// load the value stored at that address
-  b0:	e5945000 	ldr	r5, [r4]
-
-000000b4 <FLOODFOURTOFIVE>:
-
-FLOODFOURTOFIVE:		CMP R2, #8			// check value of counter
-  b4:	e3520008 	cmp	r2, #8
-						BEQ	FLOODDONE		// go to end if we've run through all HEX displays
-  b8:	0a000005 	beq	d4 <FLOODDONE>
-						CMP R0, R2			// check if leftmost bit is 1 or 0 by checking the the value in R0 is <= 2^n
-  bc:	e1500002 	cmp	r0, r2
-						BLT FLDSKIPFOURTOFIVE	// if 0, branch to SKIP:
-  c0:	ba000000 	blt	c8 <FLDSKIPFOURTOFIVE>
-						ADD R5, R5, R3 		// clear all bits in nth hex spot
-  c4:	e0855003 	add	r5, r5, r3
-
-000000c8 <FLDSKIPFOURTOFIVE>:
-FLDSKIPFOURTOFIVE:		LSR R2, #1			// decrease power of 2 counter by one power of 2
-  c8:	e1a020a2 	lsr	r2, r2, #1
-						LSR R3, #8			// move the block of 1s 8 spots right
-  cc:	e1a03423 	lsr	r3, r3, #8
-						B FLOODFOURTOFIVE  // branch back to start of loop
-  d0:	eafffff7 	b	b4 <FLOODFOURTOFIVE>
-
-000000d4 <FLOODDONE>:
-
-FLOODDONE:				STR R5, [R4]	// store the finished value back to the memory location
-  d4:	e5845000 	str	r5, [r4]
-
-000000d8 <FLDZEROTOTHREE>:
-
-FLDZEROTOTHREE:			MOV R2, #8			// R2 holds the current power of 2 that is being used for comparison
-  d8:	e3a02008 	mov	r2, #8
-						MOV R3, #255		// R3 holds a block of 1s that is 8 bits long, starting at positions 0 to 7
-  dc:	e3a030ff 	mov	r3, #255	; 0xff
-						LSL R3, #24			// move the block of 1s to positions 24 to 31
-  e0:	e1a03c03 	lsl	r3, r3, #24
-						LDR R4, =HEX_0to3	// R4 holds the starting address of the area in memory
-  e4:	e59f403c 	ldr	r4, [pc, #60]	; 128 <WRITEEND+0x8>
-						LDR R5, [R4]		// load the value stored at that address
-  e8:	e5945000 	ldr	r5, [r4]
-
-000000ec <FLOODZEROTOTHREE>:
-
-FLOODZEROTOTHREE:		CMP R2, #0			// check value of counter
-  ec:	e3520000 	cmp	r2, #0
-						BEQ	FLOODEND		// go to end if we've run through all HEX displays
-  f0:	0a000005 	beq	10c <FLOODEND>
-						CMP R0, R2			// check if leftmost bit is 1 or 0 by checking the the value in R0 is <= 2^n
-  f4:	e1500002 	cmp	r0, r2
-						BLT FLDSKIPZEROTOTHREE	// if 0, branch to SKIP:
-  f8:	ba000000 	blt	100 <FLDSKIPZEROTOTHREE>
-						ADD R5, R5, R3 		// FLOOD all bits in nth hex spot
-  fc:	e0855003 	add	r5, r5, r3
-
-00000100 <FLDSKIPZEROTOTHREE>:
-FLDSKIPZEROTOTHREE:		LSR R2, #1			// decrease power of 2 counter by one power of 2
- 100:	e1a020a2 	lsr	r2, r2, #1
-						LSR R3, #8			// move the block of 1s 8 spots right
- 104:	e1a03423 	lsr	r3, r3, #8
-						B FLOODZEROTOTHREE  // branch back to start of loop
- 108:	eafffff7 	b	ec <FLOODZEROTOTHREE>
-
-0000010c <FLOODEND>:
-
-
-FLOODEND:	STR R5, [R4]	// store the finished value back to the memory location
- 10c:	e5845000 	str	r5, [r4]
-			POP {LR}
- 110:	e49de004 	pop	{lr}		; (ldr lr, [sp], #4)
- 			// BX LR			// leave
+00000010 <HEX_clear_ASM>:
 			B CLEAR
- 114:	eaffffbb 	b	8 <CLEAR>
-
-00000118 <HEX_write_ASM>:
 
 /*------------------------------------------------------------------------------------*/
 
-HEX_write_ASM:			// display the corresponding hexadecimal digit
+HEX_clear_ASM:			// turn off everything in the requested hex displays
+	LDRB R2, ZEROS		// load 00000000 into R2
+  10:	e5df2064 	ldrb	r2, [pc, #100]	; 7c <ZEROS>
+	B RUN
+  14:	ea000004 	b	2c <RUN>
+
+00000018 <HEX_flood_ASM>:
+
+HEX_flood_ASM:			// light up everything in the requested hex displays
+	LDRB R2, ONES		// load 11111111 into R1
+  18:	e5df205d 	ldrb	r2, [pc, #93]	; 7d <ONES>
+	B RUN
+  1c:	ea000002 	b	2c <RUN>
+
+00000020 <HEX_write_ASM>:
+
+HEX_write_ASM:			// display the corresponding hexadecimal digit in the requested hex displays
+	LDR R2, =LIGHTS		// hold address of first encoded light sequence
+  20:	e59f2068 	ldr	r2, [pc, #104]	; 90 <LIGHTS+0x12>
+	LDRB R2, [R2, R1]	// put appropriate 1 byte encoded light sequence into R2, using base address + shift according to input
+  24:	e7d22001 	ldrb	r2, [r2, r1]
+	B RUN
+  28:	eaffffff 	b	2c <RUN>
+
+0000002c <RUN>:
+
+RUN:
 	PUSH {LR}
- 118:	e52de004 	push	{lr}		; (str lr, [sp, #-4]!)
-						// decide the segments that need to be illuminated
+  2c:	e52de004 	push	{lr}		; (str lr, [sp, #-4]!)
+	MOV R8, #32			// R8 holds the current power of 2 that is being used for comparison
+  30:	e3a08020 	mov	r8, #32
+	MOV R9, #1			// R9 holds the memory offset counter
+  34:	e3a09001 	mov	r9, #1
+	LDR R10, =HEX_4to5	// R10 holds the starting address of the area in memory
+  38:	e59fa054 	ldr	r10, [pc, #84]	; 94 <LIGHTS+0x16>
 
-						// loop through those displays, turning on the appropriate
-						// segments on each of the specified displays
+0000003c <LOOP>:
+	
+LOOP:
+	CMP R8, #0			// check if power-of-2 counter has reached zero
+  3c:	e3580000 	cmp	r8, #0
+	BEQ	END				// if so, branch to end
+  40:	0a000007 	beq	64 <END>
+	CMP R8, #8			// check if power-of-2 counter has reached 8, meaning it's on HEX0-HEX4
+  44:	e3580008 	cmp	r8, #8
+	BEQ N				// if on threshold, go to 'change values' block
+  48:	0a000008 	beq	70 <N>
 
-	POP {LR}
- 11c:	e49de004 	pop	{lr}		; (ldr lr, [sp], #4)
+0000004c <A>:
+A: 	CMP R0, R8			// check if input value >= power-of-2 counter
+  4c:	e1500008 	cmp	r0, r8
+	BLT S				// if no, the leftmost bit must be zero => skip a line
+  50:	ba000000 	blt	58 <S>
+	STRB R2, [R10, R9]	// if yes, leftmost bit is 1 => store the predetermined byte into the base memory location + the offset
+  54:	e7ca2009 	strb	r2, [r10, r9]
 
-00000120 <WRITEEND>:
-WRITEEND: BX LR			// leave
- 120:	e12fff1e 	bx	lr
- 124:	ff200030 	.word	0xff200030
- 128:	ff200020 	.word	0xff200020
+00000058 <S>:
+S:  LSR R8, #1			// decrease power-of-2 counter by one power of 2
+  58:	e1a080a8 	lsr	r8, r8, #1
+	SUB R9, R9, #1		// decrease memory offset counter by four
+  5c:	e2499001 	sub	r9, r9, #1
+	B LOOP
+  60:	eafffff5 	b	3c <LOOP>
+
+00000064 <END>:
+
+
+END:	B END
+  64:	eafffffe 	b	64 <END>
+		POP {LR}
+  68:	e49de004 	pop	{lr}		; (ldr lr, [sp], #4)
+		BX LR			// leave
+  6c:	e12fff1e 	bx	lr
+
+00000070 <N>:
+
+N:	LDR R10, =HEX_0to3	// change to other memory location
+  70:	e59fa020 	ldr	r10, [pc, #32]	; 98 <LIGHTS+0x1a>
+	MOV R9, #3			// update memory offset counter
+  74:	e3a09003 	mov	r9, #3
+	B A					// go back
+  78:	eafffff3 	b	4c <A>
+
+0000007c <ZEROS>:
+	...
+
+0000007d <ONES>:
+  7d:	7f          	.byte	0x7f
+
+0000007e <LIGHTS>:
+  7e:	061f      	.short	0x061f
+  80:	6d664f5b 	.word	0x6d664f5b
+  84:	673f077d 	.word	0x673f077d
+  88:	063c7c77 	.word	0x063c7c77
+  8c:	0000787c 	.word	0x0000787c
+  90:	0000007e 	.word	0x0000007e
+  94:	ff200030 	.word	0xff200030
+  98:	ff200020 	.word	0xff200020
