@@ -20,7 +20,14 @@ read_PB_data_ASM:		// return a binary string, where the final 4 bits hold the st
 PB_data_is_pressed_ASM:	// check if the indicated buttons are pressed. If yes, return 1. Otherwise, return 0.
 	PUSH {R1}
 	PUSH {LR}
-	POP {LR}
+	LDR R1, =PUSH_data	// load the memory address where the value is stored
+	LDR R1, [R1]		// get the value and put it into R1
+	CMP R0, R1			// check if the input string matches the string in memory
+	BEQ	O
+	MOV R0, #0			// if no, return false
+	B E
+O:	MOV R0, #1			// if yes, return true
+E:	POP {LR}
 	POP {R1}
 	BX LR 				// leave
 
@@ -34,7 +41,14 @@ read_PB_edgecap_ASM:	// return a binary string, where the final 4 bits hold the 
 PB_edgecap_is_pressed_ASM:	// check if the indicated buttons are pressed. If yes, return 1. Otherwise, return 0.
 	PUSH {R1}
 	PUSH {LR}
-	POP {LR}
+	LDR R1, =PUSH_edge	// load the memory address where the value is stored
+	LDR R1, [R1]		// get the value and put it into R1
+	CMP R0, R1			// check if the input string matches the string in memory
+	BEQ	Z
+	MOV R0, #0			// if no, return false
+	B D
+Z:	MOV R0, #1			// if yes, return true
+D:	POP {LR}
 	POP {R1}
 	BX LR 				// leave
 
@@ -49,6 +63,20 @@ PB_clear_edgecap_ASM:	// write the input string into the edge capture memory loc
 	BX LR 				// leave
 
 enable_PB_INT_ASM:		// write the input string into the interrupt mask memory location
-	
+	PUSH {R1}
+	PUSH {LR}
+	LDR R1, =PUSH_mask	// load the target memory address
+	STR R0, [R1]		// store the input value (which is in R0) to the memory address in R1
+	POP {LR}
+	POP {R1}
+	BX LR 				// leave
 
-disable_PB_INT_ASM:		// write the opposite of the input string into the interrupt mask mem
+disable_PB_INT_ASM:		// write the opposite of the input string into the interrupt mask memory location
+	PUSH {R1}
+	PUSH {LR}
+	LDR R1, =PUSH_mask	// load the target memory address
+	MVN R0, R0			// invert the input string
+	STR R0, [R1]		// store the input value (which is in R0) to the memory address in R1
+	POP {LR}
+	POP {R1}
+	BX LR 				// leave
