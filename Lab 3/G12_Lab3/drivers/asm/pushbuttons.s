@@ -10,38 +10,45 @@
 		.global enable_PB_INT_ASM
 		.global disable_PB_INT_ASM
 
-read_PB_data_ASM:
+read_PB_data_ASM:		// return a binary string, where the final 4 bits hold the status of the buttons (pressed or not)
 	PUSH {LR}
 	LDR R0, =PUSH_data	// load the memory address from which we'll get the value
 	LDR R0, [R0]		// get the value and put it into R0
 	POP {LR}
 	BX LR 				// leave
 
-PB_data_is_pressed_ASM:
+PB_data_is_pressed_ASM:	// check if the indicated buttons are pressed. If yes, return 1. Otherwise, return 0.
 	PUSH {R1}
 	PUSH {LR}
-	LDR R1, =PUSH_data	// load the memory address where we'll put the value
-	STR R0, [R1]		// store value of R0 to memory address in R1
 	POP {LR}
 	POP {R1}
 	BX LR 				// leave
 
-read_PB_edgecap_ASM:
+read_PB_edgecap_ASM:	// return a binary string, where the final 4 bits hold the edgecap bits
 	PUSH {LR}
 	LDR R0, =PUSH_edge	// load the memory address from which we'll get the value
-	LDR R0, [R0]		// get the value and put it into R0
+	LDR R0, [R0]		// get the value and put it into R0 for return
 	POP {LR}
 	BX LR 				// leave
 
-PB_edgecap_is_pressed_ASM:
+PB_edgecap_is_pressed_ASM:	// check if the indicated buttons are pressed. If yes, return 1. Otherwise, return 0.
 	PUSH {R1}
 	PUSH {LR}
-	LDR R1, =PUSH_edge	// load the memory address where we'll put the value
-	STR R0, [R1]		// store value of R0 to memory address in R1
 	POP {LR}
 	POP {R1}
 	BX LR 				// leave
 
-PB_clear_edgecap_ASM:
-enable_PB_INT_ASM:
-disable_PB_INT_ASM:
+PB_clear_edgecap_ASM:	// write the input string into the edge capture memory location
+						// no alterations required, since the input value is already the appropriate binary string
+	PUSH {R1}
+	PUSH {LR}
+	LDR R1, =PUSH_edge	// load the target memory address	
+	STR R0, [R1]		// store the input value (which is in R0) to the memory address in R1
+	POP {LR}
+	POP {R1}
+	BX LR 				// leave
+
+enable_PB_INT_ASM:		// write the input string into the interrupt mask memory location
+	
+
+disable_PB_INT_ASM:		// write the opposite of the input string into the interrupt mask mem
