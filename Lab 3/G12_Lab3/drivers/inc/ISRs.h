@@ -3,7 +3,7 @@
 
 	// extern volatile int hps tim0 int flag;	// from example
 
-	extern void A9_PRIV_TIM_ISR();
+	extern void A9_PRIV_TIM_ISR();					// given
 	extern void HPS_GPIO1_ISR();
 	extern void HPS_TIM0_ISR();
 	extern void HPS_TIM1_ISR();
@@ -18,5 +18,8 @@
 	extern void FPGA_JP1_ISR();
 	extern void FPGA_JP2_ISR();
 	extern void FPGA_PS2_DUAL_ISR();
+
+	extern int hps_tim0_int_flag;					// written
+	extern int pb_int_flag;
 
 #endif

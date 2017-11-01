@@ -1,14 +1,15 @@
   	.text
 	.equ HEX_0to3, 0xFF200020
 	.equ HEX_4to5, 0xFF200030
-	//.global HEX_clear_ASM
+	// .global HEX_clear_ASM
 	//.global HEX_flood_ASM
 	//.global HEX_write_ASM
 	.global _start
 
-_start:	MOV R0, #0x00000020
-		MOV R1, #1
+_start:	MOV R0, #0x4
+		MOV R1, #12
 		B HEX_write_ASM
+
 
 HEX_clear_ASM:			// turn off everything in the requested hex displays
 	LDR R2, ZEROS		// load 00000000 into R2
@@ -50,7 +51,6 @@ A: 	CMP R0, R8			// check if input value >= power-of-2 counter
 	AND R5, R5, R7		// clear the required bits
 	ORR R5, R5, R2		// enter the required bits			// TODO NEEDS TO BE OR
 	STR R5, [R10]		// store back to memory
-	// STRB R2, [R10, R9]	// if yes, leftmost bit is 1 => store the predetermined byte into the base memory location + the offset
 
 S:  LSR R8, #1			// decrease power-of-2 counter by one power of 2
 	SUB R9, R9, #1		// decrease memory offset counter by one
@@ -60,8 +60,7 @@ S:  LSR R8, #1			// decrease power-of-2 counter by one power of 2
 	B LOOP
 
 
-END:	B END
-		POP {LR}
+END:	POP {LR}
 		POP {R0}
 		BX LR			// leave
 
@@ -76,16 +75,16 @@ CLEARING:	.word 0xFFFFFF00
 			.word 0x00FFFFFF
 ZEROS:		.word 0x00000000
 ONES:		.word 0x000000FF
-LIGHTS:		.word 0x0000001F, 0x00000006, 0x0000005B, 0x0000004F		// TODO change to 0x000000xx
-				// 00011111	00000110 01011011 01001111
+LIGHTS:		.word 0x0000003F, 0x00000006, 0x0000005B, 0x0000004F
+				// 00111111	00000110 01011011 01001111
 				//	   0        1        2        3
 			.word 0x00000066, 0x0000006D, 0x0000007D, 0x000000007
 				// 01100110	01101101 01111101 00000111
 				//	   4	    5        6        7
-			.word 0x0000003F, 0x00000067, 0x00000077, 0x0000007C
-				// 00111111	01100111 01110111 01111100
+			.word 0x0000007F, 0x00000067, 0x00000077, 0x0000007C
+				// 01111111	01100111 01110111 01111100
 				//	   8	    9        A        b
-			.word 0x0000003C, 0x0000005E, 0x00000079, 0x00000078
-				// 00111100	01011110 01111001 01111000
+			.word 0x00000039, 0x0000005E, 0x00000079, 0x00000071
+				// 00111001	01011110 01111001 01110001
 				//	   C	    d        E        F
 	.end

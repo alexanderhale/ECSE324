@@ -7,163 +7,163 @@ Disassembly of section .vectors:
 00000000 <__cs3_interrupt_vector>:
    0:	18 f0 9f e5 18 f0 9f e5 18 f0 9f e5 18 f0 9f e5     ................
   10:	18 f0 9f e5 18 f0 9f e5 18 f0 9f e5 18 f0 9f e5     ................
-  20:	b8 09 00 00 c4 09 00 00 d0 09 00 00 dc 09 00 00     ................
-  30:	e8 09 00 00 f8 0d 00 00 60 08 00 00 f4 09 00 00     ........`.......
+  20:	98 0b 00 00 a4 0b 00 00 b0 0b 00 00 bc 0b 00 00     ................
+  30:	c8 0b 00 00 30 11 00 00 40 0a 00 00 d4 0b 00 00     ....0...@.......
 
 Disassembly of section .text:
 
 00000040 <__cs3_reset_generic>:
-  40:	ea000026 	b	e0 <__cs3_start_asm_sim>
+      40:	ea000026 	b	e0 <__cs3_start_asm_sim>
 
 00000044 <__cs3_start_c>:
-  44:	e59f608c 	ldr	r6, [pc, #140]	; d8 <__cs3_start_c+0x94>
-  48:	e3560000 	cmp	r6, #0
-  4c:	e92d4080 	push	{r7, lr}
-  50:	e2466001 	sub	r6, r6, #1
-  54:	0a00001e 	beq	d4 <__cs3_start_c+0x90>
-  58:	e59f507c 	ldr	r5, [pc, #124]	; dc <__cs3_start_c+0x98>
-  5c:	e3a00000 	mov	r0, #0
-  60:	e3a01000 	mov	r1, #0
-  64:	e515200c 	ldr	r2, [r5, #-12]
-  68:	e515e010 	ldr	lr, [r5, #-16]
-  6c:	e5154008 	ldr	r4, [r5, #-8]
-  70:	e15e0002 	cmp	lr, r2
-  74:	00822004 	addeq	r2, r2, r4
-  78:	0a000009 	beq	a4 <__cs3_start_c+0x60>
-  7c:	e3540000 	cmp	r4, #0
-  80:	0a000007 	beq	a4 <__cs3_start_c+0x60>
-  84:	e1a07002 	mov	r7, r2
-  88:	e1a0c002 	mov	r12, r2
-  8c:	e8be000c 	ldm	lr!, {r2, r3}
-  90:	e8ac000c 	stmia	r12!, {r2, r3}
-  94:	e067300c 	rsb	r3, r7, r12
-  98:	e1540003 	cmp	r4, r3
-  9c:	e1a0200c 	mov	r2, r12
-  a0:	1afffff9 	bne	8c <__cs3_start_c+0x48>
-  a4:	e515e004 	ldr	lr, [r5, #-4]
-  a8:	e35e0000 	cmp	lr, #0
-  ac:	11a03002 	movne	r3, r2
-  b0:	0a000003 	beq	c4 <__cs3_start_c+0x80>
-  b4:	e8a30003 	stmia	r3!, {r0, r1}
-  b8:	e062c003 	rsb	r12, r2, r3
-  bc:	e15e000c 	cmp	lr, r12
-  c0:	1afffffb 	bne	b4 <__cs3_start_c+0x70>
-  c4:	e2466001 	sub	r6, r6, #1
-  c8:	e3760001 	cmn	r6, #1
-  cc:	e2855014 	add	r5, r5, #20
-  d0:	1affffe3 	bne	64 <__cs3_start_c+0x20>
-  d4:	eb00032e 	bl	d94 <__cs3_premain>
-  d8:	00000001 	.word	0x00000001
-  dc:	00000ee0 	.word	0x00000ee0
+      44:	e59f608c 	ldr	r6, [pc, #140]	; d8 <__cs3_start_c+0x94>
+      48:	e3560000 	cmp	r6, #0
+      4c:	e92d4080 	push	{r7, lr}
+      50:	e2466001 	sub	r6, r6, #1
+      54:	0a00001e 	beq	d4 <__cs3_start_c+0x90>
+      58:	e59f507c 	ldr	r5, [pc, #124]	; dc <__cs3_start_c+0x98>
+      5c:	e3a00000 	mov	r0, #0
+      60:	e3a01000 	mov	r1, #0
+      64:	e515200c 	ldr	r2, [r5, #-12]
+      68:	e515e010 	ldr	lr, [r5, #-16]
+      6c:	e5154008 	ldr	r4, [r5, #-8]
+      70:	e15e0002 	cmp	lr, r2
+      74:	00822004 	addeq	r2, r2, r4
+      78:	0a000009 	beq	a4 <__cs3_start_c+0x60>
+      7c:	e3540000 	cmp	r4, #0
+      80:	0a000007 	beq	a4 <__cs3_start_c+0x60>
+      84:	e1a07002 	mov	r7, r2
+      88:	e1a0c002 	mov	r12, r2
+      8c:	e8be000c 	ldm	lr!, {r2, r3}
+      90:	e8ac000c 	stmia	r12!, {r2, r3}
+      94:	e067300c 	rsb	r3, r7, r12
+      98:	e1540003 	cmp	r4, r3
+      9c:	e1a0200c 	mov	r2, r12
+      a0:	1afffff9 	bne	8c <__cs3_start_c+0x48>
+      a4:	e515e004 	ldr	lr, [r5, #-4]
+      a8:	e35e0000 	cmp	lr, #0
+      ac:	11a03002 	movne	r3, r2
+      b0:	0a000003 	beq	c4 <__cs3_start_c+0x80>
+      b4:	e8a30003 	stmia	r3!, {r0, r1}
+      b8:	e062c003 	rsb	r12, r2, r3
+      bc:	e15e000c 	cmp	lr, r12
+      c0:	1afffffb 	bne	b4 <__cs3_start_c+0x70>
+      c4:	e2466001 	sub	r6, r6, #1
+      c8:	e3760001 	cmn	r6, #1
+      cc:	e2855014 	add	r5, r5, #20
+      d0:	1affffe3 	bne	64 <__cs3_start_c+0x20>
+      d4:	eb0003fc 	bl	10cc <__cs3_premain>
+      d8:	00000001 	.word	0x00000001
+      dc:	00001220 	.word	0x00001220
 
 000000e0 <__cs3_start_asm_sim>:
-  e0:	e28f103c 	add	r1, pc, #60	; 0x3c
-  e4:	e3a00016 	mov	r0, #22
-  e8:	ef123456 	svc	0x00123456
-  ec:	e3500000 	cmp	r0, #0
-  f0:	ba000008 	blt	118 <__cs3_start_asm_sim+0x38>
-  f4:	e59f2028 	ldr	r2, [pc, #40]	; 124 <__cs3_heap_start_ptr>
-  f8:	e59fd01c 	ldr	sp, [pc, #28]	; 11c <__cs3_start_asm_sim+0x3c>
-  fc:	e5920008 	ldr	r0, [r2, #8]
- 100:	e3500000 	cmp	r0, #0
- 104:	11a0d000 	movne	sp, r0
- 108:	e59f1010 	ldr	r1, [pc, #16]	; 120 <__cs3_start_asm_sim+0x40>
- 10c:	e5920004 	ldr	r0, [r2, #4]
- 110:	e3500000 	cmp	r0, #0
- 114:	15810000 	strne	r0, [r1]
- 118:	eaffffc9 	b	44 <__cs3_start_c>
- 11c:	3ffffff8 	.word	0x3ffffff8
- 120:	00001318 	.word	0x00001318
+      e0:	e28f103c 	add	r1, pc, #60	; 0x3c
+      e4:	e3a00016 	mov	r0, #22
+      e8:	ef123456 	svc	0x00123456
+      ec:	e3500000 	cmp	r0, #0
+      f0:	ba000008 	blt	118 <__cs3_start_asm_sim+0x38>
+      f4:	e59f2028 	ldr	r2, [pc, #40]	; 124 <__cs3_heap_start_ptr>
+      f8:	e59fd01c 	ldr	sp, [pc, #28]	; 11c <__cs3_start_asm_sim+0x3c>
+      fc:	e5920008 	ldr	r0, [r2, #8]
+     100:	e3500000 	cmp	r0, #0
+     104:	11a0d000 	movne	sp, r0
+     108:	e59f1010 	ldr	r1, [pc, #16]	; 120 <__cs3_start_asm_sim+0x40>
+     10c:	e5920004 	ldr	r0, [r2, #4]
+     110:	e3500000 	cmp	r0, #0
+     114:	15810000 	strne	r0, [r1]
+     118:	eaffffc9 	b	44 <__cs3_start_c>
+     11c:	3ffffff8 	.word	0x3ffffff8
+     120:	00001658 	.word	0x00001658
 
 00000124 <__cs3_heap_start_ptr>:
- 124:	00001340 	.word	0x00001340
+     124:	00001680 	.word	0x00001680
 
 00000128 <_start>:
- 128:	e51fd000 	ldr	sp, [pc, #-0]	; 130 <_start+0x8>
- 12c:	eaffffc4 	b	44 <__cs3_start_c>
- 130:	3ffffff8 	.word	0x3ffffff8
+     128:	e51fd000 	ldr	sp, [pc, #-0]	; 130 <_start+0x8>
+     12c:	eaffffc4 	b	44 <__cs3_start_c>
+     130:	3ffffff8 	.word	0x3ffffff8
 
 00000134 <deregister_tm_clones>:
- 134:	e92d4008 	push	{r3, lr}
- 138:	e59f002c 	ldr	r0, [pc, #44]	; 16c <deregister_tm_clones+0x38>
- 13c:	e59f302c 	ldr	r3, [pc, #44]	; 170 <deregister_tm_clones+0x3c>
- 140:	e0603003 	rsb	r3, r0, r3
- 144:	e3530006 	cmp	r3, #6
- 148:	8a000001 	bhi	154 <deregister_tm_clones+0x20>
- 14c:	e8bd4008 	pop	{r3, lr}
- 150:	e12fff1e 	bx	lr
- 154:	e59f3018 	ldr	r3, [pc, #24]	; 174 <deregister_tm_clones+0x40>
- 158:	e3530000 	cmp	r3, #0
- 15c:	0afffffa 	beq	14c <deregister_tm_clones+0x18>
- 160:	e1a0e00f 	mov	lr, pc
- 164:	e12fff13 	bx	r3
- 168:	eafffff7 	b	14c <deregister_tm_clones+0x18>
- 16c:	00001320 	.word	0x00001320
- 170:	00001323 	.word	0x00001323
- 174:	00000000 	.word	0x00000000
+     134:	e92d4008 	push	{r3, lr}
+     138:	e59f002c 	ldr	r0, [pc, #44]	; 16c <deregister_tm_clones+0x38>
+     13c:	e59f302c 	ldr	r3, [pc, #44]	; 170 <deregister_tm_clones+0x3c>
+     140:	e0603003 	rsb	r3, r0, r3
+     144:	e3530006 	cmp	r3, #6
+     148:	8a000001 	bhi	154 <deregister_tm_clones+0x20>
+     14c:	e8bd4008 	pop	{r3, lr}
+     150:	e12fff1e 	bx	lr
+     154:	e59f3018 	ldr	r3, [pc, #24]	; 174 <deregister_tm_clones+0x40>
+     158:	e3530000 	cmp	r3, #0
+     15c:	0afffffa 	beq	14c <deregister_tm_clones+0x18>
+     160:	e1a0e00f 	mov	lr, pc
+     164:	e12fff13 	bx	r3
+     168:	eafffff7 	b	14c <deregister_tm_clones+0x18>
+     16c:	00001660 	.word	0x00001660
+     170:	00001663 	.word	0x00001663
+     174:	00000000 	.word	0x00000000
 
 00000178 <register_tm_clones>:
- 178:	e92d4008 	push	{r3, lr}
- 17c:	e59f0034 	ldr	r0, [pc, #52]	; 1b8 <register_tm_clones+0x40>
- 180:	e59f3034 	ldr	r3, [pc, #52]	; 1bc <register_tm_clones+0x44>
- 184:	e0603003 	rsb	r3, r0, r3
- 188:	e1a03143 	asr	r3, r3, #2
- 18c:	e0833fa3 	add	r3, r3, r3, lsr #31
- 190:	e1b010c3 	asrs	r1, r3, #1
- 194:	1a000001 	bne	1a0 <register_tm_clones+0x28>
- 198:	e8bd4008 	pop	{r3, lr}
- 19c:	e12fff1e 	bx	lr
- 1a0:	e59f2018 	ldr	r2, [pc, #24]	; 1c0 <register_tm_clones+0x48>
- 1a4:	e3520000 	cmp	r2, #0
- 1a8:	0afffffa 	beq	198 <register_tm_clones+0x20>
- 1ac:	e1a0e00f 	mov	lr, pc
- 1b0:	e12fff12 	bx	r2
- 1b4:	eafffff7 	b	198 <register_tm_clones+0x20>
- 1b8:	00001320 	.word	0x00001320
- 1bc:	00001320 	.word	0x00001320
- 1c0:	00000000 	.word	0x00000000
+     178:	e92d4008 	push	{r3, lr}
+     17c:	e59f0034 	ldr	r0, [pc, #52]	; 1b8 <register_tm_clones+0x40>
+     180:	e59f3034 	ldr	r3, [pc, #52]	; 1bc <register_tm_clones+0x44>
+     184:	e0603003 	rsb	r3, r0, r3
+     188:	e1a03143 	asr	r3, r3, #2
+     18c:	e0833fa3 	add	r3, r3, r3, lsr #31
+     190:	e1b010c3 	asrs	r1, r3, #1
+     194:	1a000001 	bne	1a0 <register_tm_clones+0x28>
+     198:	e8bd4008 	pop	{r3, lr}
+     19c:	e12fff1e 	bx	lr
+     1a0:	e59f2018 	ldr	r2, [pc, #24]	; 1c0 <register_tm_clones+0x48>
+     1a4:	e3520000 	cmp	r2, #0
+     1a8:	0afffffa 	beq	198 <register_tm_clones+0x20>
+     1ac:	e1a0e00f 	mov	lr, pc
+     1b0:	e12fff12 	bx	r2
+     1b4:	eafffff7 	b	198 <register_tm_clones+0x20>
+     1b8:	00001660 	.word	0x00001660
+     1bc:	00001660 	.word	0x00001660
+     1c0:	00000000 	.word	0x00000000
 
 000001c4 <__do_global_dtors_aux>:
- 1c4:	e92d4010 	push	{r4, lr}
- 1c8:	e59f402c 	ldr	r4, [pc, #44]	; 1fc <__do_global_dtors_aux+0x38>
- 1cc:	e5d43000 	ldrb	r3, [r4]
- 1d0:	e3530000 	cmp	r3, #0
- 1d4:	1a000006 	bne	1f4 <__do_global_dtors_aux+0x30>
- 1d8:	ebffffd5 	bl	134 <deregister_tm_clones>
- 1dc:	e59f301c 	ldr	r3, [pc, #28]	; 200 <__do_global_dtors_aux+0x3c>
- 1e0:	e3530000 	cmp	r3, #0
- 1e4:	159f0018 	ldrne	r0, [pc, #24]	; 204 <__do_global_dtors_aux+0x40>
- 1e8:	1320f000 	nopne	{0}
- 1ec:	e3a03001 	mov	r3, #1
- 1f0:	e5c43000 	strb	r3, [r4]
- 1f4:	e8bd4010 	pop	{r4, lr}
- 1f8:	e12fff1e 	bx	lr
- 1fc:	00001320 	.word	0x00001320
- 200:	00000000 	.word	0x00000000
- 204:	00000e84 	.word	0x00000e84
+     1c4:	e92d4010 	push	{r4, lr}
+     1c8:	e59f402c 	ldr	r4, [pc, #44]	; 1fc <__do_global_dtors_aux+0x38>
+     1cc:	e5d43000 	ldrb	r3, [r4]
+     1d0:	e3530000 	cmp	r3, #0
+     1d4:	1a000006 	bne	1f4 <__do_global_dtors_aux+0x30>
+     1d8:	ebffffd5 	bl	134 <deregister_tm_clones>
+     1dc:	e59f301c 	ldr	r3, [pc, #28]	; 200 <__do_global_dtors_aux+0x3c>
+     1e0:	e3530000 	cmp	r3, #0
+     1e4:	159f0018 	ldrne	r0, [pc, #24]	; 204 <__do_global_dtors_aux+0x40>
+     1e8:	1320f000 	nopne	{0}
+     1ec:	e3a03001 	mov	r3, #1
+     1f0:	e5c43000 	strb	r3, [r4]
+     1f4:	e8bd4010 	pop	{r4, lr}
+     1f8:	e12fff1e 	bx	lr
+     1fc:	00001660 	.word	0x00001660
+     200:	00000000 	.word	0x00000000
+     204:	000011bc 	.word	0x000011bc
 
 00000208 <frame_dummy>:
- 208:	e92d4008 	push	{r3, lr}
- 20c:	e59f3034 	ldr	r3, [pc, #52]	; 248 <frame_dummy+0x40>
- 210:	e3530000 	cmp	r3, #0
- 214:	159f0030 	ldrne	r0, [pc, #48]	; 24c <frame_dummy+0x44>
- 218:	159f1030 	ldrne	r1, [pc, #48]	; 250 <frame_dummy+0x48>
- 21c:	1320f000 	nopne	{0}
- 220:	e59f002c 	ldr	r0, [pc, #44]	; 254 <frame_dummy+0x4c>
- 224:	e5903000 	ldr	r3, [r0]
- 228:	e3530000 	cmp	r3, #0
- 22c:	0a000003 	beq	240 <frame_dummy+0x38>
- 230:	e59f3020 	ldr	r3, [pc, #32]	; 258 <frame_dummy+0x50>
- 234:	e3530000 	cmp	r3, #0
- 238:	11a0e00f 	movne	lr, pc
- 23c:	112fff13 	bxne	r3
- 240:	e8bd4008 	pop	{r3, lr}
- 244:	eaffffcb 	b	178 <register_tm_clones>
- 248:	00000000 	.word	0x00000000
- 24c:	00000e84 	.word	0x00000e84
- 250:	00001324 	.word	0x00001324
- 254:	00000ee0 	.word	0x00000ee0
- 258:	00000000 	.word	0x00000000
+     208:	e92d4008 	push	{r3, lr}
+     20c:	e59f3034 	ldr	r3, [pc, #52]	; 248 <frame_dummy+0x40>
+     210:	e3530000 	cmp	r3, #0
+     214:	159f0030 	ldrne	r0, [pc, #48]	; 24c <frame_dummy+0x44>
+     218:	159f1030 	ldrne	r1, [pc, #48]	; 250 <frame_dummy+0x48>
+     21c:	1320f000 	nopne	{0}
+     220:	e59f002c 	ldr	r0, [pc, #44]	; 254 <frame_dummy+0x4c>
+     224:	e5903000 	ldr	r3, [r0]
+     228:	e3530000 	cmp	r3, #0
+     22c:	0a000003 	beq	240 <frame_dummy+0x38>
+     230:	e59f3020 	ldr	r3, [pc, #32]	; 258 <frame_dummy+0x50>
+     234:	e3530000 	cmp	r3, #0
+     238:	11a0e00f 	movne	lr, pc
+     23c:	112fff13 	bxne	r3
+     240:	e8bd4008 	pop	{r3, lr}
+     244:	eaffffcb 	b	178 <register_tm_clones>
+     248:	00000000 	.word	0x00000000
+     24c:	000011bc 	.word	0x000011bc
+     250:	00001664 	.word	0x00001664
+     254:	00001220 	.word	0x00001220
+     258:	00000000 	.word	0x00000000
 
 0000025c <main>:
 #include "./drivers/inc/pushbuttons.h"
@@ -172,1415 +172,1826 @@ Disassembly of section .text:
 #include "./drivers/inc/ISRs.h"
 
 int main() {
- 25c:	e92d4800 	push	{r11, lr}
- 260:	e28db004 	add	r11, sp, #4
- 264:	e24dd008 	sub	sp, sp, #8
- 268:	ea000000 	b	270 <main+0x14>
+     25c:	e92d4800 	push	{r11, lr}
+     260:	e28db004 	add	r11, sp, #4
+     264:	e24dd030 	sub	sp, sp, #48	; 0x30
+		}
+	}*/
+
+
+	/*	------------	PART 3 - Interrupt-based Stopwatch  --------------- */
+	int_setup(2, (int []) {73, 199}); //Enable interupts for push buttons and hps timer 0
+     268:	e30131c0 	movw	r3, #4544	; 0x11c0
+     26c:	e3403000 	movt	r3, #0
+     270:	e24b201c 	sub	r2, r11, #28
+     274:	e8930003 	ldm	r3, {r0, r1}
+     278:	e8820003 	stm	r2, {r0, r1}
+     27c:	e24b301c 	sub	r3, r11, #28
+     280:	e3a00002 	mov	r0, #2
+     284:	e1a01003 	mov	r1, r3
+     288:	eb000260 	bl	c10 <int_setup>
+
+	enable_PB_INT_ASM(PB0 | PB1 | PB2);	//Enable interrupts for pushbuttons
+     28c:	e3a00007 	mov	r0, #7
+     290:	eb000141 	bl	79c <enable_PB_INT_ASM>
+
+	//Initialize timer parameters
+	HPS_TIM_config_t hps_tim;
+	hps_tim.tim = TIM0;
+     294:	e3a03001 	mov	r3, #1
+     298:	e54b3030 	strb	r3, [r11, #-48]	; 0xffffffd0
+	hps_tim.timeout = 1000000;
+     29c:	e3043240 	movw	r3, #16960	; 0x4240
+     2a0:	e340300f 	movt	r3, #15
+     2a4:	e50b302c 	str	r3, [r11, #-44]	; 0xffffffd4
+	hps_tim.LD_en = 1;
+     2a8:	e3a03001 	mov	r3, #1
+     2ac:	e50b3028 	str	r3, [r11, #-40]	; 0xffffffd8
+	hps_tim.INT_en = 0;
+     2b0:	e3a03000 	mov	r3, #0
+     2b4:	e50b3024 	str	r3, [r11, #-36]	; 0xffffffdc
+	hps_tim.enable = 1;
+     2b8:	e3a03001 	mov	r3, #1
+     2bc:	e50b3020 	str	r3, [r11, #-32]	; 0xffffffe0
+
+	HPS_TIM_config_ASM(&hps_tim); //Config timer
+     2c0:	e24b3030 	sub	r3, r11, #48	; 0x30
+     2c4:	e1a00003 	mov	r0, r3
+     2c8:	eb00025e 	bl	c48 <HPS_TIM_config_ASM>
+
+	// int push_buttons = 0;
+	int ms_count = 0;
+     2cc:	e3a03000 	mov	r3, #0
+     2d0:	e50b3008 	str	r3, [r11, #-8]
+	int sec_count = 0;
+     2d4:	e3a03000 	mov	r3, #0
+     2d8:	e50b300c 	str	r3, [r11, #-12]
+	int min_count = 0;
+     2dc:	e3a03000 	mov	r3, #0
+     2e0:	e50b3010 	str	r3, [r11, #-16]
+
+	int timer_start = 0; //Bit that holds whether time is running
+     2e4:	e3a03000 	mov	r3, #0
+     2e8:	e50b3014 	str	r3, [r11, #-20]	; 0xffffffec
+     2ec:	ea000000 	b	2f4 <main+0x98>
+				HEX_write_ASM(HEX0 | HEX1 | HEX2 | HEX3 | HEX4 | HEX5, 0);
 			}
-		} else if ((0x200 & read_slider_switches_ASM()) == 512) {
-			// switch 9 is flipped => clear displays
-			HEX_clear_ASM(HEX0 | HEX1 | HEX2 | HEX3 | HEX4 | HEX5);
+
+			pb_int_flag = 0;
 		}
 	}
- 26c:	e1a00000 	nop			; (mov r0, r0)
-	/*	------------	PART 1 - Basic I/O Demonstration   --------------- */
+     2f0:	e1a00000 	nop			; (mov r0, r0)
+	int min_count = 0;
 
-	// perform continuously
-	while (1) {	
-		// illuminate LED for each switch
-		write_LEDs_ASM(read_slider_switches_ASM());
- 270:	eb00005f 	bl	3f4 <read_slider_switches_ASM>
- 274:	e1a03000 	mov	r3, r0
- 278:	e1a00003 	mov	r0, r3
- 27c:	eb000067 	bl	420 <write_LEDs_ASM>
-		
-		// determine number created by SW0-SW3
-		int number = 0xF & read_slider_switches_ASM();	// only keep first four digits of binary representation
- 280:	eb00005b 	bl	3f4 <read_slider_switches_ASM>
- 284:	e1a03000 	mov	r3, r0
- 288:	e203300f 	and	r3, r3, #15
- 28c:	e50b3008 	str	r3, [r11, #-8]
-		int keys = 0xF & read_PB_data_ASM();			// only keep first four digits of binary representation	
- 290:	eb0000b0 	bl	558 <read_PB_data_ASM>
- 294:	e1a03000 	mov	r3, r0
- 298:	e203300f 	and	r3, r3, #15
- 29c:	e50b300c 	str	r3, [r11, #-12]
+	int timer_start = 0; //Bit that holds whether time is running
 
-		// illuminate the appropriate hex displays with the correct number
-		if ((keys > 0) && ((0x200 & read_slider_switches_ASM()) != 512)) {
- 2a0:	e51b300c 	ldr	r3, [r11, #-12]
- 2a4:	e3530000 	cmp	r3, #0
- 2a8:	da000048 	ble	3d0 <main+0x174>
- 2ac:	eb000050 	bl	3f4 <read_slider_switches_ASM>
- 2b0:	e1a03000 	mov	r3, r0
- 2b4:	e2033c02 	and	r3, r3, #512	; 0x200
- 2b8:	e3530000 	cmp	r3, #0
- 2bc:	1a000043 	bne	3d0 <main+0x174>
-			// if any pushbuttons are pressed, flood HEX4 and HEX5
-			HEX_flood_ASM(HEX4 | HEX5);
- 2c0:	e3a00030 	mov	r0, #48	; 0x30
- 2c4:	eb000060 	bl	44c <HEX_flood_ASM>
-			
-			// if any other pushbuttons are pressed, send the number to the appropriate HEX displays 
-			switch (keys) {
- 2c8:	e51b300c 	ldr	r3, [r11, #-12]
- 2cc:	e2433001 	sub	r3, r3, #1
- 2d0:	e353000e 	cmp	r3, #14
- 2d4:	979ff103 	ldrls	pc, [pc, r3, lsl #2]
- 2d8:	ea000044 	b	3f0 <main+0x194>
- 2dc:	00000318 	.word	0x00000318
- 2e0:	00000324 	.word	0x00000324
- 2e4:	00000330 	.word	0x00000330
- 2e8:	0000033c 	.word	0x0000033c
- 2ec:	00000348 	.word	0x00000348
- 2f0:	00000354 	.word	0x00000354
- 2f4:	00000360 	.word	0x00000360
- 2f8:	0000036c 	.word	0x0000036c
- 2fc:	00000378 	.word	0x00000378
- 300:	00000384 	.word	0x00000384
- 304:	00000390 	.word	0x00000390
- 308:	0000039c 	.word	0x0000039c
- 30c:	000003a8 	.word	0x000003a8
- 310:	000003b4 	.word	0x000003b4
- 314:	000003c0 	.word	0x000003c0
-				case 1 :
-					HEX_write_ASM(HEX0, number);
- 318:	e3a00001 	mov	r0, #1
- 31c:	e51b1008 	ldr	r1, [r11, #-8]
- 320:	eb00004b 	bl	454 <HEX_write_ASM>
-				case 2 :
-					HEX_write_ASM(HEX1, number);
- 324:	e3a00002 	mov	r0, #2
- 328:	e51b1008 	ldr	r1, [r11, #-8]
- 32c:	eb000048 	bl	454 <HEX_write_ASM>
-				case 3:
-					HEX_write_ASM(HEX0 | HEX1, number);
- 330:	e3a00003 	mov	r0, #3
- 334:	e51b1008 	ldr	r1, [r11, #-8]
- 338:	eb000045 	bl	454 <HEX_write_ASM>
-				case 4:
-					HEX_write_ASM(HEX2, number);
- 33c:	e3a00004 	mov	r0, #4
- 340:	e51b1008 	ldr	r1, [r11, #-8]
- 344:	eb000042 	bl	454 <HEX_write_ASM>
-				case 5:
-					HEX_write_ASM(HEX0 | HEX2, number);
- 348:	e3a00005 	mov	r0, #5
- 34c:	e51b1008 	ldr	r1, [r11, #-8]
- 350:	eb00003f 	bl	454 <HEX_write_ASM>
-				case 6:
-					HEX_write_ASM(HEX1 | HEX2, number);
- 354:	e3a00006 	mov	r0, #6
- 358:	e51b1008 	ldr	r1, [r11, #-8]
- 35c:	eb00003c 	bl	454 <HEX_write_ASM>
-				case 7:
-					HEX_write_ASM(HEX0 | HEX1 | HEX2, number);
- 360:	e3a00007 	mov	r0, #7
- 364:	e51b1008 	ldr	r1, [r11, #-8]
- 368:	eb000039 	bl	454 <HEX_write_ASM>
-				case 8:
-					HEX_write_ASM(HEX3, number);
- 36c:	e3a00008 	mov	r0, #8
- 370:	e51b1008 	ldr	r1, [r11, #-8]
- 374:	eb000036 	bl	454 <HEX_write_ASM>
-				case 9:
-					HEX_write_ASM(HEX0 | HEX3, number);
- 378:	e3a00009 	mov	r0, #9
- 37c:	e51b1008 	ldr	r1, [r11, #-8]
- 380:	eb000033 	bl	454 <HEX_write_ASM>
-				case 10:
-					HEX_write_ASM(HEX2 | HEX3, number);
- 384:	e3a0000c 	mov	r0, #12
- 388:	e51b1008 	ldr	r1, [r11, #-8]
- 38c:	eb000030 	bl	454 <HEX_write_ASM>
-				case 11:
-					HEX_write_ASM(HEX0 | HEX1 | HEX3, number);
- 390:	e3a0000b 	mov	r0, #11
- 394:	e51b1008 	ldr	r1, [r11, #-8]
- 398:	eb00002d 	bl	454 <HEX_write_ASM>
-				case 12:
-					HEX_write_ASM(HEX2 | HEX3, number);
- 39c:	e3a0000c 	mov	r0, #12
- 3a0:	e51b1008 	ldr	r1, [r11, #-8]
- 3a4:	eb00002a 	bl	454 <HEX_write_ASM>
-				case 13:
-					HEX_write_ASM(HEX0 | HEX2 | HEX3, number);
- 3a8:	e3a0000d 	mov	r0, #13
- 3ac:	e51b1008 	ldr	r1, [r11, #-8]
- 3b0:	eb000027 	bl	454 <HEX_write_ASM>
-				case 14:
-					HEX_write_ASM(HEX1 | HEX2 | HEX3, number);
- 3b4:	e3a0000e 	mov	r0, #14
- 3b8:	e51b1008 	ldr	r1, [r11, #-8]
- 3bc:	eb000024 	bl	454 <HEX_write_ASM>
-				case 15:
-					HEX_write_ASM(HEX0 | HEX1 | HEX2 | HEX3, number);
- 3c0:	e3a0000f 	mov	r0, #15
- 3c4:	e51b1008 	ldr	r1, [r11, #-8]
- 3c8:	eb000021 	bl	454 <HEX_write_ASM>
-		if ((keys > 0) && ((0x200 & read_slider_switches_ASM()) != 512)) {
-			// if any pushbuttons are pressed, flood HEX4 and HEX5
-			HEX_flood_ASM(HEX4 | HEX5);
-			
-			// if any other pushbuttons are pressed, send the number to the appropriate HEX displays 
-			switch (keys) {
- 3cc:	ea000007 	b	3f0 <main+0x194>
-				case 14:
-					HEX_write_ASM(HEX1 | HEX2 | HEX3, number);
-				case 15:
-					HEX_write_ASM(HEX0 | HEX1 | HEX2 | HEX3, number);
+	while(1) {
+		if (hps_tim0_int_flag) { //Check if timer interrupt occurs
+     2f4:	e30037e4 	movw	r3, #2020	; 0x7e4
+     2f8:	e3403000 	movt	r3, #0
+     2fc:	e5933000 	ldr	r3, [r3]
+     300:	e3530000 	cmp	r3, #0
+     304:	0a000070 	beq	4cc <main+0x270>
+			hps_tim0_int_flag = 0;
+     308:	e30037e4 	movw	r3, #2020	; 0x7e4
+     30c:	e3403000 	movt	r3, #0
+     310:	e3a02000 	mov	r2, #0
+     314:	e5832000 	str	r2, [r3]
+
+			if (timer_start) {
+     318:	e51b3014 	ldr	r3, [r11, #-20]	; 0xffffffec
+     31c:	e3530000 	cmp	r3, #0
+     320:	0a000069 	beq	4cc <main+0x270>
+				ms_count += 10; //Timer is for 10 milliseconds
+     324:	e51b3008 	ldr	r3, [r11, #-8]
+     328:	e283300a 	add	r3, r3, #10
+     32c:	e50b3008 	str	r3, [r11, #-8]
+
+				//Ensure ms, sec and min are within their ranges
+				if (ms_count >= 1000) {
+     330:	e51b2008 	ldr	r2, [r11, #-8]
+     334:	e30033e7 	movw	r3, #999	; 0x3e7
+     338:	e1520003 	cmp	r2, r3
+     33c:	da000013 	ble	390 <main+0x134>
+					ms_count -= 1000;
+     340:	e51b3008 	ldr	r3, [r11, #-8]
+     344:	e2433ffa 	sub	r3, r3, #1000	; 0x3e8
+     348:	e50b3008 	str	r3, [r11, #-8]
+					sec_count++;
+     34c:	e51b300c 	ldr	r3, [r11, #-12]
+     350:	e2833001 	add	r3, r3, #1
+     354:	e50b300c 	str	r3, [r11, #-12]
+				
+					if (sec_count >= 60) {
+     358:	e51b300c 	ldr	r3, [r11, #-12]
+     35c:	e353003b 	cmp	r3, #59	; 0x3b
+     360:	da00000a 	ble	390 <main+0x134>
+						sec_count -= 60;
+     364:	e51b300c 	ldr	r3, [r11, #-12]
+     368:	e243303c 	sub	r3, r3, #60	; 0x3c
+     36c:	e50b300c 	str	r3, [r11, #-12]
+						min_count++;
+     370:	e51b3010 	ldr	r3, [r11, #-16]
+     374:	e2833001 	add	r3, r3, #1
+     378:	e50b3010 	str	r3, [r11, #-16]
+
+						if (min_count >= 60) {
+     37c:	e51b3010 	ldr	r3, [r11, #-16]
+     380:	e353003b 	cmp	r3, #59	; 0x3b
+     384:	da000001 	ble	390 <main+0x134>
+							min_count = 0;
+     388:	e3a03000 	mov	r3, #0
+     38c:	e50b3010 	str	r3, [r11, #-16]
+						}
+					}
+				}
+
+				//Get corecsponding digit and convert to ASCII
+				HEX_write_ASM(HEX0, ((ms_count % 100) / 10));		// removed +48
+     390:	e51b2008 	ldr	r2, [r11, #-8]
+     394:	e308351f 	movw	r3, #34079	; 0x851f
+     398:	e34531eb 	movt	r3, #20971	; 0x51eb
+     39c:	e0c31293 	smull	r1, r3, r3, r2
+     3a0:	e1a012c3 	asr	r1, r3, #5
+     3a4:	e1a03fc2 	asr	r3, r2, #31
+     3a8:	e0633001 	rsb	r3, r3, r1
+     3ac:	e3a01064 	mov	r1, #100	; 0x64
+     3b0:	e0030391 	mul	r3, r1, r3
+     3b4:	e0633002 	rsb	r3, r3, r2
+     3b8:	e3062667 	movw	r2, #26215	; 0x6667
+     3bc:	e3462666 	movt	r2, #26214	; 0x6666
+     3c0:	e0c21392 	smull	r1, r2, r2, r3
+     3c4:	e1a02142 	asr	r2, r2, #2
+     3c8:	e1a03fc3 	asr	r3, r3, #31
+     3cc:	e0633002 	rsb	r3, r3, r2
+     3d0:	e3a00001 	mov	r0, #1
+     3d4:	e1a01003 	mov	r1, r3
+     3d8:	eb000086 	bl	5f8 <HEX_write_ASM>
+				HEX_write_ASM(HEX1, (ms_count / 100));
+     3dc:	e51b2008 	ldr	r2, [r11, #-8]
+     3e0:	e308351f 	movw	r3, #34079	; 0x851f
+     3e4:	e34531eb 	movt	r3, #20971	; 0x51eb
+     3e8:	e0c31293 	smull	r1, r3, r3, r2
+     3ec:	e1a012c3 	asr	r1, r3, #5
+     3f0:	e1a03fc2 	asr	r3, r2, #31
+     3f4:	e0633001 	rsb	r3, r3, r1
+     3f8:	e3a00002 	mov	r0, #2
+     3fc:	e1a01003 	mov	r1, r3
+     400:	eb00007c 	bl	5f8 <HEX_write_ASM>
+				HEX_write_ASM(HEX2, (sec_count % 10));
+     404:	e51b100c 	ldr	r1, [r11, #-12]
+     408:	e3063667 	movw	r3, #26215	; 0x6667
+     40c:	e3463666 	movt	r3, #26214	; 0x6666
+     410:	e0c32193 	smull	r2, r3, r3, r1
+     414:	e1a02143 	asr	r2, r3, #2
+     418:	e1a03fc1 	asr	r3, r1, #31
+     41c:	e0632002 	rsb	r2, r3, r2
+     420:	e1a03002 	mov	r3, r2
+     424:	e1a03103 	lsl	r3, r3, #2
+     428:	e0833002 	add	r3, r3, r2
+     42c:	e1a03083 	lsl	r3, r3, #1
+     430:	e0632001 	rsb	r2, r3, r1
+     434:	e3a00004 	mov	r0, #4
+     438:	e1a01002 	mov	r1, r2
+     43c:	eb00006d 	bl	5f8 <HEX_write_ASM>
+				HEX_write_ASM(HEX3, (sec_count / 10));
+     440:	e51b200c 	ldr	r2, [r11, #-12]
+     444:	e3063667 	movw	r3, #26215	; 0x6667
+     448:	e3463666 	movt	r3, #26214	; 0x6666
+     44c:	e0c31293 	smull	r1, r3, r3, r2
+     450:	e1a01143 	asr	r1, r3, #2
+     454:	e1a03fc2 	asr	r3, r2, #31
+     458:	e0633001 	rsb	r3, r3, r1
+     45c:	e3a00008 	mov	r0, #8
+     460:	e1a01003 	mov	r1, r3
+     464:	eb000063 	bl	5f8 <HEX_write_ASM>
+				HEX_write_ASM(HEX4, (min_count % 10));
+     468:	e51b1010 	ldr	r1, [r11, #-16]
+     46c:	e3063667 	movw	r3, #26215	; 0x6667
+     470:	e3463666 	movt	r3, #26214	; 0x6666
+     474:	e0c32193 	smull	r2, r3, r3, r1
+     478:	e1a02143 	asr	r2, r3, #2
+     47c:	e1a03fc1 	asr	r3, r1, #31
+     480:	e0632002 	rsb	r2, r3, r2
+     484:	e1a03002 	mov	r3, r2
+     488:	e1a03103 	lsl	r3, r3, #2
+     48c:	e0833002 	add	r3, r3, r2
+     490:	e1a03083 	lsl	r3, r3, #1
+     494:	e0632001 	rsb	r2, r3, r1
+     498:	e3a00010 	mov	r0, #16
+     49c:	e1a01002 	mov	r1, r2
+     4a0:	eb000054 	bl	5f8 <HEX_write_ASM>
+				HEX_write_ASM(HEX5, (min_count / 10));
+     4a4:	e51b2010 	ldr	r2, [r11, #-16]
+     4a8:	e3063667 	movw	r3, #26215	; 0x6667
+     4ac:	e3463666 	movt	r3, #26214	; 0x6666
+     4b0:	e0c31293 	smull	r1, r3, r3, r2
+     4b4:	e1a01143 	asr	r1, r3, #2
+     4b8:	e1a03fc2 	asr	r3, r2, #31
+     4bc:	e0633001 	rsb	r3, r3, r1
+     4c0:	e3a00020 	mov	r0, #32
+     4c4:	e1a01003 	mov	r1, r3
+     4c8:	eb00004a 	bl	5f8 <HEX_write_ASM>
 			}
-		} else if ((0x200 & read_slider_switches_ASM()) == 512) {
- 3d0:	eb000007 	bl	3f4 <read_slider_switches_ASM>
- 3d4:	e1a03000 	mov	r3, r0
- 3d8:	e2033c02 	and	r3, r3, #512	; 0x200
- 3dc:	e3530000 	cmp	r3, #0
- 3e0:	0affffa1 	beq	26c <main+0x10>
-			// switch 9 is flipped => clear displays
-			HEX_clear_ASM(HEX0 | HEX1 | HEX2 | HEX3 | HEX4 | HEX5);
- 3e4:	e3a0003f 	mov	r0, #63	; 0x3f
- 3e8:	eb000015 	bl	444 <HEX_clear_ASM>
+		}
+
+		if (pb_int_flag != 0) { //Check if pb interrupt occurs
+     4cc:	e30037e8 	movw	r3, #2024	; 0x7e8
+     4d0:	e3403000 	movt	r3, #0
+     4d4:	e5933000 	ldr	r3, [r3]
+     4d8:	e3530000 	cmp	r3, #0
+     4dc:	0affff83 	beq	2f0 <main+0x94>
+			if ((pb_int_flag & 1) && (!timer_start)) { //Start timer
+     4e0:	e30037e8 	movw	r3, #2024	; 0x7e8
+     4e4:	e3403000 	movt	r3, #0
+     4e8:	e5933000 	ldr	r3, [r3]
+     4ec:	e2033001 	and	r3, r3, #1
+     4f0:	e3530000 	cmp	r3, #0
+     4f4:	0a000005 	beq	510 <main+0x2b4>
+     4f8:	e51b3014 	ldr	r3, [r11, #-20]	; 0xffffffec
+     4fc:	e3530000 	cmp	r3, #0
+     500:	1a000002 	bne	510 <main+0x2b4>
+				timer_start = 1;
+     504:	e3a03001 	mov	r3, #1
+     508:	e50b3014 	str	r3, [r11, #-20]	; 0xffffffec
+     50c:	ea00001c 	b	584 <main+0x328>
+			} else if ((pb_int_flag & 2) && (timer_start)) { //Stop timer
+     510:	e30037e8 	movw	r3, #2024	; 0x7e8
+     514:	e3403000 	movt	r3, #0
+     518:	e5933000 	ldr	r3, [r3]
+     51c:	e2033002 	and	r3, r3, #2
+     520:	e3530000 	cmp	r3, #0
+     524:	0a000005 	beq	540 <main+0x2e4>
+     528:	e51b3014 	ldr	r3, [r11, #-20]	; 0xffffffec
+     52c:	e3530000 	cmp	r3, #0
+     530:	0a000002 	beq	540 <main+0x2e4>
+				timer_start = 0;
+     534:	e3a03000 	mov	r3, #0
+     538:	e50b3014 	str	r3, [r11, #-20]	; 0xffffffec
+     53c:	ea000010 	b	584 <main+0x328>
+			} else if (pb_int_flag & 4) { //Reset timer
+     540:	e30037e8 	movw	r3, #2024	; 0x7e8
+     544:	e3403000 	movt	r3, #0
+     548:	e5933000 	ldr	r3, [r3]
+     54c:	e2033004 	and	r3, r3, #4
+     550:	e3530000 	cmp	r3, #0
+     554:	0a00000a 	beq	584 <main+0x328>
+				ms_count = 0;
+     558:	e3a03000 	mov	r3, #0
+     55c:	e50b3008 	str	r3, [r11, #-8]
+				sec_count = 0;
+     560:	e3a03000 	mov	r3, #0
+     564:	e50b300c 	str	r3, [r11, #-12]
+				min_count = 0;
+     568:	e3a03000 	mov	r3, #0
+     56c:	e50b3010 	str	r3, [r11, #-16]
+
+				timer_start = 0; //Stop timer
+     570:	e3a03000 	mov	r3, #0
+     574:	e50b3014 	str	r3, [r11, #-20]	; 0xffffffec
+				
+				//Set every number to 0
+				HEX_write_ASM(HEX0 | HEX1 | HEX2 | HEX3 | HEX4 | HEX5, 0);
+     578:	e3a0003f 	mov	r0, #63	; 0x3f
+     57c:	e3a01000 	mov	r1, #0
+     580:	eb00001c 	bl	5f8 <HEX_write_ASM>
+			}
+
+			pb_int_flag = 0;
+     584:	e30037e8 	movw	r3, #2024	; 0x7e8
+     588:	e3403000 	movt	r3, #0
+     58c:	e3a02000 	mov	r2, #0
+     590:	e5832000 	str	r2, [r3]
 		}
 	}
- 3ec:	eaffff9e 	b	26c <main+0x10>
- 3f0:	eaffff9d 	b	26c <main+0x10>
+     594:	eaffff55 	b	2f0 <main+0x94>
 
-000003f4 <read_slider_switches_ASM>:
+00000598 <read_slider_switches_ASM>:
 	.text
 	.equ SW_BASE, 0xFF200040
 	.global read_slider_switches_ASM
 	
 read_slider_switches_ASM:
 	LDR R1, =SW_BASE
- 3f4:	e59f1004 	ldr	r1, [pc, #4]	; 400 <read_slider_switches_ASM+0xc>
+     598:	e59f1004 	ldr	r1, [pc, #4]	; 5a4 <read_slider_switches_ASM+0xc>
 	LDR R0, [R1]
- 3f8:	e5910000 	ldr	r0, [r1]
+     59c:	e5910000 	ldr	r0, [r1]
 	BX LR
- 3fc:	e12fff1e 	bx	lr
+     5a0:	e12fff1e 	bx	lr
 	.text
 	.equ SW_BASE, 0xFF200040
 	.global read_slider_switches_ASM
 	
 read_slider_switches_ASM:
 	LDR R1, =SW_BASE
- 400:	ff200040 	.word	0xff200040
+     5a4:	ff200040 	.word	0xff200040
 
-00000404 <read_LEDs_ASM>:
+000005a8 <read_LEDs_ASM>:
 	.equ LED_BASE, 0xFF200000
 	.global read_LEDs_ASM
 	.global write_LEDs_ASM
 
 read_LEDs_ASM:
 	PUSH {R1}
- 404:	e52d1004 	push	{r1}		; (str r1, [sp, #-4]!)
+     5a8:	e52d1004 	push	{r1}		; (str r1, [sp, #-4]!)
 	PUSH {LR}
- 408:	e52de004 	push	{lr}		; (str lr, [sp, #-4]!)
+     5ac:	e52de004 	push	{lr}		; (str lr, [sp, #-4]!)
 	LDR R1, =SW_BASE	// load the memory address from which we'll get the value
- 40c:	e59f1028 	ldr	r1, [pc, #40]	; 43c <write_LEDs_ASM+0x1c>
+     5b0:	e59f1028 	ldr	r1, [pc, #40]	; 5e0 <write_LEDs_ASM+0x1c>
 	LDR R0, [R1]		// get the value and put it into R0
- 410:	e5910000 	ldr	r0, [r1]
+     5b4:	e5910000 	ldr	r0, [r1]
 	POP {LR}
- 414:	e49de004 	pop	{lr}		; (ldr lr, [sp], #4)
+     5b8:	e49de004 	pop	{lr}		; (ldr lr, [sp], #4)
 	POP {R1}
- 418:	e49d1004 	pop	{r1}		; (ldr r1, [sp], #4)
+     5bc:	e49d1004 	pop	{r1}		; (ldr r1, [sp], #4)
 	BX LR				// leave
- 41c:	e12fff1e 	bx	lr
+     5c0:	e12fff1e 	bx	lr
 
-00000420 <write_LEDs_ASM>:
+000005c4 <write_LEDs_ASM>:
 
 write_LEDs_ASM:
 	PUSH {R1}
- 420:	e52d1004 	push	{r1}		; (str r1, [sp, #-4]!)
+     5c4:	e52d1004 	push	{r1}		; (str r1, [sp, #-4]!)
 	PUSH {LR}
- 424:	e52de004 	push	{lr}		; (str lr, [sp, #-4]!)
+     5c8:	e52de004 	push	{lr}		; (str lr, [sp, #-4]!)
 	LDR R1, =LED_BASE	// load the memory address where we'll put the value
- 428:	e59f1010 	ldr	r1, [pc, #16]	; 440 <write_LEDs_ASM+0x20>
+     5cc:	e59f1010 	ldr	r1, [pc, #16]	; 5e4 <write_LEDs_ASM+0x20>
 	STR R0, [R1]		// store value of R0 to memory address in R1
- 42c:	e5810000 	str	r0, [r1]
+     5d0:	e5810000 	str	r0, [r1]
 	POP {LR}
- 430:	e49de004 	pop	{lr}		; (ldr lr, [sp], #4)
+     5d4:	e49de004 	pop	{lr}		; (ldr lr, [sp], #4)
 	POP {R1}
- 434:	e49d1004 	pop	{r1}		; (ldr r1, [sp], #4)
+     5d8:	e49d1004 	pop	{r1}		; (ldr r1, [sp], #4)
 	BX LR				// leave
- 438:	e12fff1e 	bx	lr
+     5dc:	e12fff1e 	bx	lr
 	.global write_LEDs_ASM
 
 read_LEDs_ASM:
 	PUSH {R1}
 	PUSH {LR}
 	LDR R1, =SW_BASE	// load the memory address from which we'll get the value
- 43c:	ff200040 	.word	0xff200040
+     5e0:	ff200040 	.word	0xff200040
 	BX LR				// leave
 
 write_LEDs_ASM:
 	PUSH {R1}
 	PUSH {LR}
 	LDR R1, =LED_BASE	// load the memory address where we'll put the value
- 440:	ff200000 	.word	0xff200000
+     5e4:	ff200000 	.word	0xff200000
 
-00000444 <HEX_clear_ASM>:
+000005e8 <HEX_clear_ASM>:
 	.global HEX_clear_ASM
 	.global HEX_flood_ASM
 	.global HEX_write_ASM
 
 HEX_clear_ASM:			// turn off everything in the requested hex displays
 	LDR R2, ZEROS		// load 00000000 into R2
- 444:	e59f20b4 	ldr	r2, [pc, #180]	; 500 <ZEROS>
+     5e8:	e59f20b0 	ldr	r2, [pc, #176]	; 6a0 <ZEROS>
 	B RUN
- 448:	ea000006 	b	468 <RUN>
+     5ec:	ea000006 	b	60c <RUN>
 
-0000044c <HEX_flood_ASM>:
+000005f0 <HEX_flood_ASM>:
 
 HEX_flood_ASM:			// light up everything in the requested hex displays
 	LDR R2, ONES		// load 11111111 into R1
- 44c:	e59f20b0 	ldr	r2, [pc, #176]	; 504 <ONES>
+     5f0:	e59f20ac 	ldr	r2, [pc, #172]	; 6a4 <ONES>
 	B RUN
- 450:	ea000004 	b	468 <RUN>
+     5f4:	ea000004 	b	60c <RUN>
 
-00000454 <HEX_write_ASM>:
+000005f8 <HEX_write_ASM>:
 
 HEX_write_ASM:			// display the corresponding hexadecimal digit in the requested hex displays
 	LDR R2, =LIGHTS		// hold address of first encoded light sequence
- 454:	e59f20ec 	ldr	r2, [pc, #236]	; 548 <LIGHTS+0x40>
+     5f8:	e59f20e8 	ldr	r2, [pc, #232]	; 6e8 <LIGHTS+0x40>
 	MOV R3, #4			// multiple for use on next line
- 458:	e3a03004 	mov	r3, #4
+     5fc:	e3a03004 	mov	r3, #4
 	MUL R3, R3, R1      // multiply input shift by four
- 45c:	e0030193 	mul	r3, r3, r1
+     600:	e0030193 	mul	r3, r3, r1
 	LDR R2, [R2, R3]	// put appropriate 1 byte encoded light sequence into R2, using base address + shift according to 4*input
- 460:	e7922003 	ldr	r2, [r2, r3]
+     604:	e7922003 	ldr	r2, [r2, r3]
 	B RUN
- 464:	eaffffff 	b	468 <RUN>
+     608:	eaffffff 	b	60c <RUN>
 
-00000468 <RUN>:
+0000060c <RUN>:
 
 RUN:
 	PUSH {R0}
- 468:	e52d0004 	push	{r0}		; (str r0, [sp, #-4]!)
+     60c:	e52d0004 	push	{r0}		; (str r0, [sp, #-4]!)
 	PUSH {LR}
- 46c:	e52de004 	push	{lr}		; (str lr, [sp, #-4]!)
+     610:	e52de004 	push	{lr}		; (str lr, [sp, #-4]!)
 	MOV R8, #32			// R8 holds the current power of 2 that is being used for comparison
- 470:	e3a08020 	mov	r8, #32
+     614:	e3a08020 	mov	r8, #32
 	MOV R9, #1			// R9 holds the memory offset counter
- 474:	e3a09001 	mov	r9, #1
+     618:	e3a09001 	mov	r9, #1
 	ROR R2, #24			// shift input value to be aligned with 2nd bit (in accordance with offset counter)
- 478:	e1a02c62 	ror	r2, r2, #24
+     61c:	e1a02c62 	ror	r2, r2, #24
 	MOV R6, #31			// load binary string 00000000 00000000 00000000 00011111, to be used to reduce the input string
- 47c:	e3a0601f 	mov	r6, #31
+     620:	e3a0601f 	mov	r6, #31
 	LDR R10, =HEX_4to5	// R10 holds the starting address of the area in memory
- 480:	e59fa0c4 	ldr	r10, [pc, #196]	; 54c <LIGHTS+0x44>
+     624:	e59fa0c0 	ldr	r10, [pc, #192]	; 6ec <LIGHTS+0x44>
 
-00000484 <LOOP>:
+00000628 <LOOP>:
 	
 LOOP:
 	CMP R8, #0			// check if power-of-2 counter has reached zero
- 484:	e3580000 	cmp	r8, #0
+     628:	e3580000 	cmp	r8, #0
 	BEQ	END				// if so, branch to end
- 488:	0a000011 	beq	4d4 <END>
+     62c:	0a000011 	beq	678 <END>
 	CMP R8, #8			// check if power-of-2 counter has reached 8, meaning it's on HEX0-HEX4
- 48c:	e3580008 	cmp	r8, #8
+     630:	e3580008 	cmp	r8, #8
 	BEQ N				// if on threshold, go to 'change values' block (N)
- 490:	0a000012 	beq	4e0 <N>
+     634:	0a000012 	beq	684 <N>
 
-00000494 <A>:
+00000638 <A>:
 A: 	CMP R0, R8			// check if input value >= power-of-2 counter
- 494:	e1500008 	cmp	r0, r8
+     638:	e1500008 	cmp	r0, r8
 	BLT S				// if no, the leftmost bit must be zero => skip to incrementing loop (S)
- 498:	ba000007 	blt	4bc <S>
+     63c:	ba000007 	blt	660 <S>
 	
 	LDR R7, =CLEARING	// get starting address of clearing word
- 49c:	e59f70ac 	ldr	r7, [pc, #172]	; 550 <LIGHTS+0x48>
+     640:	e59f70a8 	ldr	r7, [pc, #168]	; 6f0 <LIGHTS+0x48>
 	MOV R3, #4			// multiple for use on next line
- 4a0:	e3a03004 	mov	r3, #4
+     644:	e3a03004 	mov	r3, #4
 	MUL R3, R9, R3		// multiply offset by four
- 4a4:	e0030399 	mul	r3, r9, r3
+     648:	e0030399 	mul	r3, r9, r3
 	LDR R7, [R7, R3]	// get some zeros ready in the correct byte according to the current shift
- 4a8:	e7977003 	ldr	r7, [r7, r3]
+     64c:	e7977003 	ldr	r7, [r7, r3]
 	LDR R5, [R10]		// load the current value in memory into a register
- 4ac:	e59a5000 	ldr	r5, [r10]
+     650:	e59a5000 	ldr	r5, [r10]
 	AND R5, R5, R7		// clear the required bits
- 4b0:	e0055007 	and	r5, r5, r7
+     654:	e0055007 	and	r5, r5, r7
 	ORR R5, R5, R2		// enter the required bits			// TODO NEEDS TO BE OR
- 4b4:	e1855002 	orr	r5, r5, r2
+     658:	e1855002 	orr	r5, r5, r2
 	STR R5, [R10]		// store back to memory
- 4b8:	e58a5000 	str	r5, [r10]
+     65c:	e58a5000 	str	r5, [r10]
 
-000004bc <S>:
+00000660 <S>:
 
 S:  LSR R8, #1			// decrease power-of-2 counter by one power of 2
- 4bc:	e1a080a8 	lsr	r8, r8, #1
+     660:	e1a080a8 	lsr	r8, r8, #1
 	SUB R9, R9, #1		// decrease memory offset counter by one
- 4c0:	e2499001 	sub	r9, r9, #1
+     664:	e2499001 	sub	r9, r9, #1
 	ROR R2, #8			// shift input value one byte right (alignment according to offset counter)
- 4c4:	e1a02462 	ror	r2, r2, #8
+     668:	e1a02462 	ror	r2, r2, #8
 	AND R0, R6			// remove leftmost zero
- 4c8:	e0000006 	and	r0, r0, r6
+     66c:	e0000006 	and	r0, r0, r6
 	LSR R6, #1			// remove leftmost 1 from removal string
- 4cc:	e1a060a6 	lsr	r6, r6, #1
+     670:	e1a060a6 	lsr	r6, r6, #1
 	B LOOP
- 4d0:	eaffffeb 	b	484 <LOOP>
+     674:	eaffffeb 	b	628 <LOOP>
 
-000004d4 <END>:
+00000678 <END>:
 
 
 END:	POP {LR}
- 4d4:	e49de004 	pop	{lr}		; (ldr lr, [sp], #4)
+     678:	e49de004 	pop	{lr}		; (ldr lr, [sp], #4)
 		POP {R0}
- 4d8:	e49d0004 	pop	{r0}		; (ldr r0, [sp], #4)
+     67c:	e49d0004 	pop	{r0}		; (ldr r0, [sp], #4)
 		BX LR			// leave
- 4dc:	e12fff1e 	bx	lr
+     680:	e12fff1e 	bx	lr
 
-000004e0 <N>:
+00000684 <N>:
 
 N:	LDR R10, =HEX_0to3	// change to other memory location
- 4e0:	e59fa06c 	ldr	r10, [pc, #108]	; 554 <LIGHTS+0x4c>
+     684:	e59fa068 	ldr	r10, [pc, #104]	; 6f4 <LIGHTS+0x4c>
 	MOV R9, #3			// update memory offset counter
- 4e4:	e3a09003 	mov	r9, #3
-	ROR R2, #8			// shift input value one byte right (alignment according to offset counter)
- 4e8:	e1a02462 	ror	r2, r2, #8
+     688:	e3a09003 	mov	r9, #3
+	// ROR R2, #8			// shift input value one byte right (alignment according to offset counter)
 	B A					// go back
- 4ec:	eaffffe8 	b	494 <A>
+     68c:	eaffffe9 	b	638 <A>
 
-000004f0 <CLEARING>:
- 4f0:	ffffff00 	.word	0xffffff00
- 4f4:	ffff00ff 	.word	0xffff00ff
- 4f8:	ff00ffff 	.word	0xff00ffff
- 4fc:	00ffffff 	.word	0x00ffffff
+00000690 <CLEARING>:
+     690:	ffffff00 	.word	0xffffff00
+     694:	ffff00ff 	.word	0xffff00ff
+     698:	ff00ffff 	.word	0xff00ffff
+     69c:	00ffffff 	.word	0x00ffffff
 
-00000500 <ZEROS>:
- 500:	00000000 	.word	0x00000000
+000006a0 <ZEROS>:
+     6a0:	00000000 	.word	0x00000000
 
-00000504 <ONES>:
- 504:	000000ff 	.word	0x000000ff
+000006a4 <ONES>:
+     6a4:	000000ff 	.word	0x000000ff
 
-00000508 <LIGHTS>:
- 508:	0000001f 	.word	0x0000001f
- 50c:	00000006 	.word	0x00000006
- 510:	0000005b 	.word	0x0000005b
- 514:	0000004f 	.word	0x0000004f
- 518:	00000066 	.word	0x00000066
- 51c:	0000006d 	.word	0x0000006d
- 520:	0000007d 	.word	0x0000007d
- 524:	00000007 	.word	0x00000007
- 528:	0000003f 	.word	0x0000003f
- 52c:	00000067 	.word	0x00000067
- 530:	00000077 	.word	0x00000077
- 534:	0000007c 	.word	0x0000007c
- 538:	0000003c 	.word	0x0000003c
- 53c:	0000005e 	.word	0x0000005e
- 540:	00000079 	.word	0x00000079
- 544:	00000078 	.word	0x00000078
+000006a8 <LIGHTS>:
+     6a8:	0000003f 	.word	0x0000003f
+     6ac:	00000006 	.word	0x00000006
+     6b0:	0000005b 	.word	0x0000005b
+     6b4:	0000004f 	.word	0x0000004f
+     6b8:	00000066 	.word	0x00000066
+     6bc:	0000006d 	.word	0x0000006d
+     6c0:	0000007d 	.word	0x0000007d
+     6c4:	00000007 	.word	0x00000007
+     6c8:	0000007f 	.word	0x0000007f
+     6cc:	00000067 	.word	0x00000067
+     6d0:	00000077 	.word	0x00000077
+     6d4:	0000007c 	.word	0x0000007c
+     6d8:	00000039 	.word	0x00000039
+     6dc:	0000005e 	.word	0x0000005e
+     6e0:	00000079 	.word	0x00000079
+     6e4:	00000071 	.word	0x00000071
 HEX_flood_ASM:			// light up everything in the requested hex displays
 	LDR R2, ONES		// load 11111111 into R1
 	B RUN
 
 HEX_write_ASM:			// display the corresponding hexadecimal digit in the requested hex displays
 	LDR R2, =LIGHTS		// hold address of first encoded light sequence
- 548:	00000508 	.word	0x00000508
+     6e8:	000006a8 	.word	0x000006a8
 	PUSH {LR}
 	MOV R8, #32			// R8 holds the current power of 2 that is being used for comparison
 	MOV R9, #1			// R9 holds the memory offset counter
 	ROR R2, #24			// shift input value to be aligned with 2nd bit (in accordance with offset counter)
 	MOV R6, #31			// load binary string 00000000 00000000 00000000 00011111, to be used to reduce the input string
 	LDR R10, =HEX_4to5	// R10 holds the starting address of the area in memory
- 54c:	ff200030 	.word	0xff200030
+     6ec:	ff200030 	.word	0xff200030
 	CMP R8, #8			// check if power-of-2 counter has reached 8, meaning it's on HEX0-HEX4
 	BEQ N				// if on threshold, go to 'change values' block (N)
 A: 	CMP R0, R8			// check if input value >= power-of-2 counter
 	BLT S				// if no, the leftmost bit must be zero => skip to incrementing loop (S)
 	
 	LDR R7, =CLEARING	// get starting address of clearing word
- 550:	000004f0 	.word	0x000004f0
+     6f0:	00000690 	.word	0x00000690
 
 END:	POP {LR}
 		POP {R0}
 		BX LR			// leave
 
 N:	LDR R10, =HEX_0to3	// change to other memory location
- 554:	ff200020 	.word	0xff200020
+     6f4:	ff200020 	.word	0xff200020
 
-00000558 <read_PB_data_ASM>:
+000006f8 <read_PB_data_ASM>:
 		.global PB_clear_edgecap_ASM
 		.global enable_PB_INT_ASM
 		.global disable_PB_INT_ASM
 
 read_PB_data_ASM:		// return a binary string, where the final 4 bits hold the status of the buttons (pressed or not)
 	PUSH {LR}
- 558:	e52de004 	push	{lr}		; (str lr, [sp, #-4]!)
-	LDR R0, =PUSH_data	// load the memory address from which we'll get the value
- 55c:	e59f00d4 	ldr	r0, [pc, #212]	; 638 <disable_PB_INT_ASM+0x20>
-	LDR R0, [R0]		// get the value and put it into R0
- 560:	e5900000 	ldr	r0, [r0]
+     6f8:	e52de004 	push	{lr}		; (str lr, [sp, #-4]!)
+	LDR R1, =PUSH_data	// load the memory address from which we'll get the value
+     6fc:	e59f10d4 	ldr	r1, [pc, #212]	; 7d8 <disable_PB_INT_ASM+0x20>
+	LDR R0, [R1]		// get the value and put it into R0
+     700:	e5910000 	ldr	r0, [r1]
 	POP {LR}
- 564:	e49de004 	pop	{lr}		; (ldr lr, [sp], #4)
+     704:	e49de004 	pop	{lr}		; (ldr lr, [sp], #4)
 	BX LR 				// leave
- 568:	e12fff1e 	bx	lr
+     708:	e12fff1e 	bx	lr
 
-0000056c <PB_data_is_pressed_ASM>:
+0000070c <PB_data_is_pressed_ASM>:
 
 PB_data_is_pressed_ASM:	// check if the indicated buttons are pressed. If yes, return 1. Otherwise, return 0.
 	PUSH {R1}
- 56c:	e52d1004 	push	{r1}		; (str r1, [sp, #-4]!)
+     70c:	e52d1004 	push	{r1}		; (str r1, [sp, #-4]!)
 	PUSH {LR}
- 570:	e52de004 	push	{lr}		; (str lr, [sp, #-4]!)
+     710:	e52de004 	push	{lr}		; (str lr, [sp, #-4]!)
 	LDR R1, =PUSH_data	// load the memory address where the value is stored
- 574:	e59f10bc 	ldr	r1, [pc, #188]	; 638 <disable_PB_INT_ASM+0x20>
+     714:	e59f10bc 	ldr	r1, [pc, #188]	; 7d8 <disable_PB_INT_ASM+0x20>
 	LDR R1, [R1]		// get the value and put it into R1
- 578:	e5911000 	ldr	r1, [r1]
+     718:	e5911000 	ldr	r1, [r1]
 	CMP R0, R1			// check if the input string matches the string in memory
- 57c:	e1500001 	cmp	r0, r1
+     71c:	e1500001 	cmp	r0, r1
 	BEQ	O
- 580:	0a000001 	beq	58c <O>
+     720:	0a000001 	beq	72c <O>
 	MOV R0, #0			// if no, return false
- 584:	e3a00000 	mov	r0, #0
+     724:	e3a00000 	mov	r0, #0
 	B E
- 588:	ea000000 	b	590 <E>
+     728:	ea000000 	b	730 <E>
 
-0000058c <O>:
+0000072c <O>:
 O:	MOV R0, #1			// if yes, return true
- 58c:	e3a00001 	mov	r0, #1
+     72c:	e3a00001 	mov	r0, #1
 
-00000590 <E>:
+00000730 <E>:
 E:	POP {LR}
- 590:	e49de004 	pop	{lr}		; (ldr lr, [sp], #4)
+     730:	e49de004 	pop	{lr}		; (ldr lr, [sp], #4)
 	POP {R1}
- 594:	e49d1004 	pop	{r1}		; (ldr r1, [sp], #4)
+     734:	e49d1004 	pop	{r1}		; (ldr r1, [sp], #4)
 	BX LR 				// leave
- 598:	e12fff1e 	bx	lr
+     738:	e12fff1e 	bx	lr
 
-0000059c <read_PB_edgecap_ASM>:
+0000073c <read_PB_edgecap_ASM>:
 
 read_PB_edgecap_ASM:	// return a binary string, where the final 4 bits hold the edgecap bits
 	PUSH {LR}
- 59c:	e52de004 	push	{lr}		; (str lr, [sp, #-4]!)
+     73c:	e52de004 	push	{lr}		; (str lr, [sp, #-4]!)
 	LDR R0, =PUSH_edge	// load the memory address from which we'll get the value
- 5a0:	e59f0094 	ldr	r0, [pc, #148]	; 63c <disable_PB_INT_ASM+0x24>
+     740:	e59f0094 	ldr	r0, [pc, #148]	; 7dc <disable_PB_INT_ASM+0x24>
 	LDR R0, [R0]		// get the value and put it into R0 for return
- 5a4:	e5900000 	ldr	r0, [r0]
+     744:	e5900000 	ldr	r0, [r0]
 	POP {LR}
- 5a8:	e49de004 	pop	{lr}		; (ldr lr, [sp], #4)
+     748:	e49de004 	pop	{lr}		; (ldr lr, [sp], #4)
 	BX LR 				// leave
- 5ac:	e12fff1e 	bx	lr
+     74c:	e12fff1e 	bx	lr
 
-000005b0 <PB_edgecap_is_pressed_ASM>:
+00000750 <PB_edgecap_is_pressed_ASM>:
 
 PB_edgecap_is_pressed_ASM:	// check if the indicated buttons are pressed. If yes, return 1. Otherwise, return 0.
 	PUSH {R1}
- 5b0:	e52d1004 	push	{r1}		; (str r1, [sp, #-4]!)
+     750:	e52d1004 	push	{r1}		; (str r1, [sp, #-4]!)
 	PUSH {LR}
- 5b4:	e52de004 	push	{lr}		; (str lr, [sp, #-4]!)
+     754:	e52de004 	push	{lr}		; (str lr, [sp, #-4]!)
 	LDR R1, =PUSH_edge	// load the memory address where the value is stored
- 5b8:	e59f107c 	ldr	r1, [pc, #124]	; 63c <disable_PB_INT_ASM+0x24>
+     758:	e59f107c 	ldr	r1, [pc, #124]	; 7dc <disable_PB_INT_ASM+0x24>
 	LDR R1, [R1]		// get the value and put it into R1
- 5bc:	e5911000 	ldr	r1, [r1]
+     75c:	e5911000 	ldr	r1, [r1]
 	CMP R0, R1			// check if the input string matches the string in memory
- 5c0:	e1500001 	cmp	r0, r1
+     760:	e1500001 	cmp	r0, r1
 	BEQ	Z
- 5c4:	0a000001 	beq	5d0 <Z>
+     764:	0a000001 	beq	770 <Z>
 	MOV R0, #0			// if no, return false
- 5c8:	e3a00000 	mov	r0, #0
+     768:	e3a00000 	mov	r0, #0
 	B D
- 5cc:	ea000000 	b	5d4 <D>
+     76c:	ea000000 	b	774 <D>
 
-000005d0 <Z>:
+00000770 <Z>:
 Z:	MOV R0, #1			// if yes, return true
- 5d0:	e3a00001 	mov	r0, #1
+     770:	e3a00001 	mov	r0, #1
 
-000005d4 <D>:
+00000774 <D>:
 D:	POP {LR}
- 5d4:	e49de004 	pop	{lr}		; (ldr lr, [sp], #4)
+     774:	e49de004 	pop	{lr}		; (ldr lr, [sp], #4)
 	POP {R1}
- 5d8:	e49d1004 	pop	{r1}		; (ldr r1, [sp], #4)
+     778:	e49d1004 	pop	{r1}		; (ldr r1, [sp], #4)
 	BX LR 				// leave
- 5dc:	e12fff1e 	bx	lr
+     77c:	e12fff1e 	bx	lr
 
-000005e0 <PB_clear_edgecap_ASM>:
+00000780 <PB_clear_edgecap_ASM>:
 
 PB_clear_edgecap_ASM:	// write the input string into the edge capture memory location
 						// no alterations required, since the input value is already the appropriate binary string
 	PUSH {R1}
- 5e0:	e52d1004 	push	{r1}		; (str r1, [sp, #-4]!)
+     780:	e52d1004 	push	{r1}		; (str r1, [sp, #-4]!)
 	PUSH {LR}
- 5e4:	e52de004 	push	{lr}		; (str lr, [sp, #-4]!)
+     784:	e52de004 	push	{lr}		; (str lr, [sp, #-4]!)
 	LDR R1, =PUSH_edge	// load the target memory address	
- 5e8:	e59f104c 	ldr	r1, [pc, #76]	; 63c <disable_PB_INT_ASM+0x24>
+     788:	e59f104c 	ldr	r1, [pc, #76]	; 7dc <disable_PB_INT_ASM+0x24>
 	STR R0, [R1]		// store the input value (which is in R0) to the memory address in R1
- 5ec:	e5810000 	str	r0, [r1]
+     78c:	e5810000 	str	r0, [r1]
 	POP {LR}
- 5f0:	e49de004 	pop	{lr}		; (ldr lr, [sp], #4)
+     790:	e49de004 	pop	{lr}		; (ldr lr, [sp], #4)
 	POP {R1}
- 5f4:	e49d1004 	pop	{r1}		; (ldr r1, [sp], #4)
+     794:	e49d1004 	pop	{r1}		; (ldr r1, [sp], #4)
 	BX LR 				// leave
- 5f8:	e12fff1e 	bx	lr
+     798:	e12fff1e 	bx	lr
 
-000005fc <enable_PB_INT_ASM>:
+0000079c <enable_PB_INT_ASM>:
 
 enable_PB_INT_ASM:		// write the input string into the interrupt mask memory location
 	PUSH {R1}
- 5fc:	e52d1004 	push	{r1}		; (str r1, [sp, #-4]!)
+     79c:	e52d1004 	push	{r1}		; (str r1, [sp, #-4]!)
 	PUSH {LR}
- 600:	e52de004 	push	{lr}		; (str lr, [sp, #-4]!)
+     7a0:	e52de004 	push	{lr}		; (str lr, [sp, #-4]!)
 	LDR R1, =PUSH_mask	// load the target memory address
- 604:	e59f1034 	ldr	r1, [pc, #52]	; 640 <disable_PB_INT_ASM+0x28>
+     7a4:	e59f1034 	ldr	r1, [pc, #52]	; 7e0 <disable_PB_INT_ASM+0x28>
 	STR R0, [R1]		// store the input value (which is in R0) to the memory address in R1
- 608:	e5810000 	str	r0, [r1]
+     7a8:	e5810000 	str	r0, [r1]
 	POP {LR}
- 60c:	e49de004 	pop	{lr}		; (ldr lr, [sp], #4)
+     7ac:	e49de004 	pop	{lr}		; (ldr lr, [sp], #4)
 	POP {R1}
- 610:	e49d1004 	pop	{r1}		; (ldr r1, [sp], #4)
+     7b0:	e49d1004 	pop	{r1}		; (ldr r1, [sp], #4)
 	BX LR 				// leave
- 614:	e12fff1e 	bx	lr
+     7b4:	e12fff1e 	bx	lr
 
-00000618 <disable_PB_INT_ASM>:
+000007b8 <disable_PB_INT_ASM>:
 
 disable_PB_INT_ASM:		// write the opposite of the input string into the interrupt mask memory location
 	PUSH {R1}
- 618:	e52d1004 	push	{r1}		; (str r1, [sp, #-4]!)
+     7b8:	e52d1004 	push	{r1}		; (str r1, [sp, #-4]!)
 	PUSH {LR}
- 61c:	e52de004 	push	{lr}		; (str lr, [sp, #-4]!)
+     7bc:	e52de004 	push	{lr}		; (str lr, [sp, #-4]!)
 	LDR R1, =PUSH_mask	// load the target memory address
- 620:	e59f1018 	ldr	r1, [pc, #24]	; 640 <disable_PB_INT_ASM+0x28>
+     7c0:	e59f1018 	ldr	r1, [pc, #24]	; 7e0 <disable_PB_INT_ASM+0x28>
 	MVN R0, R0			// invert the input string
- 624:	e1e00000 	mvn	r0, r0
+     7c4:	e1e00000 	mvn	r0, r0
 	STR R0, [R1]		// store the input value (which is in R0) to the memory address in R1
- 628:	e5810000 	str	r0, [r1]
+     7c8:	e5810000 	str	r0, [r1]
 	POP {LR}
- 62c:	e49de004 	pop	{lr}		; (ldr lr, [sp], #4)
+     7cc:	e49de004 	pop	{lr}		; (ldr lr, [sp], #4)
 	POP {R1}
- 630:	e49d1004 	pop	{r1}		; (ldr r1, [sp], #4)
- 634:	e12fff1e 	bx	lr
+     7d0:	e49d1004 	pop	{r1}		; (ldr r1, [sp], #4)
+	BX LR 				// leave
+     7d4:	e12fff1e 	bx	lr
 		.global enable_PB_INT_ASM
 		.global disable_PB_INT_ASM
 
 read_PB_data_ASM:		// return a binary string, where the final 4 bits hold the status of the buttons (pressed or not)
 	PUSH {LR}
-	LDR R0, =PUSH_data	// load the memory address from which we'll get the value
- 638:	0ff20050 	.word	0x0ff20050
+	LDR R1, =PUSH_data	// load the memory address from which we'll get the value
+     7d8:	ff200050 	.word	0xff200050
 	POP {R1}
 	BX LR 				// leave
 
 read_PB_edgecap_ASM:	// return a binary string, where the final 4 bits hold the edgecap bits
 	PUSH {LR}
 	LDR R0, =PUSH_edge	// load the memory address from which we'll get the value
- 63c:	0ff2005c 	.word	0x0ff2005c
+     7dc:	ff20005c 	.word	0xff20005c
 	BX LR 				// leave
 
 enable_PB_INT_ASM:		// write the input string into the interrupt mask memory location
 	PUSH {R1}
 	PUSH {LR}
 	LDR R1, =PUSH_mask	// load the target memory address
- 640:	0ff20058 	.word	0x0ff20058
+     7e0:	ff200058 	.word	0xff200058
 
-00000644 <hps_tim0_int_flag>:
- 644:	00000000 	.word	0x00000000
+000007e4 <hps_tim0_int_flag>:
+     7e4:	00000000 	.word	0x00000000
 
-00000648 <A9_PRIV_TIM_ISR>:
+000007e8 <pb_int_flag>:
+     7e8:	00000000 	.word	0x00000000
 
-hps_tim0_int_flag:	// from example
-	.word 0x0		// from example
+000007ec <A9_PRIV_TIM_ISR>:
+
+pb_int_flag:
+	.word 0x0
 
 A9_PRIV_TIM_ISR:
 	BX LR
- 648:	e12fff1e 	bx	lr
+     7ec:	e12fff1e 	bx	lr
 
-0000064c <HPS_GPIO1_ISR>:
+000007f0 <HPS_GPIO1_ISR>:
 	
 HPS_GPIO1_ISR:
 	BX LR
- 64c:	e12fff1e 	bx	lr
+     7f0:	e12fff1e 	bx	lr
 
-00000650 <HPS_TIM0_ISR>:
-	LDR R0, =hps_tim0_int_flag			// from example
-	MOV R1, #1							// from example
-	STR R1, [R0]						// from example
+000007f4 <HPS_TIM0_ISR>:
+	
+HPS_TIM0_ISR:
+	PUSH {R14}					//Push LR to stack
+     7f4:	e52de004 	push	{lr}		; (str lr, [sp, #-4]!)
+	
+	MOV R0, #0x1
+     7f8:	e3a00001 	mov	r0, #1
+	BL HPS_TIM_clear_INT_ASM	//Clear tim0
+     7fc:	eb00014c 	bl	d34 <HPS_TIM_clear_INT_ASM>
 
-	POP {LR}							// from example*/
+	LDR R0, =hps_tim0_int_flag
+     800:	e59f0054 	ldr	r0, [pc, #84]	; 85c <FPGA_PS2_DUAL_ISR+0x4>
+	MOV R1, #1
+     804:	e3a01001 	mov	r1, #1
+	STR R1, [R0]				//Set flag to 1
+     808:	e5801000 	str	r1, [r0]
+
+	POP {R14}					//Pop LR from stack
+     80c:	e49de004 	pop	{lr}		; (ldr lr, [sp], #4)
 	BX LR
- 650:	e12fff1e 	bx	lr
+     810:	e12fff1e 	bx	lr
 
-00000654 <HPS_TIM1_ISR>:
+00000814 <HPS_TIM1_ISR>:
 	
 HPS_TIM1_ISR:
 	BX LR
- 654:	e12fff1e 	bx	lr
+     814:	e12fff1e 	bx	lr
 
-00000658 <HPS_TIM2_ISR>:
+00000818 <HPS_TIM2_ISR>:
 	
 HPS_TIM2_ISR:
 	BX LR
- 658:	e12fff1e 	bx	lr
+     818:	e12fff1e 	bx	lr
 
-0000065c <HPS_TIM3_ISR>:
+0000081c <HPS_TIM3_ISR>:
 	
 HPS_TIM3_ISR:
 	BX LR
- 65c:	e12fff1e 	bx	lr
+     81c:	e12fff1e 	bx	lr
 
-00000660 <FPGA_INTERVAL_TIM_ISR>:
+00000820 <FPGA_INTERVAL_TIM_ISR>:
 	
 FPGA_INTERVAL_TIM_ISR:
 	BX LR
- 660:	e12fff1e 	bx	lr
+     820:	e12fff1e 	bx	lr
 
-00000664 <FPGA_PB_KEYS_ISR>:
+00000824 <FPGA_PB_KEYS_ISR>:
 	
 FPGA_PB_KEYS_ISR:
-	BX LR
- 664:	e12fff1e 	bx	lr
+	PUSH {R14}					//Push LR to stack
+     824:	e52de004 	push	{lr}		; (str lr, [sp, #-4]!)
 
-00000668 <FPGA_Audio_ISR>:
+	BL read_PB_edgecap_ASM		//Get pushbutton that was pressed
+     828:	ebffffc3 	bl	73c <read_PB_edgecap_ASM>
+
+	LDR R1, =pb_int_flag
+     82c:	e59f102c 	ldr	r1, [pc, #44]	; 860 <FPGA_PS2_DUAL_ISR+0x8>
+	STR R0, [R1]				//Set flag to value of pb
+     830:	e5810000 	str	r0, [r1]
+
+	BL PB_clear_edgecap_ASM		//Clear edgecap to reset interrupt
+     834:	ebffffd1 	bl	780 <PB_clear_edgecap_ASM>
+
+	POP {R14}					//Pop LR from stack
+     838:	e49de004 	pop	{lr}		; (ldr lr, [sp], #4)
+	BX LR
+     83c:	e12fff1e 	bx	lr
+
+00000840 <FPGA_Audio_ISR>:
 	
 FPGA_Audio_ISR:
 	BX LR
- 668:	e12fff1e 	bx	lr
+     840:	e12fff1e 	bx	lr
 
-0000066c <FPGA_PS2_ISR>:
+00000844 <FPGA_PS2_ISR>:
 	
 FPGA_PS2_ISR:
 	BX LR
- 66c:	e12fff1e 	bx	lr
+     844:	e12fff1e 	bx	lr
 
-00000670 <FPGA_JTAG_ISR>:
+00000848 <FPGA_JTAG_ISR>:
 	
 FPGA_JTAG_ISR:
 	BX LR
- 670:	e12fff1e 	bx	lr
+     848:	e12fff1e 	bx	lr
 
-00000674 <FPGA_IrDA_ISR>:
+0000084c <FPGA_IrDA_ISR>:
 	
 FPGA_IrDA_ISR:
 	BX LR
- 674:	e12fff1e 	bx	lr
+     84c:	e12fff1e 	bx	lr
 
-00000678 <FPGA_JP1_ISR>:
+00000850 <FPGA_JP1_ISR>:
 	
 FPGA_JP1_ISR:
 	BX LR
- 678:	e12fff1e 	bx	lr
+     850:	e12fff1e 	bx	lr
 
-0000067c <FPGA_JP2_ISR>:
+00000854 <FPGA_JP2_ISR>:
 	
 FPGA_JP2_ISR:
 	BX LR
- 67c:	e12fff1e 	bx	lr
+     854:	e12fff1e 	bx	lr
 
-00000680 <FPGA_PS2_DUAL_ISR>:
+00000858 <FPGA_PS2_DUAL_ISR>:
 	
 FPGA_PS2_DUAL_ISR:
 	BX LR
- 680:	e12fff1e 	bx	lr
+     858:	e12fff1e 	bx	lr
+	PUSH {R14}					//Push LR to stack
+	
+	MOV R0, #0x1
+	BL HPS_TIM_clear_INT_ASM	//Clear tim0
 
-00000684 <disable_A9_interrupts>:
+	LDR R0, =hps_tim0_int_flag
+     85c:	000007e4 	.word	0x000007e4
+FPGA_PB_KEYS_ISR:
+	PUSH {R14}					//Push LR to stack
+
+	BL read_PB_edgecap_ASM		//Get pushbutton that was pressed
+
+	LDR R1, =pb_int_flag
+     860:	000007e8 	.word	0x000007e8
+
+00000864 <disable_A9_interrupts>:
 #include "../inc/int_setup.h"
 
 void disable_A9_interrupts() {
- 684:	e52db004 	push	{r11}		; (str r11, [sp, #-4]!)
- 688:	e28db000 	add	r11, sp, #0
- 68c:	e24dd00c 	sub	sp, sp, #12
+     864:	e52db004 	push	{r11}		; (str r11, [sp, #-4]!)
+     868:	e28db000 	add	r11, sp, #0
+     86c:	e24dd00c 	sub	sp, sp, #12
 	int status = 0b11010011;
- 690:	e3a030d3 	mov	r3, #211	; 0xd3
- 694:	e50b3008 	str	r3, [r11, #-8]
+     870:	e3a030d3 	mov	r3, #211	; 0xd3
+     874:	e50b3008 	str	r3, [r11, #-8]
 	asm("msr cpsr, %[ps]" : : [ps]"r"(status));
- 698:	e51b3008 	ldr	r3, [r11, #-8]
- 69c:	e129f003 	msr	CPSR_fc, r3
+     878:	e51b3008 	ldr	r3, [r11, #-8]
+     87c:	e129f003 	msr	CPSR_fc, r3
 }
- 6a0:	e28bd000 	add	sp, r11, #0
- 6a4:	e8bd0800 	ldmfd	sp!, {r11}
- 6a8:	e12fff1e 	bx	lr
+     880:	e28bd000 	add	sp, r11, #0
+     884:	e8bd0800 	ldmfd	sp!, {r11}
+     888:	e12fff1e 	bx	lr
 
-000006ac <enable_A9_interrupts>:
+0000088c <enable_A9_interrupts>:
 
 void enable_A9_interrupts() {
- 6ac:	e52db004 	push	{r11}		; (str r11, [sp, #-4]!)
- 6b0:	e28db000 	add	r11, sp, #0
- 6b4:	e24dd00c 	sub	sp, sp, #12
+     88c:	e52db004 	push	{r11}		; (str r11, [sp, #-4]!)
+     890:	e28db000 	add	r11, sp, #0
+     894:	e24dd00c 	sub	sp, sp, #12
 	int status = 0b01010011;
- 6b8:	e3a03053 	mov	r3, #83	; 0x53
- 6bc:	e50b3008 	str	r3, [r11, #-8]
+     898:	e3a03053 	mov	r3, #83	; 0x53
+     89c:	e50b3008 	str	r3, [r11, #-8]
 	asm("msr cpsr, %[ps]" : : [ps]"r"(status));
- 6c0:	e51b3008 	ldr	r3, [r11, #-8]
- 6c4:	e129f003 	msr	CPSR_fc, r3
+     8a0:	e51b3008 	ldr	r3, [r11, #-8]
+     8a4:	e129f003 	msr	CPSR_fc, r3
 }
- 6c8:	e28bd000 	add	sp, r11, #0
- 6cc:	e8bd0800 	ldmfd	sp!, {r11}
- 6d0:	e12fff1e 	bx	lr
+     8a8:	e28bd000 	add	sp, r11, #0
+     8ac:	e8bd0800 	ldmfd	sp!, {r11}
+     8b0:	e12fff1e 	bx	lr
 
-000006d4 <set_A9_IRQ_stack>:
+000008b4 <set_A9_IRQ_stack>:
 
 void set_A9_IRQ_stack() {
- 6d4:	e52db004 	push	{r11}		; (str r11, [sp, #-4]!)
- 6d8:	e28db000 	add	r11, sp, #0
- 6dc:	e24dd00c 	sub	sp, sp, #12
+     8b4:	e52db004 	push	{r11}		; (str r11, [sp, #-4]!)
+     8b8:	e28db000 	add	r11, sp, #0
+     8bc:	e24dd00c 	sub	sp, sp, #12
 	int stack, mode;
 	stack = 0xFFFFFFFF - 7;
- 6e0:	e3e03007 	mvn	r3, #7
- 6e4:	e50b3008 	str	r3, [r11, #-8]
+     8c0:	e3e03007 	mvn	r3, #7
+     8c4:	e50b3008 	str	r3, [r11, #-8]
 	mode = 0b11010010;
- 6e8:	e3a030d2 	mov	r3, #210	; 0xd2
- 6ec:	e50b300c 	str	r3, [r11, #-12]
+     8c8:	e3a030d2 	mov	r3, #210	; 0xd2
+     8cc:	e50b300c 	str	r3, [r11, #-12]
 	asm("msr cpsr, %[ps]" : : [ps] "r" (mode));
- 6f0:	e51b300c 	ldr	r3, [r11, #-12]
- 6f4:	e129f003 	msr	CPSR_fc, r3
+     8d0:	e51b300c 	ldr	r3, [r11, #-12]
+     8d4:	e129f003 	msr	CPSR_fc, r3
 	asm("mov sp, %[ps]" : : [ps] "r" (stack));
- 6f8:	e51b3008 	ldr	r3, [r11, #-8]
- 6fc:	e1a0d003 	mov	sp, r3
+     8d8:	e51b3008 	ldr	r3, [r11, #-8]
+     8dc:	e1a0d003 	mov	sp, r3
 	
 	mode = 0b11010011;
- 700:	e3a030d3 	mov	r3, #211	; 0xd3
- 704:	e50b300c 	str	r3, [r11, #-12]
+     8e0:	e3a030d3 	mov	r3, #211	; 0xd3
+     8e4:	e50b300c 	str	r3, [r11, #-12]
 	asm("msr cpsr, %[ps]" : : [ps] "r" (mode));
- 708:	e51b300c 	ldr	r3, [r11, #-12]
- 70c:	e129f003 	msr	CPSR_fc, r3
+     8e8:	e51b300c 	ldr	r3, [r11, #-12]
+     8ec:	e129f003 	msr	CPSR_fc, r3
 }
- 710:	e28bd000 	add	sp, r11, #0
- 714:	e8bd0800 	ldmfd	sp!, {r11}
- 718:	e12fff1e 	bx	lr
+     8f0:	e28bd000 	add	sp, r11, #0
+     8f4:	e8bd0800 	ldmfd	sp!, {r11}
+     8f8:	e12fff1e 	bx	lr
 
-0000071c <config_interrupt>:
+000008fc <config_interrupt>:
 
 void config_interrupt(int ID, int CPU) {
- 71c:	e52db004 	push	{r11}		; (str r11, [sp, #-4]!)
- 720:	e28db000 	add	r11, sp, #0
- 724:	e24dd01c 	sub	sp, sp, #28
- 728:	e50b0018 	str	r0, [r11, #-24]	; 0xffffffe8
- 72c:	e50b101c 	str	r1, [r11, #-28]	; 0xffffffe4
+     8fc:	e52db004 	push	{r11}		; (str r11, [sp, #-4]!)
+     900:	e28db000 	add	r11, sp, #0
+     904:	e24dd01c 	sub	sp, sp, #28
+     908:	e50b0018 	str	r0, [r11, #-24]	; 0xffffffe8
+     90c:	e50b101c 	str	r1, [r11, #-28]	; 0xffffffe4
 	int reg_offset;
 	int index;
 	int value;
 	int address;
 	
 	reg_offset = (ID>>3) & 0xFFFFFFFC;
- 730:	e51b3018 	ldr	r3, [r11, #-24]	; 0xffffffe8
- 734:	e1a031c3 	asr	r3, r3, #3
- 738:	e3c33003 	bic	r3, r3, #3
- 73c:	e50b3008 	str	r3, [r11, #-8]
+     910:	e51b3018 	ldr	r3, [r11, #-24]	; 0xffffffe8
+     914:	e1a031c3 	asr	r3, r3, #3
+     918:	e3c33003 	bic	r3, r3, #3
+     91c:	e50b3008 	str	r3, [r11, #-8]
 	index = ID & 0x1F;
- 740:	e51b3018 	ldr	r3, [r11, #-24]	; 0xffffffe8
- 744:	e203301f 	and	r3, r3, #31
- 748:	e50b300c 	str	r3, [r11, #-12]
+     920:	e51b3018 	ldr	r3, [r11, #-24]	; 0xffffffe8
+     924:	e203301f 	and	r3, r3, #31
+     928:	e50b300c 	str	r3, [r11, #-12]
 	value = 1<<index;
- 74c:	e3a02001 	mov	r2, #1
- 750:	e51b300c 	ldr	r3, [r11, #-12]
- 754:	e1a03312 	lsl	r3, r2, r3
- 758:	e50b3010 	str	r3, [r11, #-16]
+     92c:	e3a02001 	mov	r2, #1
+     930:	e51b300c 	ldr	r3, [r11, #-12]
+     934:	e1a03312 	lsl	r3, r2, r3
+     938:	e50b3010 	str	r3, [r11, #-16]
 	address = MPCORE_GIC_DIST + ICDISER + reg_offset;
- 75c:	e51b3008 	ldr	r3, [r11, #-8]
- 760:	e2433b4b 	sub	r3, r3, #76800	; 0x12c00
- 764:	e2433c03 	sub	r3, r3, #768	; 0x300
- 768:	e50b3014 	str	r3, [r11, #-20]	; 0xffffffec
+     93c:	e51b3008 	ldr	r3, [r11, #-8]
+     940:	e2433b4b 	sub	r3, r3, #76800	; 0x12c00
+     944:	e2433c03 	sub	r3, r3, #768	; 0x300
+     948:	e50b3014 	str	r3, [r11, #-20]	; 0xffffffec
 	*(int *)address |= value;
- 76c:	e51b3014 	ldr	r3, [r11, #-20]	; 0xffffffec
- 770:	e51b2014 	ldr	r2, [r11, #-20]	; 0xffffffec
- 774:	e5921000 	ldr	r1, [r2]
- 778:	e51b2010 	ldr	r2, [r11, #-16]
- 77c:	e1812002 	orr	r2, r1, r2
- 780:	e5832000 	str	r2, [r3]
+     94c:	e51b3014 	ldr	r3, [r11, #-20]	; 0xffffffec
+     950:	e51b2014 	ldr	r2, [r11, #-20]	; 0xffffffec
+     954:	e5921000 	ldr	r1, [r2]
+     958:	e51b2010 	ldr	r2, [r11, #-16]
+     95c:	e1812002 	orr	r2, r1, r2
+     960:	e5832000 	str	r2, [r3]
 	
 	reg_offset = (ID & 0xFFFFFFFC);
- 784:	e51b3018 	ldr	r3, [r11, #-24]	; 0xffffffe8
- 788:	e3c33003 	bic	r3, r3, #3
- 78c:	e50b3008 	str	r3, [r11, #-8]
+     964:	e51b3018 	ldr	r3, [r11, #-24]	; 0xffffffe8
+     968:	e3c33003 	bic	r3, r3, #3
+     96c:	e50b3008 	str	r3, [r11, #-8]
 	index = ID & 3;
- 790:	e51b3018 	ldr	r3, [r11, #-24]	; 0xffffffe8
- 794:	e2033003 	and	r3, r3, #3
- 798:	e50b300c 	str	r3, [r11, #-12]
+     970:	e51b3018 	ldr	r3, [r11, #-24]	; 0xffffffe8
+     974:	e2033003 	and	r3, r3, #3
+     978:	e50b300c 	str	r3, [r11, #-12]
 	address = MPCORE_GIC_DIST + ICDIPTR + reg_offset + index;
- 79c:	e51b2008 	ldr	r2, [r11, #-8]
- 7a0:	e51b300c 	ldr	r3, [r11, #-12]
- 7a4:	e0823003 	add	r3, r2, r3
- 7a8:	e2433b4a 	sub	r3, r3, #75776	; 0x12800
- 7ac:	e50b3014 	str	r3, [r11, #-20]	; 0xffffffec
+     97c:	e51b2008 	ldr	r2, [r11, #-8]
+     980:	e51b300c 	ldr	r3, [r11, #-12]
+     984:	e0823003 	add	r3, r2, r3
+     988:	e2433b4a 	sub	r3, r3, #75776	; 0x12800
+     98c:	e50b3014 	str	r3, [r11, #-20]	; 0xffffffec
 	*(char *)address = (char)CPU;
- 7b0:	e51b3014 	ldr	r3, [r11, #-20]	; 0xffffffec
- 7b4:	e51b201c 	ldr	r2, [r11, #-28]	; 0xffffffe4
- 7b8:	e6ef2072 	uxtb	r2, r2
- 7bc:	e5c32000 	strb	r2, [r3]
+     990:	e51b3014 	ldr	r3, [r11, #-20]	; 0xffffffec
+     994:	e51b201c 	ldr	r2, [r11, #-28]	; 0xffffffe4
+     998:	e6ef2072 	uxtb	r2, r2
+     99c:	e5c32000 	strb	r2, [r3]
 }
- 7c0:	e28bd000 	add	sp, r11, #0
- 7c4:	e8bd0800 	ldmfd	sp!, {r11}
- 7c8:	e12fff1e 	bx	lr
+     9a0:	e28bd000 	add	sp, r11, #0
+     9a4:	e8bd0800 	ldmfd	sp!, {r11}
+     9a8:	e12fff1e 	bx	lr
 
-000007cc <config_GIC>:
+000009ac <config_GIC>:
 
 void config_GIC(int len, int* IDs) {
- 7cc:	e92d4800 	push	{r11, lr}
- 7d0:	e28db004 	add	r11, sp, #4
- 7d4:	e24dd010 	sub	sp, sp, #16
- 7d8:	e50b0010 	str	r0, [r11, #-16]
- 7dc:	e50b1014 	str	r1, [r11, #-20]	; 0xffffffec
+     9ac:	e92d4800 	push	{r11, lr}
+     9b0:	e28db004 	add	r11, sp, #4
+     9b4:	e24dd010 	sub	sp, sp, #16
+     9b8:	e50b0010 	str	r0, [r11, #-16]
+     9bc:	e50b1014 	str	r1, [r11, #-20]	; 0xffffffec
 	int i;
 	for(i=0 ; i<len ; i++)
- 7e0:	e3a03000 	mov	r3, #0
- 7e4:	e50b3008 	str	r3, [r11, #-8]
- 7e8:	ea00000a 	b	818 <config_GIC+0x4c>
+     9c0:	e3a03000 	mov	r3, #0
+     9c4:	e50b3008 	str	r3, [r11, #-8]
+     9c8:	ea00000a 	b	9f8 <config_GIC+0x4c>
 		config_interrupt(IDs[i],1);
- 7ec:	e51b3008 	ldr	r3, [r11, #-8]
- 7f0:	e1a03103 	lsl	r3, r3, #2
- 7f4:	e51b2014 	ldr	r2, [r11, #-20]	; 0xffffffec
- 7f8:	e0823003 	add	r3, r2, r3
- 7fc:	e5933000 	ldr	r3, [r3]
- 800:	e1a00003 	mov	r0, r3
- 804:	e3a01001 	mov	r1, #1
- 808:	ebffffc3 	bl	71c <config_interrupt>
+     9cc:	e51b3008 	ldr	r3, [r11, #-8]
+     9d0:	e1a03103 	lsl	r3, r3, #2
+     9d4:	e51b2014 	ldr	r2, [r11, #-20]	; 0xffffffec
+     9d8:	e0823003 	add	r3, r2, r3
+     9dc:	e5933000 	ldr	r3, [r3]
+     9e0:	e1a00003 	mov	r0, r3
+     9e4:	e3a01001 	mov	r1, #1
+     9e8:	ebffffc3 	bl	8fc <config_interrupt>
 	*(char *)address = (char)CPU;
 }
 
 void config_GIC(int len, int* IDs) {
 	int i;
 	for(i=0 ; i<len ; i++)
- 80c:	e51b3008 	ldr	r3, [r11, #-8]
- 810:	e2833001 	add	r3, r3, #1
- 814:	e50b3008 	str	r3, [r11, #-8]
- 818:	e51b2008 	ldr	r2, [r11, #-8]
- 81c:	e51b3010 	ldr	r3, [r11, #-16]
- 820:	e1520003 	cmp	r2, r3
- 824:	bafffff0 	blt	7ec <config_GIC+0x20>
+     9ec:	e51b3008 	ldr	r3, [r11, #-8]
+     9f0:	e2833001 	add	r3, r3, #1
+     9f4:	e50b3008 	str	r3, [r11, #-8]
+     9f8:	e51b2008 	ldr	r2, [r11, #-8]
+     9fc:	e51b3010 	ldr	r3, [r11, #-16]
+     a00:	e1520003 	cmp	r2, r3
+     a04:	bafffff0 	blt	9cc <config_GIC+0x20>
 		config_interrupt(IDs[i],1);
 	*((int *) (MPCORE_GIC_CPUIF + ICCPMR)) = 0xFFFF;
- 828:	e30c3104 	movw	r3, #49412	; 0xc104
- 82c:	e34f3ffe 	movt	r3, #65534	; 0xfffe
- 830:	e30f2fff 	movw	r2, #65535	; 0xffff
- 834:	e5832000 	str	r2, [r3]
+     a08:	e30c3104 	movw	r3, #49412	; 0xc104
+     a0c:	e34f3ffe 	movt	r3, #65534	; 0xfffe
+     a10:	e30f2fff 	movw	r2, #65535	; 0xffff
+     a14:	e5832000 	str	r2, [r3]
 	*((int *) (MPCORE_GIC_CPUIF)) = 1;
- 838:	e3a03cc1 	mov	r3, #49408	; 0xc100
- 83c:	e34f3ffe 	movt	r3, #65534	; 0xfffe
- 840:	e3a02001 	mov	r2, #1
- 844:	e5832000 	str	r2, [r3]
+     a18:	e3a03cc1 	mov	r3, #49408	; 0xc100
+     a1c:	e34f3ffe 	movt	r3, #65534	; 0xfffe
+     a20:	e3a02001 	mov	r2, #1
+     a24:	e5832000 	str	r2, [r3]
 	*((int *) (MPCORE_GIC_DIST)) = 1;
- 848:	e3a03a0d 	mov	r3, #53248	; 0xd000
- 84c:	e34f3ffe 	movt	r3, #65534	; 0xfffe
- 850:	e3a02001 	mov	r2, #1
- 854:	e5832000 	str	r2, [r3]
+     a28:	e3a03a0d 	mov	r3, #53248	; 0xd000
+     a2c:	e34f3ffe 	movt	r3, #65534	; 0xfffe
+     a30:	e3a02001 	mov	r2, #1
+     a34:	e5832000 	str	r2, [r3]
 }
- 858:	e24bd004 	sub	sp, r11, #4
- 85c:	e8bd8800 	pop	{r11, pc}
+     a38:	e24bd004 	sub	sp, r11, #4
+     a3c:	e8bd8800 	pop	{r11, pc}
 
-00000860 <__cs3_isr_irq>:
+00000a40 <__cs3_isr_irq>:
 
 void __attribute__ ((interrupt)) __cs3_isr_irq() {
- 860:	e24ee004 	sub	lr, lr, #4
- 864:	e92d580f 	push	{r0, r1, r2, r3, r11, r12, lr}
- 868:	e28db018 	add	r11, sp, #24
- 86c:	e24dd00c 	sub	sp, sp, #12
+     a40:	e24ee004 	sub	lr, lr, #4
+     a44:	e92d580f 	push	{r0, r1, r2, r3, r11, r12, lr}
+     a48:	e28db018 	add	r11, sp, #24
+     a4c:	e24dd00c 	sub	sp, sp, #12
 	int interrupt_ID = *((int *) (MPCORE_GIC_CPUIF + ICCIAR));
- 870:	e30c310c 	movw	r3, #49420	; 0xc10c
- 874:	e34f3ffe 	movt	r3, #65534	; 0xfffe
- 878:	e5933000 	ldr	r3, [r3]
- 87c:	e50b3020 	str	r3, [r11, #-32]	; 0xffffffe0
+     a50:	e30c310c 	movw	r3, #49420	; 0xc10c
+     a54:	e34f3ffe 	movt	r3, #65534	; 0xfffe
+     a58:	e5933000 	ldr	r3, [r3]
+     a5c:	e50b3020 	str	r3, [r11, #-32]	; 0xffffffe0
 	
 	switch(interrupt_ID) {
- 880:	e51b3020 	ldr	r3, [r11, #-32]	; 0xffffffe0
- 884:	e3530053 	cmp	r3, #83	; 0x53
- 888:	0a00003d 	beq	984 <__cs3_isr_irq+0x124>
- 88c:	e3530053 	cmp	r3, #83	; 0x53
- 890:	ca000011 	bgt	8dc <__cs3_isr_irq+0x7c>
- 894:	e353004e 	cmp	r3, #78	; 0x4e
- 898:	0a000031 	beq	964 <__cs3_isr_irq+0x104>
- 89c:	e353004e 	cmp	r3, #78	; 0x4e
- 8a0:	ca000006 	bgt	8c0 <__cs3_isr_irq+0x60>
- 8a4:	e3530048 	cmp	r3, #72	; 0x48
- 8a8:	0a000029 	beq	954 <__cs3_isr_irq+0xf4>
- 8ac:	e3530049 	cmp	r3, #73	; 0x49
- 8b0:	0a000029 	beq	95c <__cs3_isr_irq+0xfc>
- 8b4:	e353001d 	cmp	r3, #29
- 8b8:	0a000019 	beq	924 <__cs3_isr_irq+0xc4>
- 8bc:	ea000036 	b	99c <__cs3_isr_irq+0x13c>
- 8c0:	e3530050 	cmp	r3, #80	; 0x50
- 8c4:	0a00002a 	beq	974 <__cs3_isr_irq+0x114>
- 8c8:	e3530050 	cmp	r3, #80	; 0x50
- 8cc:	ba000026 	blt	96c <__cs3_isr_irq+0x10c>
- 8d0:	e3530051 	cmp	r3, #81	; 0x51
- 8d4:	0a000028 	beq	97c <__cs3_isr_irq+0x11c>
- 8d8:	ea00002f 	b	99c <__cs3_isr_irq+0x13c>
- 8dc:	e35300c7 	cmp	r3, #199	; 0xc7
- 8e0:	0a000013 	beq	934 <__cs3_isr_irq+0xd4>
- 8e4:	e35300c7 	cmp	r3, #199	; 0xc7
- 8e8:	ca000006 	bgt	908 <__cs3_isr_irq+0xa8>
- 8ec:	e3530059 	cmp	r3, #89	; 0x59
- 8f0:	0a000027 	beq	994 <__cs3_isr_irq+0x134>
- 8f4:	e35300c5 	cmp	r3, #197	; 0xc5
- 8f8:	0a00000b 	beq	92c <__cs3_isr_irq+0xcc>
- 8fc:	e3530054 	cmp	r3, #84	; 0x54
- 900:	0a000021 	beq	98c <__cs3_isr_irq+0x12c>
- 904:	ea000024 	b	99c <__cs3_isr_irq+0x13c>
- 908:	e35300c9 	cmp	r3, #201	; 0xc9
- 90c:	0a00000c 	beq	944 <__cs3_isr_irq+0xe4>
- 910:	e35300c9 	cmp	r3, #201	; 0xc9
- 914:	ba000008 	blt	93c <__cs3_isr_irq+0xdc>
- 918:	e35300ca 	cmp	r3, #202	; 0xca
- 91c:	0a00000a 	beq	94c <__cs3_isr_irq+0xec>
- 920:	ea00001d 	b	99c <__cs3_isr_irq+0x13c>
+     a60:	e51b3020 	ldr	r3, [r11, #-32]	; 0xffffffe0
+     a64:	e3530053 	cmp	r3, #83	; 0x53
+     a68:	0a00003d 	beq	b64 <__cs3_isr_irq+0x124>
+     a6c:	e3530053 	cmp	r3, #83	; 0x53
+     a70:	ca000011 	bgt	abc <__cs3_isr_irq+0x7c>
+     a74:	e353004e 	cmp	r3, #78	; 0x4e
+     a78:	0a000031 	beq	b44 <__cs3_isr_irq+0x104>
+     a7c:	e353004e 	cmp	r3, #78	; 0x4e
+     a80:	ca000006 	bgt	aa0 <__cs3_isr_irq+0x60>
+     a84:	e3530048 	cmp	r3, #72	; 0x48
+     a88:	0a000029 	beq	b34 <__cs3_isr_irq+0xf4>
+     a8c:	e3530049 	cmp	r3, #73	; 0x49
+     a90:	0a000029 	beq	b3c <__cs3_isr_irq+0xfc>
+     a94:	e353001d 	cmp	r3, #29
+     a98:	0a000019 	beq	b04 <__cs3_isr_irq+0xc4>
+     a9c:	ea000036 	b	b7c <__cs3_isr_irq+0x13c>
+     aa0:	e3530050 	cmp	r3, #80	; 0x50
+     aa4:	0a00002a 	beq	b54 <__cs3_isr_irq+0x114>
+     aa8:	e3530050 	cmp	r3, #80	; 0x50
+     aac:	ba000026 	blt	b4c <__cs3_isr_irq+0x10c>
+     ab0:	e3530051 	cmp	r3, #81	; 0x51
+     ab4:	0a000028 	beq	b5c <__cs3_isr_irq+0x11c>
+     ab8:	ea00002f 	b	b7c <__cs3_isr_irq+0x13c>
+     abc:	e35300c7 	cmp	r3, #199	; 0xc7
+     ac0:	0a000013 	beq	b14 <__cs3_isr_irq+0xd4>
+     ac4:	e35300c7 	cmp	r3, #199	; 0xc7
+     ac8:	ca000006 	bgt	ae8 <__cs3_isr_irq+0xa8>
+     acc:	e3530059 	cmp	r3, #89	; 0x59
+     ad0:	0a000027 	beq	b74 <__cs3_isr_irq+0x134>
+     ad4:	e35300c5 	cmp	r3, #197	; 0xc5
+     ad8:	0a00000b 	beq	b0c <__cs3_isr_irq+0xcc>
+     adc:	e3530054 	cmp	r3, #84	; 0x54
+     ae0:	0a000021 	beq	b6c <__cs3_isr_irq+0x12c>
+     ae4:	ea000024 	b	b7c <__cs3_isr_irq+0x13c>
+     ae8:	e35300c9 	cmp	r3, #201	; 0xc9
+     aec:	0a00000c 	beq	b24 <__cs3_isr_irq+0xe4>
+     af0:	e35300c9 	cmp	r3, #201	; 0xc9
+     af4:	ba000008 	blt	b1c <__cs3_isr_irq+0xdc>
+     af8:	e35300ca 	cmp	r3, #202	; 0xca
+     afc:	0a00000a 	beq	b2c <__cs3_isr_irq+0xec>
+     b00:	ea00001d 	b	b7c <__cs3_isr_irq+0x13c>
 		
 		case 29:  A9_PRIV_TIM_ISR(); break;
- 924:	ebffff47 	bl	648 <A9_PRIV_TIM_ISR>
- 928:	ea00001c 	b	9a0 <__cs3_isr_irq+0x140>
+     b04:	ebffff38 	bl	7ec <A9_PRIV_TIM_ISR>
+     b08:	ea00001c 	b	b80 <__cs3_isr_irq+0x140>
 		case 197: HPS_GPIO1_ISR(); break;
- 92c:	ebffff46 	bl	64c <HPS_GPIO1_ISR>
- 930:	ea00001a 	b	9a0 <__cs3_isr_irq+0x140>
+     b0c:	ebffff37 	bl	7f0 <HPS_GPIO1_ISR>
+     b10:	ea00001a 	b	b80 <__cs3_isr_irq+0x140>
 		case 199: HPS_TIM0_ISR(); break;
- 934:	ebffff45 	bl	650 <HPS_TIM0_ISR>
- 938:	ea000018 	b	9a0 <__cs3_isr_irq+0x140>
+     b14:	ebffff36 	bl	7f4 <HPS_TIM0_ISR>
+     b18:	ea000018 	b	b80 <__cs3_isr_irq+0x140>
 		case 200: HPS_TIM1_ISR(); break;
- 93c:	ebffff44 	bl	654 <HPS_TIM1_ISR>
- 940:	ea000016 	b	9a0 <__cs3_isr_irq+0x140>
+     b1c:	ebffff3c 	bl	814 <HPS_TIM1_ISR>
+     b20:	ea000016 	b	b80 <__cs3_isr_irq+0x140>
 		case 201: HPS_TIM2_ISR(); break;
- 944:	ebffff43 	bl	658 <HPS_TIM2_ISR>
- 948:	ea000014 	b	9a0 <__cs3_isr_irq+0x140>
+     b24:	ebffff3b 	bl	818 <HPS_TIM2_ISR>
+     b28:	ea000014 	b	b80 <__cs3_isr_irq+0x140>
 		case 202: HPS_TIM3_ISR(); break;
- 94c:	ebffff42 	bl	65c <HPS_TIM3_ISR>
- 950:	ea000012 	b	9a0 <__cs3_isr_irq+0x140>
+     b2c:	ebffff3a 	bl	81c <HPS_TIM3_ISR>
+     b30:	ea000012 	b	b80 <__cs3_isr_irq+0x140>
 		case 72:  FPGA_INTERVAL_TIM_ISR(); break;
- 954:	ebffff41 	bl	660 <FPGA_INTERVAL_TIM_ISR>
- 958:	ea000010 	b	9a0 <__cs3_isr_irq+0x140>
+     b34:	ebffff39 	bl	820 <FPGA_INTERVAL_TIM_ISR>
+     b38:	ea000010 	b	b80 <__cs3_isr_irq+0x140>
 		case 73:  FPGA_PB_KEYS_ISR(); break;
- 95c:	ebffff40 	bl	664 <FPGA_PB_KEYS_ISR>
- 960:	ea00000e 	b	9a0 <__cs3_isr_irq+0x140>
+     b3c:	ebffff38 	bl	824 <FPGA_PB_KEYS_ISR>
+     b40:	ea00000e 	b	b80 <__cs3_isr_irq+0x140>
 		case 78:  FPGA_Audio_ISR(); break;
- 964:	ebffff3f 	bl	668 <FPGA_Audio_ISR>
- 968:	ea00000c 	b	9a0 <__cs3_isr_irq+0x140>
+     b44:	ebffff3d 	bl	840 <FPGA_Audio_ISR>
+     b48:	ea00000c 	b	b80 <__cs3_isr_irq+0x140>
 		case 79:  FPGA_PS2_ISR(); break;
- 96c:	ebffff3e 	bl	66c <FPGA_PS2_ISR>
- 970:	ea00000a 	b	9a0 <__cs3_isr_irq+0x140>
+     b4c:	ebffff3c 	bl	844 <FPGA_PS2_ISR>
+     b50:	ea00000a 	b	b80 <__cs3_isr_irq+0x140>
 		case 80:  FPGA_JTAG_ISR(); break;
- 974:	ebffff3d 	bl	670 <FPGA_JTAG_ISR>
- 978:	ea000008 	b	9a0 <__cs3_isr_irq+0x140>
+     b54:	ebffff3b 	bl	848 <FPGA_JTAG_ISR>
+     b58:	ea000008 	b	b80 <__cs3_isr_irq+0x140>
 		case 81:  FPGA_IrDA_ISR(); break;
- 97c:	ebffff3c 	bl	674 <FPGA_IrDA_ISR>
- 980:	ea000006 	b	9a0 <__cs3_isr_irq+0x140>
+     b5c:	ebffff3a 	bl	84c <FPGA_IrDA_ISR>
+     b60:	ea000006 	b	b80 <__cs3_isr_irq+0x140>
 		case 83:  FPGA_JP1_ISR(); break;
- 984:	ebffff3b 	bl	678 <FPGA_JP1_ISR>
- 988:	ea000004 	b	9a0 <__cs3_isr_irq+0x140>
+     b64:	ebffff39 	bl	850 <FPGA_JP1_ISR>
+     b68:	ea000004 	b	b80 <__cs3_isr_irq+0x140>
 		case 84:  FPGA_JP2_ISR(); break;
- 98c:	ebffff3a 	bl	67c <FPGA_JP2_ISR>
- 990:	ea000002 	b	9a0 <__cs3_isr_irq+0x140>
+     b6c:	ebffff38 	bl	854 <FPGA_JP2_ISR>
+     b70:	ea000002 	b	b80 <__cs3_isr_irq+0x140>
 		case 89:  FPGA_PS2_DUAL_ISR(); break;
- 994:	ebffff39 	bl	680 <FPGA_PS2_DUAL_ISR>
- 998:	ea000000 	b	9a0 <__cs3_isr_irq+0x140>
+     b74:	ebffff37 	bl	858 <FPGA_PS2_DUAL_ISR>
+     b78:	ea000000 	b	b80 <__cs3_isr_irq+0x140>
 	
 		default: while(1); break;
- 99c:	eafffffe 	b	99c <__cs3_isr_irq+0x13c>
+     b7c:	eafffffe 	b	b7c <__cs3_isr_irq+0x13c>
 	}
 	
 	*((int *) (MPCORE_GIC_CPUIF + ICCEOIR)) = interrupt_ID;
- 9a0:	e30c3110 	movw	r3, #49424	; 0xc110
- 9a4:	e34f3ffe 	movt	r3, #65534	; 0xfffe
- 9a8:	e51b2020 	ldr	r2, [r11, #-32]	; 0xffffffe0
- 9ac:	e5832000 	str	r2, [r3]
+     b80:	e30c3110 	movw	r3, #49424	; 0xc110
+     b84:	e34f3ffe 	movt	r3, #65534	; 0xfffe
+     b88:	e51b2020 	ldr	r2, [r11, #-32]	; 0xffffffe0
+     b8c:	e5832000 	str	r2, [r3]
 }
- 9b0:	e24bd018 	sub	sp, r11, #24
- 9b4:	e8fd980f 	ldm	sp!, {r0, r1, r2, r3, r11, r12, pc}^
+     b90:	e24bd018 	sub	sp, r11, #24
+     b94:	e8fd980f 	ldm	sp!, {r0, r1, r2, r3, r11, r12, pc}^
 
-000009b8 <__cs3_reset>:
+00000b98 <__cs3_reset>:
 
 void __attribute__ ((interrupt)) __cs3_reset (void) {
- 9b8:	e52db004 	push	{r11}		; (str r11, [sp, #-4]!)
- 9bc:	e28db000 	add	r11, sp, #0
+     b98:	e52db004 	push	{r11}		; (str r11, [sp, #-4]!)
+     b9c:	e28db000 	add	r11, sp, #0
 	while(1);
- 9c0:	eafffffe 	b	9c0 <__cs3_reset+0x8>
+     ba0:	eafffffe 	b	ba0 <__cs3_reset+0x8>
 
-000009c4 <__cs3_isr_undef>:
+00000ba4 <__cs3_isr_undef>:
 }
 
 void __attribute__ ((interrupt)) __cs3_isr_undef (void) {
- 9c4:	e52db004 	push	{r11}		; (str r11, [sp, #-4]!)
- 9c8:	e28db000 	add	r11, sp, #0
+     ba4:	e52db004 	push	{r11}		; (str r11, [sp, #-4]!)
+     ba8:	e28db000 	add	r11, sp, #0
 	while(1);
- 9cc:	eafffffe 	b	9cc <__cs3_isr_undef+0x8>
+     bac:	eafffffe 	b	bac <__cs3_isr_undef+0x8>
 
-000009d0 <__cs3_isr_swi>:
+00000bb0 <__cs3_isr_swi>:
 }
 
 void __attribute__ ((interrupt)) __cs3_isr_swi (void) {
- 9d0:	e52db004 	push	{r11}		; (str r11, [sp, #-4]!)
- 9d4:	e28db000 	add	r11, sp, #0
+     bb0:	e52db004 	push	{r11}		; (str r11, [sp, #-4]!)
+     bb4:	e28db000 	add	r11, sp, #0
 	while(1);
- 9d8:	eafffffe 	b	9d8 <__cs3_isr_swi+0x8>
+     bb8:	eafffffe 	b	bb8 <__cs3_isr_swi+0x8>
 
-000009dc <__cs3_isr_pabort>:
+00000bbc <__cs3_isr_pabort>:
 }
 
 void __attribute__ ((interrupt)) __cs3_isr_pabort (void) {
- 9dc:	e52db004 	push	{r11}		; (str r11, [sp, #-4]!)
- 9e0:	e28db000 	add	r11, sp, #0
+     bbc:	e52db004 	push	{r11}		; (str r11, [sp, #-4]!)
+     bc0:	e28db000 	add	r11, sp, #0
 	while(1);
- 9e4:	eafffffe 	b	9e4 <__cs3_isr_pabort+0x8>
+     bc4:	eafffffe 	b	bc4 <__cs3_isr_pabort+0x8>
 
-000009e8 <__cs3_isr_dabort>:
+00000bc8 <__cs3_isr_dabort>:
 }
 
 void __attribute__ ((interrupt)) __cs3_isr_dabort (void) {
- 9e8:	e52db004 	push	{r11}		; (str r11, [sp, #-4]!)
- 9ec:	e28db000 	add	r11, sp, #0
+     bc8:	e52db004 	push	{r11}		; (str r11, [sp, #-4]!)
+     bcc:	e28db000 	add	r11, sp, #0
 	while(1);
- 9f0:	eafffffe 	b	9f0 <__cs3_isr_dabort+0x8>
+     bd0:	eafffffe 	b	bd0 <__cs3_isr_dabort+0x8>
 
-000009f4 <__cs3_isr_fiq>:
+00000bd4 <__cs3_isr_fiq>:
 }
 
 void __attribute__ ((interrupt)) __cs3_isr_fiq (void) {
- 9f4:	e52db004 	push	{r11}		; (str r11, [sp, #-4]!)
- 9f8:	e28db000 	add	r11, sp, #0
+     bd4:	e52db004 	push	{r11}		; (str r11, [sp, #-4]!)
+     bd8:	e28db000 	add	r11, sp, #0
 	while(1);
- 9fc:	eafffffe 	b	9fc <__cs3_isr_fiq+0x8>
+     bdc:	eafffffe 	b	bdc <__cs3_isr_fiq+0x8>
 
-00000a00 <fix_bug>:
+00000be0 <fix_bug>:
 }
 
 void fix_bug() {
- a00:	e52db004 	push	{r11}		; (str r11, [sp, #-4]!)
- a04:	e28db000 	add	r11, sp, #0
- a08:	e24dd00c 	sub	sp, sp, #12
+     be0:	e52db004 	push	{r11}		; (str r11, [sp, #-4]!)
+     be4:	e28db000 	add	r11, sp, #0
+     be8:	e24dd00c 	sub	sp, sp, #12
 	volatile int * addr = (int *)0xFFFED198;
- a0c:	e30d3198 	movw	r3, #53656	; 0xd198
- a10:	e34f3ffe 	movt	r3, #65534	; 0xfffe
- a14:	e50b3008 	str	r3, [r11, #-8]
+     bec:	e30d3198 	movw	r3, #53656	; 0xd198
+     bf0:	e34f3ffe 	movt	r3, #65534	; 0xfffe
+     bf4:	e50b3008 	str	r3, [r11, #-8]
 	*addr = 0x000C0000;
- a18:	e51b3008 	ldr	r3, [r11, #-8]
- a1c:	e3a02703 	mov	r2, #786432	; 0xc0000
- a20:	e5832000 	str	r2, [r3]
+     bf8:	e51b3008 	ldr	r3, [r11, #-8]
+     bfc:	e3a02703 	mov	r2, #786432	; 0xc0000
+     c00:	e5832000 	str	r2, [r3]
 }
- a24:	e28bd000 	add	sp, r11, #0
- a28:	e8bd0800 	ldmfd	sp!, {r11}
- a2c:	e12fff1e 	bx	lr
+     c04:	e28bd000 	add	sp, r11, #0
+     c08:	e8bd0800 	ldmfd	sp!, {r11}
+     c0c:	e12fff1e 	bx	lr
 
-00000a30 <int_setup>:
+00000c10 <int_setup>:
 
 void int_setup(int len, int* IDs) {
- a30:	e92d4800 	push	{r11, lr}
- a34:	e28db004 	add	r11, sp, #4
- a38:	e24dd008 	sub	sp, sp, #8
- a3c:	e50b0008 	str	r0, [r11, #-8]
- a40:	e50b100c 	str	r1, [r11, #-12]
+     c10:	e92d4800 	push	{r11, lr}
+     c14:	e28db004 	add	r11, sp, #4
+     c18:	e24dd008 	sub	sp, sp, #8
+     c1c:	e50b0008 	str	r0, [r11, #-8]
+     c20:	e50b100c 	str	r1, [r11, #-12]
 	disable_A9_interrupts();
- a44:	ebffff0e 	bl	684 <disable_A9_interrupts>
+     c24:	ebffff0e 	bl	864 <disable_A9_interrupts>
 	set_A9_IRQ_stack();
- a48:	ebffff21 	bl	6d4 <set_A9_IRQ_stack>
+     c28:	ebffff21 	bl	8b4 <set_A9_IRQ_stack>
 	fix_bug();
- a4c:	ebffffeb 	bl	a00 <fix_bug>
+     c2c:	ebffffeb 	bl	be0 <fix_bug>
 	config_GIC(len, IDs);
- a50:	e51b0008 	ldr	r0, [r11, #-8]
- a54:	e51b100c 	ldr	r1, [r11, #-12]
- a58:	ebffff5b 	bl	7cc <config_GIC>
+     c30:	e51b0008 	ldr	r0, [r11, #-8]
+     c34:	e51b100c 	ldr	r1, [r11, #-12]
+     c38:	ebffff5b 	bl	9ac <config_GIC>
 	enable_A9_interrupts();
- a5c:	ebffff12 	bl	6ac <enable_A9_interrupts>
+     c3c:	ebffff12 	bl	88c <enable_A9_interrupts>
 }
- a60:	e24bd004 	sub	sp, r11, #4
- a64:	e8bd8800 	pop	{r11, pc}
+     c40:	e24bd004 	sub	sp, r11, #4
+     c44:	e8bd8800 	pop	{r11, pc}
 
-00000a68 <atexit>:
- a68:	e1a01000 	mov	r1, r0
- a6c:	e3a00000 	mov	r0, #0
- a70:	e92d4008 	push	{r3, lr}
- a74:	e1a02000 	mov	r2, r0
- a78:	e1a03000 	mov	r3, r0
- a7c:	eb00000e 	bl	abc <__register_exitproc>
- a80:	e8bd4008 	pop	{r3, lr}
- a84:	e12fff1e 	bx	lr
+00000c48 <HPS_TIM_config_ASM>:
+			.global HPS_TIM_read_INT_ASM
+			.global HPS_TIM_clear_INT_ASM
 
-00000a88 <exit>:
- a88:	e92d4008 	push	{r3, lr}
- a8c:	e3a01000 	mov	r1, #0
- a90:	e1a04000 	mov	r4, r0
- a94:	eb000045 	bl	bb0 <__call_exitprocs>
- a98:	e59f3018 	ldr	r3, [pc, #24]	; ab8 <exit+0x30>
- a9c:	e5930000 	ldr	r0, [r3]
- aa0:	e590303c 	ldr	r3, [r0, #60]	; 0x3c
- aa4:	e3530000 	cmp	r3, #0
- aa8:	11a0e00f 	movne	lr, pc
- aac:	112fff13 	bxne	r3
- ab0:	e1a00004 	mov	r0, r4
- ab4:	eb0000c9 	bl	de0 <_exit>
- ab8:	00000e88 	.word	0x00000e88
+//R0: HPS_TIM_config_t *param
+HPS_TIM_config_ASM:
+			PUSH {R1-R7}
+     c48:	e92d00fe 	push	{r1, r2, r3, r4, r5, r6, r7}
+			LDR R3, [R0]				//Load TIM into R3
+     c4c:	e5903000 	ldr	r3, [r0]
+			AND R3, R3, #0xF			//Get rid of random numbers ahead of our one-hot string
+     c50:	e203300f 	and	r3, r3, #15
+			MOV R1, #0					//Initialize counter
+     c54:	e3a01000 	mov	r1, #0
 
-00000abc <__register_exitproc>:
- abc:	e59fc0e4 	ldr	r12, [pc, #228]	; ba8 <__register_exitproc+0xec>
- ac0:	e92d41f0 	push	{r4, r5, r6, r7, r8, lr}
- ac4:	e59c4000 	ldr	r4, [r12]
- ac8:	e594c148 	ldr	r12, [r4, #328]	; 0x148
- acc:	e35c0000 	cmp	r12, #0
- ad0:	0284cf53 	addeq	r12, r4, #332	; 0x14c
- ad4:	e59c5004 	ldr	r5, [r12, #4]
- ad8:	0584c148 	streq	r12, [r4, #328]	; 0x148
- adc:	e355001f 	cmp	r5, #31
- ae0:	e24dd010 	sub	sp, sp, #16
- ae4:	e1a06000 	mov	r6, r0
- ae8:	da000015 	ble	b44 <__register_exitproc+0x88>
- aec:	e59f00b8 	ldr	r0, [pc, #184]	; bac <__register_exitproc+0xf0>
- af0:	e3500000 	cmp	r0, #0
- af4:	1a000001 	bne	b00 <__register_exitproc+0x44>
- af8:	e3e00000 	mvn	r0, #0
- afc:	ea000018 	b	b64 <__register_exitproc+0xa8>
- b00:	e3a00e19 	mov	r0, #400	; 0x190
- b04:	e58d100c 	str	r1, [sp, #12]
- b08:	e58d2008 	str	r2, [sp, #8]
- b0c:	e58d3004 	str	r3, [sp, #4]
- b10:	e320f000 	nop	{0}
- b14:	e250c000 	subs	r12, r0, #0
- b18:	e59d100c 	ldr	r1, [sp, #12]
- b1c:	e59d2008 	ldr	r2, [sp, #8]
- b20:	e59d3004 	ldr	r3, [sp, #4]
- b24:	0afffff3 	beq	af8 <__register_exitproc+0x3c>
- b28:	e5945148 	ldr	r5, [r4, #328]	; 0x148
- b2c:	e3a00000 	mov	r0, #0
- b30:	e58c0004 	str	r0, [r12, #4]
- b34:	e58c5000 	str	r5, [r12]
- b38:	e584c148 	str	r12, [r4, #328]	; 0x148
- b3c:	e58c0188 	str	r0, [r12, #392]	; 0x188
- b40:	e58c018c 	str	r0, [r12, #396]	; 0x18c
- b44:	e3560000 	cmp	r6, #0
- b48:	e59c4004 	ldr	r4, [r12, #4]
- b4c:	1a000007 	bne	b70 <__register_exitproc+0xb4>
- b50:	e2843002 	add	r3, r4, #2
- b54:	e2844001 	add	r4, r4, #1
- b58:	e78c1103 	str	r1, [r12, r3, lsl #2]
- b5c:	e58c4004 	str	r4, [r12, #4]
- b60:	e3a00000 	mov	r0, #0
- b64:	e28dd010 	add	sp, sp, #16
- b68:	e8bd41f0 	pop	{r4, r5, r6, r7, r8, lr}
- b6c:	e12fff1e 	bx	lr
- b70:	e3a00001 	mov	r0, #1
- b74:	e1a00410 	lsl	r0, r0, r4
- b78:	e08c8104 	add	r8, r12, r4, lsl #2
- b7c:	e3560002 	cmp	r6, #2
- b80:	e59c7188 	ldr	r7, [r12, #392]	; 0x188
- b84:	e5883108 	str	r3, [r8, #264]	; 0x108
- b88:	059c318c 	ldreq	r3, [r12, #396]	; 0x18c
- b8c:	e1877000 	orr	r7, r7, r0
- b90:	01830000 	orreq	r0, r3, r0
- b94:	e1a05008 	mov	r5, r8
- b98:	e5882088 	str	r2, [r8, #136]	; 0x88
- b9c:	e58c7188 	str	r7, [r12, #392]	; 0x188
- ba0:	058c018c 	streq	r0, [r12, #396]	; 0x18c
- ba4:	eaffffe9 	b	b50 <__register_exitproc+0x94>
- ba8:	00000e88 	.word	0x00000e88
- bac:	00000000 	.word	0x00000000
+00000c58 <HPS_TIM_config_ASM_LOOP>:
+			
+HPS_TIM_config_ASM_LOOP:
+			CMP R1, #4					//if counter >= 4
+     c58:	e3510004 	cmp	r1, #4
+			BGE HPS_TIM_config_ASM_DONE	//done
+     c5c:	aa00001b 	bge	cd0 <HPS_TIM_config_ASM_DONE>
+			AND R5, R3, #1
+     c60:	e2035001 	and	r5, r3, #1
+			CMP R5, #0
+     c64:	e3550000 	cmp	r5, #0
+			ASR R3, R3, #1				//Shift input by 1
+     c68:	e1a030c3 	asr	r3, r3, #1
+			ADDEQ R1, R1, #1			//Increment counter if 0
+     c6c:	02811001 	addeq	r1, r1, #1
+			BEQ HPS_TIM_config_ASM_LOOP	//Branch back to loop if 0
+     c70:	0afffff8 	beq	c58 <HPS_TIM_config_ASM_LOOP>
 
-00000bb0 <__call_exitprocs>:
- bb0:	e92d4ff0 	push	{r4, r5, r6, r7, r8, r9, r10, r11, lr}
- bb4:	e59f3168 	ldr	r3, [pc, #360]	; d24 <__call_exitprocs+0x174>
- bb8:	e5933000 	ldr	r3, [r3]
- bbc:	e24dd014 	sub	sp, sp, #20
- bc0:	e58d3004 	str	r3, [sp, #4]
- bc4:	e2833f52 	add	r3, r3, #328	; 0x148
- bc8:	e58d0008 	str	r0, [sp, #8]
- bcc:	e58d300c 	str	r3, [sp, #12]
- bd0:	e1a07001 	mov	r7, r1
- bd4:	e3a08001 	mov	r8, #1
- bd8:	e59d3004 	ldr	r3, [sp, #4]
- bdc:	e5936148 	ldr	r6, [r3, #328]	; 0x148
- be0:	e3560000 	cmp	r6, #0
- be4:	e59db00c 	ldr	r11, [sp, #12]
- be8:	0a000033 	beq	cbc <__call_exitprocs+0x10c>
- bec:	e5965004 	ldr	r5, [r6, #4]
- bf0:	e2554001 	subs	r4, r5, #1
- bf4:	5286a088 	addpl	r10, r6, #136	; 0x88
- bf8:	5285501f 	addpl	r5, r5, #31
- bfc:	508a5105 	addpl	r5, r10, r5, lsl #2
- c00:	5a000007 	bpl	c24 <__call_exitprocs+0x74>
- c04:	ea000029 	b	cb0 <__call_exitprocs+0x100>
- c08:	e5953000 	ldr	r3, [r5]
- c0c:	e1530007 	cmp	r3, r7
- c10:	0a000005 	beq	c2c <__call_exitprocs+0x7c>
- c14:	e2444001 	sub	r4, r4, #1
- c18:	e3740001 	cmn	r4, #1
- c1c:	e2455004 	sub	r5, r5, #4
- c20:	0a000022 	beq	cb0 <__call_exitprocs+0x100>
- c24:	e3570000 	cmp	r7, #0
- c28:	1afffff6 	bne	c08 <__call_exitprocs+0x58>
- c2c:	e5963004 	ldr	r3, [r6, #4]
- c30:	e06a2005 	rsb	r2, r10, r5
- c34:	e2433001 	sub	r3, r3, #1
- c38:	e0862002 	add	r2, r6, r2
- c3c:	e1530004 	cmp	r3, r4
- c40:	e5123078 	ldr	r3, [r2, #-120]	; 0xffffff88
- c44:	13a01000 	movne	r1, #0
- c48:	05864004 	streq	r4, [r6, #4]
- c4c:	15021078 	strne	r1, [r2, #-120]	; 0xffffff88
- c50:	e3530000 	cmp	r3, #0
- c54:	0affffee 	beq	c14 <__call_exitprocs+0x64>
- c58:	e1a02418 	lsl	r2, r8, r4
- c5c:	e5961188 	ldr	r1, [r6, #392]	; 0x188
- c60:	e1120001 	tst	r2, r1
- c64:	e5969004 	ldr	r9, [r6, #4]
- c68:	0a000016 	beq	cc8 <__call_exitprocs+0x118>
- c6c:	e596118c 	ldr	r1, [r6, #396]	; 0x18c
- c70:	e1120001 	tst	r2, r1
- c74:	1a000016 	bne	cd4 <__call_exitprocs+0x124>
- c78:	e59d0008 	ldr	r0, [sp, #8]
- c7c:	e5151080 	ldr	r1, [r5, #-128]	; 0xffffff80
- c80:	e1a0e00f 	mov	lr, pc
- c84:	e12fff13 	bx	r3
- c88:	e5963004 	ldr	r3, [r6, #4]
- c8c:	e1530009 	cmp	r3, r9
- c90:	1affffd0 	bne	bd8 <__call_exitprocs+0x28>
- c94:	e59b3000 	ldr	r3, [r11]
- c98:	e1530006 	cmp	r3, r6
- c9c:	1affffcd 	bne	bd8 <__call_exitprocs+0x28>
- ca0:	e2444001 	sub	r4, r4, #1
- ca4:	e3740001 	cmn	r4, #1
- ca8:	e2455004 	sub	r5, r5, #4
- cac:	1affffdc 	bne	c24 <__call_exitprocs+0x74>
- cb0:	e59f1070 	ldr	r1, [pc, #112]	; d28 <__call_exitprocs+0x178>
- cb4:	e3510000 	cmp	r1, #0
- cb8:	1a000009 	bne	ce4 <__call_exitprocs+0x134>
- cbc:	e28dd014 	add	sp, sp, #20
- cc0:	e8bd4ff0 	pop	{r4, r5, r6, r7, r8, r9, r10, r11, lr}
- cc4:	e12fff1e 	bx	lr
- cc8:	e1a0e00f 	mov	lr, pc
- ccc:	e12fff13 	bx	r3
- cd0:	eaffffec 	b	c88 <__call_exitprocs+0xd8>
- cd4:	e5150080 	ldr	r0, [r5, #-128]	; 0xffffff80
- cd8:	e1a0e00f 	mov	lr, pc
- cdc:	e12fff13 	bx	r3
- ce0:	eaffffe8 	b	c88 <__call_exitprocs+0xd8>
- ce4:	e5963004 	ldr	r3, [r6, #4]
- ce8:	e3530000 	cmp	r3, #0
- cec:	e5963000 	ldr	r3, [r6]
- cf0:	1a000008 	bne	d18 <__call_exitprocs+0x168>
- cf4:	e3530000 	cmp	r3, #0
- cf8:	0a000006 	beq	d18 <__call_exitprocs+0x168>
- cfc:	e1a00006 	mov	r0, r6
- d00:	e58b3000 	str	r3, [r11]
- d04:	e320f000 	nop	{0}
- d08:	e59b6000 	ldr	r6, [r11]
- d0c:	e3560000 	cmp	r6, #0
- d10:	1affffb5 	bne	bec <__call_exitprocs+0x3c>
- d14:	eaffffe8 	b	cbc <__call_exitprocs+0x10c>
- d18:	e1a0b006 	mov	r11, r6
- d1c:	e1a06003 	mov	r6, r3
- d20:	eafffff9 	b	d0c <__call_exitprocs+0x15c>
- d24:	00000e88 	.word	0x00000e88
- d28:	00000000 	.word	0x00000000
+			//Load timer into R2 depending on which one it is
+			CMP R1, #0
+     c74:	e3510000 	cmp	r1, #0
+			LDREQ R2, =TIM_0
+     c78:	059f2110 	ldreq	r2, [pc, #272]	; d90 <HPS_TIM_clear_INT_ASM_DONE+0x8>
+			CMP R1, #1
+     c7c:	e3510001 	cmp	r1, #1
+			LDREQ R2, =TIM_1
+     c80:	059f210c 	ldreq	r2, [pc, #268]	; d94 <HPS_TIM_clear_INT_ASM_DONE+0xc>
+			CMP R1, #2
+     c84:	e3510002 	cmp	r1, #2
+			LDREQ R2, =TIM_2
+     c88:	059f2108 	ldreq	r2, [pc, #264]	; d98 <HPS_TIM_clear_INT_ASM_DONE+0x10>
+			CMP R1, #3
+     c8c:	e3510003 	cmp	r1, #3
+			LDREQ R2, =TIM_3
+     c90:	059f2104 	ldreq	r2, [pc, #260]	; d9c <HPS_TIM_clear_INT_ASM_DONE+0x14>
+		
+			LDR R4, [R0, #0x8]			//Disable timer before doing config
+     c94:	e5904008 	ldr	r4, [r0, #8]
+			AND R4, R4, #0x6			//Disable E bit, keep other the same
+     c98:	e2044006 	and	r4, r4, #6
+			STR	R4, [R2, #0x8] 		
+     c9c:	e5824008 	str	r4, [r2, #8]
+	
+			LDR R4, [R0, #0x4]			//Load "timeout"
+     ca0:	e5904004 	ldr	r4, [r0, #4]
+			STR R4, [R2] 				//Config "Timeout"
+     ca4:	e5824000 	str	r4, [r2]
 
-00000d2c <register_fini>:
- d2c:	e92d4008 	push	{r3, lr}
- d30:	e59f3010 	ldr	r3, [pc, #16]	; d48 <register_fini+0x1c>
- d34:	e3530000 	cmp	r3, #0
- d38:	159f000c 	ldrne	r0, [pc, #12]	; d4c <register_fini+0x20>
- d3c:	1bffff49 	blne	a68 <atexit>
- d40:	e8bd4008 	pop	{r3, lr}
- d44:	e12fff1e 	bx	lr
- d48:	00000eb0 	.word	0x00000eb0
- d4c:	00000d50 	.word	0x00000d50
+			LDR R4, [R0, #0x8]			//Load "LD_en"
+     ca8:	e5904008 	ldr	r4, [r0, #8]
+			LSL R4, R4, #1				//Shift by one (M bit)
+     cac:	e1a04084 	lsl	r4, r4, #1
 
-00000d50 <__libc_fini_array>:
- d50:	e92d4038 	push	{r3, r4, r5, lr}
- d54:	e59f5030 	ldr	r5, [pc, #48]	; d8c <__libc_fini_array+0x3c>
- d58:	e59f4030 	ldr	r4, [pc, #48]	; d90 <__libc_fini_array+0x40>
- d5c:	e0654004 	rsb	r4, r5, r4
- d60:	e1b04144 	asrs	r4, r4, #2
- d64:	10855104 	addne	r5, r5, r4, lsl #2
- d68:	0a000004 	beq	d80 <__libc_fini_array+0x30>
- d6c:	e5353004 	ldr	r3, [r5, #-4]!
- d70:	e1a0e00f 	mov	lr, pc
- d74:	e12fff13 	bx	r3
- d78:	e2544001 	subs	r4, r4, #1
- d7c:	1afffffa 	bne	d6c <__libc_fini_array+0x1c>
- d80:	eb00004a 	bl	eb0 <__libc_fini>
- d84:	e8bd4038 	pop	{r3, r4, r5, lr}
- d88:	e12fff1e 	bx	lr
- d8c:	00000ec8 	.word	0x00000ec8
- d90:	00000ecc 	.word	0x00000ecc
+			LDR R5, [R0, #0xC]			//Load "INT_en"
+     cb0:	e590500c 	ldr	r5, [r0, #12]
+			LSL R5, R5, #2				//Shift twice (I bit)
+     cb4:	e1a05105 	lsl	r5, r5, #2
 
-00000d94 <__cs3_premain>:
- d94:	e92d4008 	push	{r3, lr}
- d98:	eb000017 	bl	dfc <__libc_init_array>
- d9c:	e59f3030 	ldr	r3, [pc, #48]	; dd4 <__cs3_premain+0x40>
- da0:	e3530000 	cmp	r3, #0
- da4:	15930000 	ldrne	r0, [r3]
- da8:	01a00003 	moveq	r0, r3
- dac:	e59f3024 	ldr	r3, [pc, #36]	; dd8 <__cs3_premain+0x44>
- db0:	e3530000 	cmp	r3, #0
- db4:	15931000 	ldrne	r1, [r3]
- db8:	01a01003 	moveq	r1, r3
- dbc:	e3a02000 	mov	r2, #0
- dc0:	ebfffd25 	bl	25c <main>
- dc4:	e59f3010 	ldr	r3, [pc, #16]	; ddc <__cs3_premain+0x48>
- dc8:	e3530000 	cmp	r3, #0
- dcc:	1bffff2d 	blne	a88 <exit>
- dd0:	eafffffe 	b	dd0 <__cs3_premain+0x3c>
+			LDR R6, [R0, #0x10]			//Load "enable"
+     cb8:	e5906010 	ldr	r6, [r0, #16]
+
+			ORR R7, R4, R5
+     cbc:	e1847005 	orr	r7, r4, r5
+			ORR R7, R7, R6				//Get string of M, I and E bits
+     cc0:	e1877006 	orr	r7, r7, r6
+
+			STR R7, [R2, #0x8]			//Store into control
+     cc4:	e5827008 	str	r7, [r2, #8]
+
+			ADD R1, R1, #1				//Increment counter
+     cc8:	e2811001 	add	r1, r1, #1
+			B HPS_TIM_config_ASM_LOOP
+     ccc:	eaffffe1 	b	c58 <HPS_TIM_config_ASM_LOOP>
+
+00000cd0 <HPS_TIM_config_ASM_DONE>:
+
+HPS_TIM_config_ASM_DONE:
+			POP {R1-R7}
+     cd0:	e8bd00fe 	pop	{r1, r2, r3, r4, r5, r6, r7}
+			BX LR
+     cd4:	e12fff1e 	bx	lr
+
+00000cd8 <HPS_TIM_read_INT_ASM>:
+			
+
+//R0: HPS_TIM_t tim
+HPS_TIM_read_INT_ASM:
+			PUSH {R1-R4}
+     cd8:	e92d001e 	push	{r1, r2, r3, r4}
+			AND R0, R0, #0xF			//Get rid of random numbers ahead of our one-hot string
+     cdc:	e200000f 	and	r0, r0, #15
+			MOV R1, #0					//Initialize counter
+     ce0:	e3a01000 	mov	r1, #0
+
+00000ce4 <HPS_TIM_read_ASM_LOOP>:
+			
+HPS_TIM_read_ASM_LOOP:
+			CMP R1, #4					//if counter >= 4
+     ce4:	e3510004 	cmp	r1, #4
+			BGE HPS_TIM_read_ASM_DONE	//done
+     ce8:	aa00000f 	bge	d2c <HPS_TIM_read_ASM_DONE>
+			AND R4, R0, #1
+     cec:	e2004001 	and	r4, r0, #1
+			CMP R4, #0
+     cf0:	e3540000 	cmp	r4, #0
+			ASR R0, R0, #1				//Shift input by 1
+     cf4:	e1a000c0 	asr	r0, r0, #1
+			ADDEQ R1, R1, #1			//Increment counter if 0
+     cf8:	02811001 	addeq	r1, r1, #1
+			BEQ HPS_TIM_read_ASM_LOOP	//Branch back to loop if 0
+     cfc:	0afffff8 	beq	ce4 <HPS_TIM_read_ASM_LOOP>
+
+			//Load timer into R2 depending on which one it is
+			CMP R1, #0
+     d00:	e3510000 	cmp	r1, #0
+			LDREQ R2, =TIM_0
+     d04:	059f2084 	ldreq	r2, [pc, #132]	; d90 <HPS_TIM_clear_INT_ASM_DONE+0x8>
+			CMP R1, #1
+     d08:	e3510001 	cmp	r1, #1
+			LDREQ R2, =TIM_1
+     d0c:	059f2080 	ldreq	r2, [pc, #128]	; d94 <HPS_TIM_clear_INT_ASM_DONE+0xc>
+			CMP R1, #2
+     d10:	e3510002 	cmp	r1, #2
+			LDREQ R2, =TIM_2
+     d14:	059f207c 	ldreq	r2, [pc, #124]	; d98 <HPS_TIM_clear_INT_ASM_DONE+0x10>
+			CMP R1, #3
+     d18:	e3510003 	cmp	r1, #3
+			LDREQ R2, =TIM_3
+     d1c:	059f2078 	ldreq	r2, [pc, #120]	; d9c <HPS_TIM_clear_INT_ASM_DONE+0x14>
+
+			LDR R3, [R2, #0x10]			//Load S-bit
+     d20:	e5923010 	ldr	r3, [r2, #16]
+			AND R0, R3, #1
+     d24:	e2030001 	and	r0, r3, #1
+			B HPS_TIM_read_ASM_DONE 	//Only supports single timer, so done
+     d28:	eaffffff 	b	d2c <HPS_TIM_read_ASM_DONE>
+
+00000d2c <HPS_TIM_read_ASM_DONE>:
+
+HPS_TIM_read_ASM_DONE:
+			POP {R1-R4}
+     d2c:	e8bd001e 	pop	{r1, r2, r3, r4}
+			BX LR
+     d30:	e12fff1e 	bx	lr
+
+00000d34 <HPS_TIM_clear_INT_ASM>:
+
+//R0: HPS_TIM_t tim
+HPS_TIM_clear_INT_ASM:
+			PUSH {R1-R4}
+     d34:	e92d001e 	push	{r1, r2, r3, r4}
+			AND R0, R0, #0xF			//Get rid of random numbers ahead of our one-hot string
+     d38:	e200000f 	and	r0, r0, #15
+			MOV R1, #0					//Initialize counter
+     d3c:	e3a01000 	mov	r1, #0
+
+00000d40 <HPS_TIM_clear_INT_ASM_LOOP>:
+			
+HPS_TIM_clear_INT_ASM_LOOP:
+			CMP R1, #4					//if counter >= 4
+     d40:	e3510004 	cmp	r1, #4
+			BGE HPS_TIM_clear_INT_ASM_DONE	//done
+     d44:	aa00000f 	bge	d88 <HPS_TIM_clear_INT_ASM_DONE>
+			AND R4, R0, #1
+     d48:	e2004001 	and	r4, r0, #1
+			CMP R4, #0
+     d4c:	e3540000 	cmp	r4, #0
+			ASR R0, R0, #1				//Shift input by 1
+     d50:	e1a000c0 	asr	r0, r0, #1
+			ADDEQ R1, R1, #1			//Increment counter if 0
+     d54:	02811001 	addeq	r1, r1, #1
+			BEQ HPS_TIM_clear_INT_ASM_LOOP	//Branch back to loop if 0
+     d58:	0afffff8 	beq	d40 <HPS_TIM_clear_INT_ASM_LOOP>
+
+			//Load timer into R2 depending on which one it is
+			CMP R1, #0
+     d5c:	e3510000 	cmp	r1, #0
+			LDREQ R2, =TIM_0
+     d60:	059f2028 	ldreq	r2, [pc, #40]	; d90 <HPS_TIM_clear_INT_ASM_DONE+0x8>
+			CMP R1, #1
+     d64:	e3510001 	cmp	r1, #1
+			LDREQ R2, =TIM_1
+     d68:	059f2024 	ldreq	r2, [pc, #36]	; d94 <HPS_TIM_clear_INT_ASM_DONE+0xc>
+			CMP R1, #2
+     d6c:	e3510002 	cmp	r1, #2
+			LDREQ R2, =TIM_2
+     d70:	059f2020 	ldreq	r2, [pc, #32]	; d98 <HPS_TIM_clear_INT_ASM_DONE+0x10>
+			CMP R1, #3
+     d74:	e3510003 	cmp	r1, #3
+			LDREQ R2, =TIM_3
+     d78:	059f201c 	ldreq	r2, [pc, #28]	; d9c <HPS_TIM_clear_INT_ASM_DONE+0x14>
+
+			LDR R4, [R2, #0xC]			//Reading F bit clears everything... 
+     d7c:	e592400c 	ldr	r4, [r2, #12]
+
+			ADD R1, R1, #1				//Increment counter
+     d80:	e2811001 	add	r1, r1, #1
+			B HPS_TIM_clear_INT_ASM_LOOP
+     d84:	eaffffed 	b	d40 <HPS_TIM_clear_INT_ASM_LOOP>
+
+00000d88 <HPS_TIM_clear_INT_ASM_DONE>:
+
+HPS_TIM_clear_INT_ASM_DONE:
+			POP {R1-R4}
+     d88:	e8bd001e 	pop	{r1, r2, r3, r4}
+			BX LR			
+     d8c:	e12fff1e 	bx	lr
+			ADDEQ R1, R1, #1			//Increment counter if 0
+			BEQ HPS_TIM_config_ASM_LOOP	//Branch back to loop if 0
+
+			//Load timer into R2 depending on which one it is
+			CMP R1, #0
+			LDREQ R2, =TIM_0
+     d90:	ffc08000 	.word	0xffc08000
+			CMP R1, #1
+			LDREQ R2, =TIM_1
+     d94:	ffc09000 	.word	0xffc09000
+			CMP R1, #2
+			LDREQ R2, =TIM_2
+     d98:	ffd00000 	.word	0xffd00000
+			CMP R1, #3
+			LDREQ R2, =TIM_3
+     d9c:	ffd01000 	.word	0xffd01000
+
+00000da0 <atexit>:
+     da0:	e1a01000 	mov	r1, r0
+     da4:	e3a00000 	mov	r0, #0
+     da8:	e92d4008 	push	{r3, lr}
+     dac:	e1a02000 	mov	r2, r0
+     db0:	e1a03000 	mov	r3, r0
+     db4:	eb00000e 	bl	df4 <__register_exitproc>
+     db8:	e8bd4008 	pop	{r3, lr}
+     dbc:	e12fff1e 	bx	lr
+
+00000dc0 <exit>:
+     dc0:	e92d4008 	push	{r3, lr}
+     dc4:	e3a01000 	mov	r1, #0
+     dc8:	e1a04000 	mov	r4, r0
+     dcc:	eb000045 	bl	ee8 <__call_exitprocs>
+     dd0:	e59f3018 	ldr	r3, [pc, #24]	; df0 <exit+0x30>
+     dd4:	e5930000 	ldr	r0, [r3]
+     dd8:	e590303c 	ldr	r3, [r0, #60]	; 0x3c
+     ddc:	e3530000 	cmp	r3, #0
+     de0:	11a0e00f 	movne	lr, pc
+     de4:	112fff13 	bxne	r3
+     de8:	e1a00004 	mov	r0, r4
+     dec:	eb0000c9 	bl	1118 <_exit>
+     df0:	000011c8 	.word	0x000011c8
+
+00000df4 <__register_exitproc>:
+     df4:	e59fc0e4 	ldr	r12, [pc, #228]	; ee0 <__register_exitproc+0xec>
+     df8:	e92d41f0 	push	{r4, r5, r6, r7, r8, lr}
+     dfc:	e59c4000 	ldr	r4, [r12]
+     e00:	e594c148 	ldr	r12, [r4, #328]	; 0x148
+     e04:	e35c0000 	cmp	r12, #0
+     e08:	0284cf53 	addeq	r12, r4, #332	; 0x14c
+     e0c:	e59c5004 	ldr	r5, [r12, #4]
+     e10:	0584c148 	streq	r12, [r4, #328]	; 0x148
+     e14:	e355001f 	cmp	r5, #31
+     e18:	e24dd010 	sub	sp, sp, #16
+     e1c:	e1a06000 	mov	r6, r0
+     e20:	da000015 	ble	e7c <__register_exitproc+0x88>
+     e24:	e59f00b8 	ldr	r0, [pc, #184]	; ee4 <__register_exitproc+0xf0>
+     e28:	e3500000 	cmp	r0, #0
+     e2c:	1a000001 	bne	e38 <__register_exitproc+0x44>
+     e30:	e3e00000 	mvn	r0, #0
+     e34:	ea000018 	b	e9c <__register_exitproc+0xa8>
+     e38:	e3a00e19 	mov	r0, #400	; 0x190
+     e3c:	e58d100c 	str	r1, [sp, #12]
+     e40:	e58d2008 	str	r2, [sp, #8]
+     e44:	e58d3004 	str	r3, [sp, #4]
+     e48:	e320f000 	nop	{0}
+     e4c:	e250c000 	subs	r12, r0, #0
+     e50:	e59d100c 	ldr	r1, [sp, #12]
+     e54:	e59d2008 	ldr	r2, [sp, #8]
+     e58:	e59d3004 	ldr	r3, [sp, #4]
+     e5c:	0afffff3 	beq	e30 <__register_exitproc+0x3c>
+     e60:	e5945148 	ldr	r5, [r4, #328]	; 0x148
+     e64:	e3a00000 	mov	r0, #0
+     e68:	e58c0004 	str	r0, [r12, #4]
+     e6c:	e58c5000 	str	r5, [r12]
+     e70:	e584c148 	str	r12, [r4, #328]	; 0x148
+     e74:	e58c0188 	str	r0, [r12, #392]	; 0x188
+     e78:	e58c018c 	str	r0, [r12, #396]	; 0x18c
+     e7c:	e3560000 	cmp	r6, #0
+     e80:	e59c4004 	ldr	r4, [r12, #4]
+     e84:	1a000007 	bne	ea8 <__register_exitproc+0xb4>
+     e88:	e2843002 	add	r3, r4, #2
+     e8c:	e2844001 	add	r4, r4, #1
+     e90:	e78c1103 	str	r1, [r12, r3, lsl #2]
+     e94:	e58c4004 	str	r4, [r12, #4]
+     e98:	e3a00000 	mov	r0, #0
+     e9c:	e28dd010 	add	sp, sp, #16
+     ea0:	e8bd41f0 	pop	{r4, r5, r6, r7, r8, lr}
+     ea4:	e12fff1e 	bx	lr
+     ea8:	e3a00001 	mov	r0, #1
+     eac:	e1a00410 	lsl	r0, r0, r4
+     eb0:	e08c8104 	add	r8, r12, r4, lsl #2
+     eb4:	e3560002 	cmp	r6, #2
+     eb8:	e59c7188 	ldr	r7, [r12, #392]	; 0x188
+     ebc:	e5883108 	str	r3, [r8, #264]	; 0x108
+     ec0:	059c318c 	ldreq	r3, [r12, #396]	; 0x18c
+     ec4:	e1877000 	orr	r7, r7, r0
+     ec8:	01830000 	orreq	r0, r3, r0
+     ecc:	e1a05008 	mov	r5, r8
+     ed0:	e5882088 	str	r2, [r8, #136]	; 0x88
+     ed4:	e58c7188 	str	r7, [r12, #392]	; 0x188
+     ed8:	058c018c 	streq	r0, [r12, #396]	; 0x18c
+     edc:	eaffffe9 	b	e88 <__register_exitproc+0x94>
+     ee0:	000011c8 	.word	0x000011c8
+     ee4:	00000000 	.word	0x00000000
+
+00000ee8 <__call_exitprocs>:
+     ee8:	e92d4ff0 	push	{r4, r5, r6, r7, r8, r9, r10, r11, lr}
+     eec:	e59f3168 	ldr	r3, [pc, #360]	; 105c <__call_exitprocs+0x174>
+     ef0:	e5933000 	ldr	r3, [r3]
+     ef4:	e24dd014 	sub	sp, sp, #20
+     ef8:	e58d3004 	str	r3, [sp, #4]
+     efc:	e2833f52 	add	r3, r3, #328	; 0x148
+     f00:	e58d0008 	str	r0, [sp, #8]
+     f04:	e58d300c 	str	r3, [sp, #12]
+     f08:	e1a07001 	mov	r7, r1
+     f0c:	e3a08001 	mov	r8, #1
+     f10:	e59d3004 	ldr	r3, [sp, #4]
+     f14:	e5936148 	ldr	r6, [r3, #328]	; 0x148
+     f18:	e3560000 	cmp	r6, #0
+     f1c:	e59db00c 	ldr	r11, [sp, #12]
+     f20:	0a000033 	beq	ff4 <__call_exitprocs+0x10c>
+     f24:	e5965004 	ldr	r5, [r6, #4]
+     f28:	e2554001 	subs	r4, r5, #1
+     f2c:	5286a088 	addpl	r10, r6, #136	; 0x88
+     f30:	5285501f 	addpl	r5, r5, #31
+     f34:	508a5105 	addpl	r5, r10, r5, lsl #2
+     f38:	5a000007 	bpl	f5c <__call_exitprocs+0x74>
+     f3c:	ea000029 	b	fe8 <__call_exitprocs+0x100>
+     f40:	e5953000 	ldr	r3, [r5]
+     f44:	e1530007 	cmp	r3, r7
+     f48:	0a000005 	beq	f64 <__call_exitprocs+0x7c>
+     f4c:	e2444001 	sub	r4, r4, #1
+     f50:	e3740001 	cmn	r4, #1
+     f54:	e2455004 	sub	r5, r5, #4
+     f58:	0a000022 	beq	fe8 <__call_exitprocs+0x100>
+     f5c:	e3570000 	cmp	r7, #0
+     f60:	1afffff6 	bne	f40 <__call_exitprocs+0x58>
+     f64:	e5963004 	ldr	r3, [r6, #4]
+     f68:	e06a2005 	rsb	r2, r10, r5
+     f6c:	e2433001 	sub	r3, r3, #1
+     f70:	e0862002 	add	r2, r6, r2
+     f74:	e1530004 	cmp	r3, r4
+     f78:	e5123078 	ldr	r3, [r2, #-120]	; 0xffffff88
+     f7c:	13a01000 	movne	r1, #0
+     f80:	05864004 	streq	r4, [r6, #4]
+     f84:	15021078 	strne	r1, [r2, #-120]	; 0xffffff88
+     f88:	e3530000 	cmp	r3, #0
+     f8c:	0affffee 	beq	f4c <__call_exitprocs+0x64>
+     f90:	e1a02418 	lsl	r2, r8, r4
+     f94:	e5961188 	ldr	r1, [r6, #392]	; 0x188
+     f98:	e1120001 	tst	r2, r1
+     f9c:	e5969004 	ldr	r9, [r6, #4]
+     fa0:	0a000016 	beq	1000 <__call_exitprocs+0x118>
+     fa4:	e596118c 	ldr	r1, [r6, #396]	; 0x18c
+     fa8:	e1120001 	tst	r2, r1
+     fac:	1a000016 	bne	100c <__call_exitprocs+0x124>
+     fb0:	e59d0008 	ldr	r0, [sp, #8]
+     fb4:	e5151080 	ldr	r1, [r5, #-128]	; 0xffffff80
+     fb8:	e1a0e00f 	mov	lr, pc
+     fbc:	e12fff13 	bx	r3
+     fc0:	e5963004 	ldr	r3, [r6, #4]
+     fc4:	e1530009 	cmp	r3, r9
+     fc8:	1affffd0 	bne	f10 <__call_exitprocs+0x28>
+     fcc:	e59b3000 	ldr	r3, [r11]
+     fd0:	e1530006 	cmp	r3, r6
+     fd4:	1affffcd 	bne	f10 <__call_exitprocs+0x28>
+     fd8:	e2444001 	sub	r4, r4, #1
+     fdc:	e3740001 	cmn	r4, #1
+     fe0:	e2455004 	sub	r5, r5, #4
+     fe4:	1affffdc 	bne	f5c <__call_exitprocs+0x74>
+     fe8:	e59f1070 	ldr	r1, [pc, #112]	; 1060 <__call_exitprocs+0x178>
+     fec:	e3510000 	cmp	r1, #0
+     ff0:	1a000009 	bne	101c <__call_exitprocs+0x134>
+     ff4:	e28dd014 	add	sp, sp, #20
+     ff8:	e8bd4ff0 	pop	{r4, r5, r6, r7, r8, r9, r10, r11, lr}
+     ffc:	e12fff1e 	bx	lr
+    1000:	e1a0e00f 	mov	lr, pc
+    1004:	e12fff13 	bx	r3
+    1008:	eaffffec 	b	fc0 <__call_exitprocs+0xd8>
+    100c:	e5150080 	ldr	r0, [r5, #-128]	; 0xffffff80
+    1010:	e1a0e00f 	mov	lr, pc
+    1014:	e12fff13 	bx	r3
+    1018:	eaffffe8 	b	fc0 <__call_exitprocs+0xd8>
+    101c:	e5963004 	ldr	r3, [r6, #4]
+    1020:	e3530000 	cmp	r3, #0
+    1024:	e5963000 	ldr	r3, [r6]
+    1028:	1a000008 	bne	1050 <__call_exitprocs+0x168>
+    102c:	e3530000 	cmp	r3, #0
+    1030:	0a000006 	beq	1050 <__call_exitprocs+0x168>
+    1034:	e1a00006 	mov	r0, r6
+    1038:	e58b3000 	str	r3, [r11]
+    103c:	e320f000 	nop	{0}
+    1040:	e59b6000 	ldr	r6, [r11]
+    1044:	e3560000 	cmp	r6, #0
+    1048:	1affffb5 	bne	f24 <__call_exitprocs+0x3c>
+    104c:	eaffffe8 	b	ff4 <__call_exitprocs+0x10c>
+    1050:	e1a0b006 	mov	r11, r6
+    1054:	e1a06003 	mov	r6, r3
+    1058:	eafffff9 	b	1044 <__call_exitprocs+0x15c>
+    105c:	000011c8 	.word	0x000011c8
+    1060:	00000000 	.word	0x00000000
+
+00001064 <register_fini>:
+    1064:	e92d4008 	push	{r3, lr}
+    1068:	e59f3010 	ldr	r3, [pc, #16]	; 1080 <register_fini+0x1c>
+    106c:	e3530000 	cmp	r3, #0
+    1070:	159f000c 	ldrne	r0, [pc, #12]	; 1084 <register_fini+0x20>
+    1074:	1bffff49 	blne	da0 <atexit>
+    1078:	e8bd4008 	pop	{r3, lr}
+    107c:	e12fff1e 	bx	lr
+    1080:	000011f0 	.word	0x000011f0
+    1084:	00001088 	.word	0x00001088
+
+00001088 <__libc_fini_array>:
+    1088:	e92d4038 	push	{r3, r4, r5, lr}
+    108c:	e59f5030 	ldr	r5, [pc, #48]	; 10c4 <__libc_fini_array+0x3c>
+    1090:	e59f4030 	ldr	r4, [pc, #48]	; 10c8 <__libc_fini_array+0x40>
+    1094:	e0654004 	rsb	r4, r5, r4
+    1098:	e1b04144 	asrs	r4, r4, #2
+    109c:	10855104 	addne	r5, r5, r4, lsl #2
+    10a0:	0a000004 	beq	10b8 <__libc_fini_array+0x30>
+    10a4:	e5353004 	ldr	r3, [r5, #-4]!
+    10a8:	e1a0e00f 	mov	lr, pc
+    10ac:	e12fff13 	bx	r3
+    10b0:	e2544001 	subs	r4, r4, #1
+    10b4:	1afffffa 	bne	10a4 <__libc_fini_array+0x1c>
+    10b8:	eb00004c 	bl	11f0 <__libc_fini>
+    10bc:	e8bd4038 	pop	{r3, r4, r5, lr}
+    10c0:	e12fff1e 	bx	lr
+    10c4:	00001208 	.word	0x00001208
+    10c8:	0000120c 	.word	0x0000120c
+
+000010cc <__cs3_premain>:
+    10cc:	e92d4008 	push	{r3, lr}
+    10d0:	eb000017 	bl	1134 <__libc_init_array>
+    10d4:	e59f3030 	ldr	r3, [pc, #48]	; 110c <__cs3_premain+0x40>
+    10d8:	e3530000 	cmp	r3, #0
+    10dc:	15930000 	ldrne	r0, [r3]
+    10e0:	01a00003 	moveq	r0, r3
+    10e4:	e59f3024 	ldr	r3, [pc, #36]	; 1110 <__cs3_premain+0x44>
+    10e8:	e3530000 	cmp	r3, #0
+    10ec:	15931000 	ldrne	r1, [r3]
+    10f0:	01a01003 	moveq	r1, r3
+    10f4:	e3a02000 	mov	r2, #0
+    10f8:	ebfffc57 	bl	25c <main>
+    10fc:	e59f3010 	ldr	r3, [pc, #16]	; 1114 <__cs3_premain+0x48>
+    1100:	e3530000 	cmp	r3, #0
+    1104:	1bffff2d 	blne	dc0 <exit>
+    1108:	eafffffe 	b	1108 <__cs3_premain+0x3c>
 	...
- ddc:	00000a88 	.word	0x00000a88
+    1114:	00000dc0 	.word	0x00000dc0
 
-00000de0 <_exit>:
- de0:	e52de004 	push	{lr}		; (str lr, [sp, #-4]!)
- de4:	e3a00018 	mov	r0, #24
- de8:	e59f1004 	ldr	r1, [pc, #4]	; df4 <_exit+0x14>
- dec:	ef123456 	svc	0x00123456
- df0:	eafffffe 	b	df0 <_exit+0x10>
- df4:	00020026 	.word	0x00020026
+00001118 <_exit>:
+    1118:	e52de004 	push	{lr}		; (str lr, [sp, #-4]!)
+    111c:	e3a00018 	mov	r0, #24
+    1120:	e59f1004 	ldr	r1, [pc, #4]	; 112c <_exit+0x14>
+    1124:	ef123456 	svc	0x00123456
+    1128:	eafffffe 	b	1128 <_exit+0x10>
+    112c:	00020026 	.word	0x00020026
 
-00000df8 <__cs3_isr_interrupt>:
- df8:	eafffffe 	b	df8 <__cs3_isr_interrupt>
+00001130 <__cs3_isr_interrupt>:
+    1130:	eafffffe 	b	1130 <__cs3_isr_interrupt>
 
-00000dfc <__libc_init_array>:
- dfc:	e92d4070 	push	{r4, r5, r6, lr}
- e00:	e59f506c 	ldr	r5, [pc, #108]	; e74 <__libc_init_array+0x78>
- e04:	e59f606c 	ldr	r6, [pc, #108]	; e78 <__libc_init_array+0x7c>
- e08:	e0656006 	rsb	r6, r5, r6
- e0c:	e1b06146 	asrs	r6, r6, #2
- e10:	12455004 	subne	r5, r5, #4
- e14:	13a04000 	movne	r4, #0
- e18:	0a000005 	beq	e34 <__libc_init_array+0x38>
- e1c:	e5b53004 	ldr	r3, [r5, #4]!
- e20:	e2844001 	add	r4, r4, #1
- e24:	e1a0e00f 	mov	lr, pc
- e28:	e12fff13 	bx	r3
- e2c:	e1560004 	cmp	r6, r4
- e30:	1afffff9 	bne	e1c <__libc_init_array+0x20>
- e34:	e59f5040 	ldr	r5, [pc, #64]	; e7c <__libc_init_array+0x80>
- e38:	e59f6040 	ldr	r6, [pc, #64]	; e80 <__libc_init_array+0x84>
- e3c:	e0656006 	rsb	r6, r5, r6
- e40:	eb000012 	bl	e90 <_init>
- e44:	e1b06146 	asrs	r6, r6, #2
- e48:	12455004 	subne	r5, r5, #4
- e4c:	13a04000 	movne	r4, #0
- e50:	0a000005 	beq	e6c <__libc_init_array+0x70>
- e54:	e5b53004 	ldr	r3, [r5, #4]!
- e58:	e2844001 	add	r4, r4, #1
- e5c:	e1a0e00f 	mov	lr, pc
- e60:	e12fff13 	bx	r3
- e64:	e1560004 	cmp	r6, r4
- e68:	1afffff9 	bne	e54 <__libc_init_array+0x58>
- e6c:	e8bd4070 	pop	{r4, r5, r6, lr}
- e70:	e12fff1e 	bx	lr
- e74:	00000ea8 	.word	0x00000ea8
- e78:	00000ea8 	.word	0x00000ea8
- e7c:	00000ea8 	.word	0x00000ea8
- e80:	00000eb0 	.word	0x00000eb0
+00001134 <__libc_init_array>:
+    1134:	e92d4070 	push	{r4, r5, r6, lr}
+    1138:	e59f506c 	ldr	r5, [pc, #108]	; 11ac <__libc_init_array+0x78>
+    113c:	e59f606c 	ldr	r6, [pc, #108]	; 11b0 <__libc_init_array+0x7c>
+    1140:	e0656006 	rsb	r6, r5, r6
+    1144:	e1b06146 	asrs	r6, r6, #2
+    1148:	12455004 	subne	r5, r5, #4
+    114c:	13a04000 	movne	r4, #0
+    1150:	0a000005 	beq	116c <__libc_init_array+0x38>
+    1154:	e5b53004 	ldr	r3, [r5, #4]!
+    1158:	e2844001 	add	r4, r4, #1
+    115c:	e1a0e00f 	mov	lr, pc
+    1160:	e12fff13 	bx	r3
+    1164:	e1560004 	cmp	r6, r4
+    1168:	1afffff9 	bne	1154 <__libc_init_array+0x20>
+    116c:	e59f5040 	ldr	r5, [pc, #64]	; 11b4 <__libc_init_array+0x80>
+    1170:	e59f6040 	ldr	r6, [pc, #64]	; 11b8 <__libc_init_array+0x84>
+    1174:	e0656006 	rsb	r6, r5, r6
+    1178:	eb000014 	bl	11d0 <_init>
+    117c:	e1b06146 	asrs	r6, r6, #2
+    1180:	12455004 	subne	r5, r5, #4
+    1184:	13a04000 	movne	r4, #0
+    1188:	0a000005 	beq	11a4 <__libc_init_array+0x70>
+    118c:	e5b53004 	ldr	r3, [r5, #4]!
+    1190:	e2844001 	add	r4, r4, #1
+    1194:	e1a0e00f 	mov	lr, pc
+    1198:	e12fff13 	bx	r3
+    119c:	e1560004 	cmp	r6, r4
+    11a0:	1afffff9 	bne	118c <__libc_init_array+0x58>
+    11a4:	e8bd4070 	pop	{r4, r5, r6, lr}
+    11a8:	e12fff1e 	bx	lr
+    11ac:	000011e8 	.word	0x000011e8
+    11b0:	000011e8 	.word	0x000011e8
+    11b4:	000011e8 	.word	0x000011e8
+    11b8:	000011f0 	.word	0x000011f0
 
 Disassembly of section .rodata:
 
-00000e88 <_global_impure_ptr>:
- e88:	00000ef0 00000043                       ....C...
+000011c0 <_global_impure_ptr-0x8>:
+    11c0:	00000049 	.word	0x00000049
+    11c4:	000000c7 	.word	0x000000c7
 
-00000e90 <_init>:
- e90:	e1a0c00d 	mov	r12, sp
- e94:	e92ddff8 	push	{r3, r4, r5, r6, r7, r8, r9, r10, r11, r12, lr, pc}
- e98:	e24cb004 	sub	r11, r12, #4
- e9c:	e24bd028 	sub	sp, r11, #40	; 0x28
- ea0:	e89d6ff0 	ldm	sp, {r4, r5, r6, r7, r8, r9, r10, r11, sp, lr}
- ea4:	e12fff1e 	bx	lr
+000011c8 <_global_impure_ptr>:
+    11c8:	00001230 00000043                       0...C...
 
-00000ea8 <__init_array_start>:
- ea8:	00000d2c 	.word	0x00000d2c
+000011d0 <_init>:
+    11d0:	e1a0c00d 	mov	r12, sp
+    11d4:	e92ddff8 	push	{r3, r4, r5, r6, r7, r8, r9, r10, r11, r12, lr, pc}
+    11d8:	e24cb004 	sub	r11, r12, #4
+    11dc:	e24bd028 	sub	sp, r11, #40	; 0x28
+    11e0:	e89d6ff0 	ldm	sp, {r4, r5, r6, r7, r8, r9, r10, r11, sp, lr}
+    11e4:	e12fff1e 	bx	lr
 
-00000eac <__frame_dummy_init_array_entry>:
- eac:	00000208                                ....
+000011e8 <__init_array_start>:
+    11e8:	00001064 	.word	0x00001064
 
-00000eb0 <__libc_fini>:
- eb0:	e1a0c00d 	mov	r12, sp
- eb4:	e92ddff8 	push	{r3, r4, r5, r6, r7, r8, r9, r10, r11, r12, lr, pc}
- eb8:	e24cb004 	sub	r11, r12, #4
- ebc:	e24bd028 	sub	sp, r11, #40	; 0x28
- ec0:	e89d6ff0 	ldm	sp, {r4, r5, r6, r7, r8, r9, r10, r11, sp, lr}
- ec4:	e12fff1e 	bx	lr
+000011ec <__frame_dummy_init_array_entry>:
+    11ec:	00000208                                ....
 
-00000ec8 <__fini_array_start>:
- ec8:	000001c4 	.word	0x000001c4
+000011f0 <__libc_fini>:
+    11f0:	e1a0c00d 	mov	r12, sp
+    11f4:	e92ddff8 	push	{r3, r4, r5, r6, r7, r8, r9, r10, r11, r12, lr, pc}
+    11f8:	e24cb004 	sub	r11, r12, #4
+    11fc:	e24bd028 	sub	sp, r11, #40	; 0x28
+    1200:	e89d6ff0 	ldm	sp, {r4, r5, r6, r7, r8, r9, r10, r11, sp, lr}
+    1204:	e12fff1e 	bx	lr
 
-00000ecc <__cs3_regions>:
- ecc:	00000000 	.word	0x00000000
- ed0:	00000040 	.word	0x00000040
- ed4:	00000040 	.word	0x00000040
- ed8:	000012e0 	.word	0x000012e0
- edc:	00000020 	.word	0x00000020
+00001208 <__fini_array_start>:
+    1208:	000001c4 	.word	0x000001c4
+
+0000120c <__cs3_regions>:
+    120c:	00000000 	.word	0x00000000
+    1210:	00000040 	.word	0x00000040
+    1214:	00000040 	.word	0x00000040
+    1218:	00001620 	.word	0x00001620
+    121c:	00000020 	.word	0x00000020

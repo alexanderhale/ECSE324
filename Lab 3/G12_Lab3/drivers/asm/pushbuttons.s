@@ -1,7 +1,7 @@
 		.text
-		.equ PUSH_data, 0xFF20050
-		.equ PUSH_mask, 0xFF20058
-		.equ PUSH_edge, 0xFF2005C
+		.equ PUSH_data, 0xFF200050
+		.equ PUSH_mask, 0xFF200058
+		.equ PUSH_edge, 0xFF20005C
 		.global read_PB_data_ASM
 		.global PB_data_is_pressed_ASM
 		.global read_PB_edgecap_ASM
@@ -12,8 +12,8 @@
 
 read_PB_data_ASM:		// return a binary string, where the final 4 bits hold the status of the buttons (pressed or not)
 	PUSH {LR}
-	LDR R0, =PUSH_data	// load the memory address from which we'll get the value
-	LDR R0, [R0]		// get the value and put it into R0
+	LDR R1, =PUSH_data	// load the memory address from which we'll get the value
+	LDR R0, [R1]		// get the value and put it into R0
 	POP {LR}
 	BX LR 				// leave
 

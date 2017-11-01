@@ -60,7 +60,7 @@ END:	POP {LR}
 
 N:	LDR R10, =HEX_0to3	// change to other memory location
 	MOV R9, #3			// update memory offset counter
-	ROR R2, #8			// shift input value one byte right (alignment according to offset counter)
+	// ROR R2, #8			// shift input value one byte right (alignment according to offset counter)
 	B A					// go back
 
 CLEARING:	.word 0xFFFFFF00
@@ -69,16 +69,16 @@ CLEARING:	.word 0xFFFFFF00
 			.word 0x00FFFFFF
 ZEROS:		.word 0x00000000
 ONES:		.word 0x000000FF
-LIGHTS:		.word 0x0000001F, 0x00000006, 0x0000005B, 0x0000004F		// TODO change to 0x000000xx
-				// 00011111	00000110 01011011 01001111
+LIGHTS:		.word 0x0000003F, 0x00000006, 0x0000005B, 0x0000004F
+				// 00111111	00000110 01011011 01001111
 				//	   0        1        2        3
 			.word 0x00000066, 0x0000006D, 0x0000007D, 0x000000007
 				// 01100110	01101101 01111101 00000111
 				//	   4	    5        6        7
-			.word 0x0000003F, 0x00000067, 0x00000077, 0x0000007C
-				// 00111111	01100111 01110111 01111100
+			.word 0x0000007F, 0x00000067, 0x00000077, 0x0000007C
+				// 01111111	01100111 01110111 01111100
 				//	   8	    9        A        b
-			.word 0x0000003C, 0x0000005E, 0x00000079, 0x00000078
-				// 00111100	01011110 01111001 01111000
+			.word 0x00000039, 0x0000005E, 0x00000079, 0x00000071
+				// 00111001	01011110 01111001 01110001
 				//	   C	    d        E        F
 	.end
