@@ -7,9 +7,9 @@
 
 int main() {
 
-	HEX_write_ASM(HEX1, 10);
+	// HEX_write_ASM(HEX1, 10);
 
-	/* perform continuously
+	// perform continuously
 	while (1) {	
 		// illuminate LED for each switch
 		write_LEDs_ASM(read_slider_switches_ASM());
@@ -26,7 +26,7 @@ int main() {
 
 		int keys = 0xF & read_PB_data_ASM();	// only keep first four digits of binary representation	
 		// HEX_write_ASM(keys, number);
-		/* illuminate the appropriate hex displays with the correct number
+		// illuminate the appropriate hex displays with the correct number
 		if (read_PB_data_ASM() > 0) {
 			int keys = 0xF & read_PB_data_ASM();	// only keep first four digits of binary representation	
 			
@@ -71,6 +71,6 @@ int main() {
 		if (read_slider_switches_ASM() >= 512) {
 			HEX_clear_ASM(HEX0 | HEX1 | HEX2 | HEX3 | HEX4 | HEX5);
 		} 
-	} */
+	}
 	return 0;
 }
