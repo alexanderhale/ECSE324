@@ -6,9 +6,6 @@
 #include "./drivers/inc/pushbuttons.h"
 
 int main() {
-
-	// HEX_write_ASM(HEX1, 10);
-
 	// perform continuously
 	while (1) {	
 		// illuminate LED for each switch
@@ -16,20 +13,14 @@ int main() {
 		
 		// determine number created by SW0-SW3
 		int number = 0xF & read_slider_switches_ASM();	// only keep first four digits of binary representation
-		
-		// convert to hexadecimal using ASCII chart
-		if (number < 10) {
-			number += 48;
-		} else {
-			number += 55;
-		}
+		int keys = 0xF & read_PB_data_ASM();			// only keep first four digits of binary representation	
 
-		int keys = 0xF & read_PB_data_ASM();	// only keep first four digits of binary representation	
-		// HEX_write_ASM(keys, number);
 		// illuminate the appropriate hex displays with the correct number
-		if (read_PB_data_ASM() > 0) {
-			int keys = 0xF & read_PB_data_ASM();	// only keep first four digits of binary representation	
+		if ((keys > 0) && ((0x200 & read_slider_switches_ASM()) != 512) {
+			// if any pushbuttons are pressed, flood HEX4 and HEX5
+			HEX_flood_ASM(HEX4 | HEX5);
 			
+			// if any other pushbuttons are pressed, send the number to the appropriate HEX displays 
 			switch (keys) {
 				case 1 :
 					HEX_write_ASM(HEX0, number);
@@ -62,15 +53,10 @@ int main() {
 				case 15:
 					HEX_write_ASM(HEX0 | HEX1 | HEX2 | HEX3, number);
 			}
-				
-			// if any pushbuttons are pressed, light up 
-			HEX_flood_ASM(HEX4 | HEX5);
-		}
-		
-		// if slider 9 is on, the value will be at least 2^9 = 512
-		if (read_slider_switches_ASM() >= 512) {
+		} else if ((0x200 & read_slider_switches_ASM()) == 512) {
+			// switch 9 is flipped => clear displays
 			HEX_clear_ASM(HEX0 | HEX1 | HEX2 | HEX3 | HEX4 | HEX5);
-		} 
+		}
 	}
 	return 0;
 }
