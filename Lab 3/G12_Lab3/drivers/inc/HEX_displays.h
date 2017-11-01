@@ -12,6 +12,6 @@
 
 	extern void HEX_clear_ASM(HEX_t hex);
 	extern void HEX_flood_ASM(HEX_t hex);
-	extern void HEX_write_ASM(HEX_t hex, char val);
+	extern void HEX_write_ASM(HEX_t hex, int val);		// TODO: specs say the second paramater should be a char, but this makes more sense
 
 #endif

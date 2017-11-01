@@ -1,0 +1,174 @@
+
+C:/Users/Alex/Documents/McGill/ECSE_324/Labs/ECSE324/Lab 3/HEX_test/HEX_displays.axf:     file format elf32-littlearm
+
+
+Disassembly of section .text:
+
+00000000 <__cs3_interrupt_vector>:
+	//.global HEX_clear_ASM
+	//.global HEX_flood_ASM
+	//.global HEX_write_ASM
+	.global _start
+
+_start:	MOV R0, #0x00000020
+   0:	e3a00020 	mov	r0, #32
+		MOV R1, #1
+   4:	e3a01001 	mov	r1, #1
+		B HEX_write_ASM
+   8:	ea000003 	b	1c <HEX_write_ASM>
+
+0000000c <HEX_clear_ASM>:
+
+HEX_clear_ASM:			// turn off everything in the requested hex displays
+	LDR R2, ZEROS		// load 00000000 into R2
+   c:	e59f20b8 	ldr	r2, [pc, #184]	; cc <ZEROS>
+	B RUN
+  10:	ea000006 	b	30 <RUN>
+
+00000014 <HEX_flood_ASM>:
+
+HEX_flood_ASM:			// light up everything in the requested hex displays
+	LDR R2, ONES		// load 11111111 into R1
+  14:	e59f20b4 	ldr	r2, [pc, #180]	; d0 <ONES>
+	B RUN
+  18:	ea000004 	b	30 <RUN>
+
+0000001c <HEX_write_ASM>:
+
+HEX_write_ASM:			// display the corresponding hexadecimal digit in the requested hex displays
+	LDR R2, =LIGHTS		// hold address of first encoded light sequence
+  1c:	e59f20f0 	ldr	r2, [pc, #240]	; 114 <LIGHTS+0x40>
+	MOV R3, #4			// multiple for use on next line
+  20:	e3a03004 	mov	r3, #4
+	MUL R3, R3, R1      // multiply input shift by four
+  24:	e0030193 	mul	r3, r3, r1
+	LDR R2, [R2, R3]	// put appropriate 1 byte encoded light sequence into R2, using base address + shift according to 4*input
+  28:	e7922003 	ldr	r2, [r2, r3]
+	B RUN
+  2c:	eaffffff 	b	30 <RUN>
+
+00000030 <RUN>:
+
+RUN:
+	PUSH {R0}
+  30:	e52d0004 	push	{r0}		; (str r0, [sp, #-4]!)
+	PUSH {LR}
+  34:	e52de004 	push	{lr}		; (str lr, [sp, #-4]!)
+	MOV R8, #32			// R8 holds the current power of 2 that is being used for comparison
+  38:	e3a08020 	mov	r8, #32
+	MOV R9, #1			// R9 holds the memory offset counter
+  3c:	e3a09001 	mov	r9, #1
+	ROR R2, #24			// shift input value to be aligned with 2nd bit (in accordance with offset counter)
+  40:	e1a02c62 	ror	r2, r2, #24
+	MOV R6, #31			// load binary string 00000000 00000000 00000000 00011111, to be used to reduce the input string
+  44:	e3a0601f 	mov	r6, #31
+	LDR R10, =HEX_4to5	// R10 holds the starting address of the area in memory
+  48:	e59fa0c8 	ldr	r10, [pc, #200]	; 118 <LIGHTS+0x44>
+
+0000004c <LOOP>:
+	
+LOOP:
+	CMP R8, #0			// check if power-of-2 counter has reached zero
+  4c:	e3580000 	cmp	r8, #0
+	BEQ	END				// if so, branch to end
+  50:	0a000011 	beq	9c <END>
+	CMP R8, #8			// check if power-of-2 counter has reached 8, meaning it's on HEX0-HEX4
+  54:	e3580008 	cmp	r8, #8
+	BEQ N				// if on threshold, go to 'change values' block (N)
+  58:	0a000013 	beq	ac <N>
+
+0000005c <A>:
+A: 	CMP R0, R8			// check if input value >= power-of-2 counter
+  5c:	e1500008 	cmp	r0, r8
+	BLT S				// if no, the leftmost bit must be zero => skip to incrementing loop (S)
+  60:	ba000007 	blt	84 <S>
+	
+	LDR R7, =CLEARING	// get starting address of clearing word
+  64:	e59f70b0 	ldr	r7, [pc, #176]	; 11c <LIGHTS+0x48>
+	MOV R3, #4			// multiple for use on next line
+  68:	e3a03004 	mov	r3, #4
+	MUL R3, R9, R3		// multiply offset by four
+  6c:	e0030399 	mul	r3, r9, r3
+	LDR R7, [R7, R3]	// get some zeros ready in the correct byte according to the current shift
+  70:	e7977003 	ldr	r7, [r7, r3]
+	LDR R5, [R10]		// load the current value in memory into a register
+  74:	e59a5000 	ldr	r5, [r10]
+	AND R5, R5, R7		// clear the required bits
+  78:	e0055007 	and	r5, r5, r7
+	ORR R5, R5, R2		// enter the required bits			// TODO NEEDS TO BE OR
+  7c:	e1855002 	orr	r5, r5, r2
+	STR R5, [R10]		// store back to memory
+  80:	e58a5000 	str	r5, [r10]
+
+00000084 <S>:
+	// STRB R2, [R10, R9]	// if yes, leftmost bit is 1 => store the predetermined byte into the base memory location + the offset
+
+S:  LSR R8, #1			// decrease power-of-2 counter by one power of 2
+  84:	e1a080a8 	lsr	r8, r8, #1
+	SUB R9, R9, #1		// decrease memory offset counter by one
+  88:	e2499001 	sub	r9, r9, #1
+	ROR R2, #8			// shift input value one byte right (alignment according to offset counter)
+  8c:	e1a02462 	ror	r2, r2, #8
+	AND R0, R6			// remove leftmost zero
+  90:	e0000006 	and	r0, r0, r6
+	LSR R6, #1			// remove leftmost 1 from removal string
+  94:	e1a060a6 	lsr	r6, r6, #1
+	B LOOP
+  98:	eaffffeb 	b	4c <LOOP>
+
+0000009c <END>:
+
+
+END:	B END
+  9c:	eafffffe 	b	9c <END>
+		POP {LR}
+  a0:	e49de004 	pop	{lr}		; (ldr lr, [sp], #4)
+		POP {R0}
+  a4:	e49d0004 	pop	{r0}		; (ldr r0, [sp], #4)
+		BX LR			// leave
+  a8:	e12fff1e 	bx	lr
+
+000000ac <N>:
+
+N:	LDR R10, =HEX_0to3	// change to other memory location
+  ac:	e59fa06c 	ldr	r10, [pc, #108]	; 120 <LIGHTS+0x4c>
+	MOV R9, #3			// update memory offset counter
+  b0:	e3a09003 	mov	r9, #3
+	ROR R2, #8			// shift input value one byte right (alignment according to offset counter)
+  b4:	e1a02462 	ror	r2, r2, #8
+	B A					// go back
+  b8:	eaffffe7 	b	5c <A>
+
+000000bc <CLEARING>:
+  bc:	ffffff00 	.word	0xffffff00
+  c0:	ffff00ff 	.word	0xffff00ff
+  c4:	ff00ffff 	.word	0xff00ffff
+  c8:	00ffffff 	.word	0x00ffffff
+
+000000cc <ZEROS>:
+  cc:	00000000 	.word	0x00000000
+
+000000d0 <ONES>:
+  d0:	000000ff 	.word	0x000000ff
+
+000000d4 <LIGHTS>:
+  d4:	0000001f 	.word	0x0000001f
+  d8:	00000006 	.word	0x00000006
+  dc:	0000005b 	.word	0x0000005b
+  e0:	0000004f 	.word	0x0000004f
+  e4:	00000066 	.word	0x00000066
+  e8:	0000006d 	.word	0x0000006d
+  ec:	0000007d 	.word	0x0000007d
+  f0:	00000007 	.word	0x00000007
+  f4:	0000003f 	.word	0x0000003f
+  f8:	00000067 	.word	0x00000067
+  fc:	00000077 	.word	0x00000077
+ 100:	0000007c 	.word	0x0000007c
+ 104:	0000003c 	.word	0x0000003c
+ 108:	0000005e 	.word	0x0000005e
+ 10c:	00000079 	.word	0x00000079
+ 110:	00000078 	.word	0x00000078
+ 114:	000000d4 	.word	0x000000d4
+ 118:	ff200030 	.word	0xff200030
+ 11c:	000000bc 	.word	0x000000bc
+ 120:	ff200020 	.word	0xff200020

@@ -1,9 +1,14 @@
   	.text
 	.equ HEX_0to3, 0xFF200020
 	.equ HEX_4to5, 0xFF200030
-	.global HEX_clear_ASM
-	.global HEX_flood_ASM
-	.global HEX_write_ASM
+	//.global HEX_clear_ASM
+	//.global HEX_flood_ASM
+	//.global HEX_write_ASM
+	.global _start
+
+_start:	MOV R0, #0x00000020
+		MOV R1, #1
+		B HEX_write_ASM
 
 HEX_clear_ASM:			// turn off everything in the requested hex displays
 	LDR R2, ZEROS		// load 00000000 into R2
@@ -45,6 +50,7 @@ A: 	CMP R0, R8			// check if input value >= power-of-2 counter
 	AND R5, R5, R7		// clear the required bits
 	ORR R5, R5, R2		// enter the required bits			// TODO NEEDS TO BE OR
 	STR R5, [R10]		// store back to memory
+	// STRB R2, [R10, R9]	// if yes, leftmost bit is 1 => store the predetermined byte into the base memory location + the offset
 
 S:  LSR R8, #1			// decrease power-of-2 counter by one power of 2
 	SUB R9, R9, #1		// decrease memory offset counter by one
@@ -54,7 +60,8 @@ S:  LSR R8, #1			// decrease power-of-2 counter by one power of 2
 	B LOOP
 
 
-END:	POP {LR}
+END:	B END
+		POP {LR}
 		POP {R0}
 		BX LR			// leave
 

@@ -22,10 +22,11 @@ extern void HPS_TIM_config_ASM(HPS_TIM_config_t *param);
 /* reads the valye of the s-bit (offset = 16). The nature
 of the return value will depend on whether this function 
 is able to read the s-bit value of multiple timers in the
-same call */
+same call (not required) */
 extern int HPS_TIM_read_INT_ASM(HPS_TIM_t tim);
 
 /* resets the s-bit and the f-bit. This function should
 support multiple timers in the argument. */
+extern void HPS_TIM_clear_INT_ASM(HPS_TIM_t tim);
 
 #endif
