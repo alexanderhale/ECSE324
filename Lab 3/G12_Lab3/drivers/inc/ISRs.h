@@ -19,7 +19,7 @@
 	extern void FPGA_JP2_ISR();
 	extern void FPGA_PS2_DUAL_ISR();
 
-	extern int hps_tim0_int_flag;					// written
-	extern int pb_int_flag;
+	extern int hps_tim0_int_flag;					// written by us
+	extern int pb_int_flag;							// written by us
 
 #endif

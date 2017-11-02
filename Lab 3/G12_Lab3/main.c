@@ -85,7 +85,7 @@ int main() {
 	} */
 
 
-	/*	------------	PART 2 - SAMPLE TESTING COD   ---------------
+	/*	------------	PART 2 - SAMPLE TESTING CODE   ---------------
 
 	int count0 = 0, count1 = 0, count2 = 0, count3 = 0;
 

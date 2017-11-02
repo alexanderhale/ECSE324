@@ -9,17 +9,17 @@ typedef enum {
 } HPS_TIM_t;
 
 typedef struct {
-	HPS_TIM_t tim;
-	int timeout; // in microseconds
-	int LD_en;		// accessible via LDR address in R0, offset by 0x8
-	int INT_en;			// same concept extends to other variables
-	int enable;
+	HPS_TIM_t tim;		// the enum declared above													// accessible at address in R0
+	int timeout; 		// in microseconds															// accessible at address in R0 + 0x4
+	int LD_en;			// load enable bit (M) - tells timer to restart at the value we loaded		// accessible at address in R0 + 0x8
+	int INT_en;			// interrupt enable bit (I)											 		// accessible at address in R0 + 0xC
+	int enable;			// enable bit																// accessible at address in R0 + 0x10
 } HPS_TIM_config_t;
 
 /* the argument is a struct pointer */
 extern void HPS_TIM_config_ASM(HPS_TIM_config_t *param);
 
-/* reads the valye of the s-bit (offset = 16). The nature
+/* Reads the value of the s-bit (offset = 16). The nature
 of the return value will depend on whether this function 
 is able to read the s-bit value of multiple timers in the
 same call (not required) */
