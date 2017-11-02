@@ -915,22 +915,22 @@ HPS_GPIO1_ISR:
 000007f4 <HPS_TIM0_ISR>:
 	
 HPS_TIM0_ISR:
-	PUSH {R14}					//Push LR to stack
+	PUSH {R14}							// push LR to stack
      7f4:	e52de004 	push	{lr}		; (str lr, [sp, #-4]!)
 	
-	MOV R0, #0x1
+	MOV R0, #0x1						// move 0000....00001 to R0 choose Timer 0
      7f8:	e3a00001 	mov	r0, #1
-	BL HPS_TIM_clear_INT_ASM	//Clear tim0
+	BL HPS_TIM_clear_INT_ASM			// clear timer 0 to get it ready
      7fc:	eb00014c 	bl	d34 <HPS_TIM_clear_INT_ASM>
 
-	LDR R0, =hps_tim0_int_flag
+	LDR R0, =hps_tim0_int_flag			// load address set aside for timer flag
      800:	e59f0054 	ldr	r0, [pc, #84]	; 85c <FPGA_PS2_DUAL_ISR+0x4>
-	MOV R1, #1
+	MOV R1, #1							// load a 1 into R1
      804:	e3a01001 	mov	r1, #1
-	STR R1, [R0]				//Set flag to 1
+	STR R1, [R0]						// store 1 into the flag address => sets flag to 1
      808:	e5801000 	str	r1, [r0]
 
-	POP {R14}					//Pop LR from stack
+	POP {R14}							// pop LR from stack
      80c:	e49de004 	pop	{lr}		; (ldr lr, [sp], #4)
 	BX LR
      810:	e12fff1e 	bx	lr
@@ -962,21 +962,21 @@ FPGA_INTERVAL_TIM_ISR:
 00000824 <FPGA_PB_KEYS_ISR>:
 	
 FPGA_PB_KEYS_ISR:
-	PUSH {R14}					//Push LR to stack
+	PUSH {R14}						// push LR to stack
      824:	e52de004 	push	{lr}		; (str lr, [sp, #-4]!)
 
-	BL read_PB_edgecap_ASM		//Get pushbutton that was pressed
+	BL read_PB_edgecap_ASM			// get pushbutton that was pressed
      828:	ebffffc3 	bl	73c <read_PB_edgecap_ASM>
 
-	LDR R1, =pb_int_flag
+	LDR R1, =pb_int_flag			// load address set aside for pushbutton flag
      82c:	e59f102c 	ldr	r1, [pc, #44]	; 860 <FPGA_PS2_DUAL_ISR+0x8>
-	STR R0, [R1]				//Set flag to value of pb
+	STR R0, [R1]					// set the flag to the same value as the pushbutton that was pressed
      830:	e5810000 	str	r0, [r1]
 
-	BL PB_clear_edgecap_ASM		//Clear edgecap to reset interrupt
+	BL PB_clear_edgecap_ASM			// clear edgecap to reset interrupt. Pushbutton required is still stored in R0
      834:	ebffffd1 	bl	780 <PB_clear_edgecap_ASM>
 
-	POP {R14}					//Pop LR from stack
+	POP {R14}						// pop LR from stack
      838:	e49de004 	pop	{lr}		; (ldr lr, [sp], #4)
 	BX LR
      83c:	e12fff1e 	bx	lr
@@ -1022,19 +1022,19 @@ FPGA_JP2_ISR:
 FPGA_PS2_DUAL_ISR:
 	BX LR
      858:	e12fff1e 	bx	lr
-	PUSH {R14}					//Push LR to stack
+	PUSH {R14}							// push LR to stack
 	
-	MOV R0, #0x1
-	BL HPS_TIM_clear_INT_ASM	//Clear tim0
+	MOV R0, #0x1						// move 0000....00001 to R0 choose Timer 0
+	BL HPS_TIM_clear_INT_ASM			// clear timer 0 to get it ready
 
-	LDR R0, =hps_tim0_int_flag
+	LDR R0, =hps_tim0_int_flag			// load address set aside for timer flag
      85c:	000007e4 	.word	0x000007e4
 FPGA_PB_KEYS_ISR:
-	PUSH {R14}					//Push LR to stack
+	PUSH {R14}						// push LR to stack
 
-	BL read_PB_edgecap_ASM		//Get pushbutton that was pressed
+	BL read_PB_edgecap_ASM			// get pushbutton that was pressed
 
-	LDR R1, =pb_int_flag
+	LDR R1, =pb_int_flag			// load address set aside for pushbutton flag
      860:	000007e8 	.word	0x000007e8
 
 00000864 <disable_A9_interrupts>:
@@ -1435,16 +1435,16 @@ void int_setup(int len, int* IDs) {
      c44:	e8bd8800 	pop	{r11, pc}
 
 00000c48 <HPS_TIM_config_ASM>:
-			.global HPS_TIM_read_INT_ASM
 			.global HPS_TIM_clear_INT_ASM
 
-// input value in R0 = HPS_TIM_config_t *param
+
+// input value in R0 holds: HPS_TIM_config_t *param
 HPS_TIM_config_ASM:
 			PUSH {R1-R7}				// store the registers that we're planning to use so we can recover them later
      c48:	e92d00fe 	push	{r1, r2, r3, r4, r5, r6, r7}
 			LDR R3, [R0]				// load starting address of timer struct into R3
      c4c:	e5903000 	ldr	r3, [r0]
-			AND R3, R3, #0xF			// remove everything except the last four bits (our encoded string of timers to use)
+			AND R3, R3, #0xF			// remove everything from the input except the last four bits (our encoded string of timers to use)
      c50:	e203300f 	and	r3, r3, #15
 			MOV R1, #0					// start loop counter at 0 in R1
      c54:	e3a01000 	mov	r1, #0
@@ -1500,73 +1500,75 @@ HPS_TIM_config_ASM_LOOP:
      ca4:	e5824000 	str	r4, [r2]
 
 			// get M bit ready (M bit instructs timer to start at the value we loaded above when it restarts)
-			LDR R4, [R0, #0x8]			// load third value from input struct (LD_en = load enable bit??) into R4
+			LDR R4, [R0, #0x8]			// load third value from input struct (LD_en = load enable bit = M) into R4
      ca8:	e5904008 	ldr	r4, [r0, #8]
 			LSL R4, R4, #1				// shift by one bit left to get aligned with M bit location
      cac:	e1a04084 	lsl	r4, r4, #1
 			// TODO: why do we use the same input string for both the entire control word (above) _and_ just the M bit?
 
 			// get I bit ready (I bit is whether or not interrupts are enabled)
-			LDR R5, [R0, #0xC]			//Load "INT_en"
+			LDR R5, [R0, #0xC]			// load fourth value from input struct (INT_en = interrupt enable bit (I)) into R5
      cb0:	e590500c 	ldr	r5, [r0, #12]
-			LSL R5, R5, #2				//Shift twice (I bit)
+			LSL R5, R5, #2				// shift by two bits left to get aligned with I bit location
      cb4:	e1a05105 	lsl	r5, r5, #2
 
-			LDR R6, [R0, #0x10]			//Load "enable"
+			// get enable bit ready (enable bit = 1 when timer is running, 0 when it is stopped)
+			LDR R6, [R0, #0x10]			// load fifth value from input struct (enable = enable bit (E)) into R6
      cb8:	e5906010 	ldr	r6, [r0, #16]
 
-			ORR R7, R4, R5
+			ORR R7, R4, R5				// get M and I into R7
      cbc:	e1847005 	orr	r7, r4, r5
-			ORR R7, R7, R6				//Get string of M, I and E bits
+			ORR R7, R7, R6				// get E into R7
      cc0:	e1877006 	orr	r7, r7, r6
 
-			STR R7, [R2, #0x8]			//Store into control
+			STR R7, [R2, #0x8]			// store the control word into the control memory location of our timer
      cc4:	e5827008 	str	r7, [r2, #8]
 
-			ADD R1, R1, #1				//Increment counter
+			ADD R1, R1, #1				// increment loop counter
      cc8:	e2811001 	add	r1, r1, #1
-			B HPS_TIM_config_ASM_LOOP
+			B HPS_TIM_config_ASM_LOOP	// go back to the start of the loop
      ccc:	eaffffe1 	b	c58 <HPS_TIM_config_ASM_LOOP>
 
 00000cd0 <HPS_TIM_config_ASM_DONE>:
 
 HPS_TIM_config_ASM_DONE:
-			POP {R1-R7}
+			POP {R1-R7}		// recover the registers that we stored on the stack
      cd0:	e8bd00fe 	pop	{r1, r2, r3, r4, r5, r6, r7}
-			BX LR
+			BX LR 			// leave
      cd4:	e12fff1e 	bx	lr
 
 00000cd8 <HPS_TIM_read_INT_ASM>:
-			
 
-//R0: HPS_TIM_t tim
+
+// input value in R0 holds: HPS_TIM_t tim
+	// only supports one timer => assumes the input string is one-hot encoded
 HPS_TIM_read_INT_ASM:
-			PUSH {R1-R4}
+			PUSH {R1-R4}				// store the values of the registers that we're planning to use so we can recover them later
      cd8:	e92d001e 	push	{r1, r2, r3, r4}
-			AND R0, R0, #0xF			//Get rid of random numbers ahead of our one-hot string
+			AND R0, R0, #0xF			// remove everything from the input except the last four bits, which contain our encoded string
      cdc:	e200000f 	and	r0, r0, #15
-			MOV R1, #0					//Initialize counter
+			MOV R1, #0					// start loop counter at 0 in R1
      ce0:	e3a01000 	mov	r1, #0
 
 00000ce4 <HPS_TIM_read_ASM_LOOP>:
 			
 HPS_TIM_read_ASM_LOOP:
-			CMP R1, #4					//if counter >= 4
+			CMP R1, #4					// check loop counter
      ce4:	e3510004 	cmp	r1, #4
-			BGE HPS_TIM_read_ASM_DONE	//done
+			BGE HPS_TIM_read_ASM_DONE	// if the counter has reached the fourth (last) digit of the 4-bit input string, leave
      ce8:	aa00000f 	bge	d2c <HPS_TIM_read_ASM_DONE>
-			AND R4, R0, #1
+			AND R4, R0, #1 				// put the rightmost bit of the input in R4
      cec:	e2004001 	and	r4, r0, #1
-			CMP R4, #0
+			CMP R4, #0					// check if the rightmost bit of the input is 1 or 0 (updates flags, which are used later in this block)
      cf0:	e3540000 	cmp	r4, #0
-			ASR R0, R0, #1				//Shift input by 1
+			ASR R0, R0, #1				// shift input string one bit to the right (TODO: should this be LSL? no need to preserve sign bit, since it gets ANDed away anyway)
      cf4:	e1a000c0 	asr	r0, r0, #1
-			ADDEQ R1, R1, #1			//Increment counter if 0
+			ADDEQ R1, R1, #1			// if rightmost bit was zero, skip the process below. Increment counter
      cf8:	02811001 	addeq	r1, r1, #1
-			BEQ HPS_TIM_read_ASM_LOOP	//Branch back to loop if 0
+			BEQ HPS_TIM_read_ASM_LOOP	// if rightmost bit was zero, skip the process below. Branch back to start of loop
      cfc:	0afffff8 	beq	ce4 <HPS_TIM_read_ASM_LOOP>
 
-			//Load timer into R2 depending on which one it is
+			// load timer into R2, using the counter to determine which counter we're loading
 			CMP R1, #0
      d00:	e3510000 	cmp	r1, #0
 			LDREQ R2, =TIM_0
@@ -1584,51 +1586,53 @@ HPS_TIM_read_ASM_LOOP:
 			LDREQ R2, =TIM_3
      d1c:	059f2078 	ldreq	r2, [pc, #120]	; d9c <HPS_TIM_clear_INT_ASM_DONE+0x14>
 
-			LDR R3, [R2, #0x10]			//Load S-bit
+			LDR R3, [R2, #0x10]			// load s-bit (interrupt status bit) from chosen timer into R3 using offset from base address
      d20:	e5923010 	ldr	r3, [r2, #16]
-			AND R0, R3, #1
+			AND R0, R3, #1				// put the s-bit into the rightmost bit of R0, ensuring that all other bits are 0
      d24:	e2030001 	and	r0, r3, #1
-			B HPS_TIM_read_ASM_DONE 	//Only supports single timer, so done
+			B HPS_TIM_read_ASM_DONE 	// we're only supporting one timer, so since we already found that one timer, we can leave
      d28:	eaffffff 	b	d2c <HPS_TIM_read_ASM_DONE>
 
 00000d2c <HPS_TIM_read_ASM_DONE>:
 
 HPS_TIM_read_ASM_DONE:
-			POP {R1-R4}
+			POP {R1-R4}			// recover the registers that we stored on the stack
      d2c:	e8bd001e 	pop	{r1, r2, r3, r4}
-			BX LR
+			BX LR 				// leave
      d30:	e12fff1e 	bx	lr
 
 00000d34 <HPS_TIM_clear_INT_ASM>:
 
-//R0: HPS_TIM_t tim
+
+// input value in R0 holds: HPS_TIM_t tim
+	// supports multiple timers => can't assume that the input string is one-hot encoded
 HPS_TIM_clear_INT_ASM:
-			PUSH {R1-R4}
+			PUSH {R1-R4}				// store the values of the registers that we're planning to use so we can recover them later
      d34:	e92d001e 	push	{r1, r2, r3, r4}
-			AND R0, R0, #0xF			//Get rid of random numbers ahead of our one-hot string
+			AND R0, R0, #0xF			// remove everything from the input except the last four bits, which contain our encoded string
      d38:	e200000f 	and	r0, r0, #15
-			MOV R1, #0					//Initialize counter
+			MOV R1, #0					// start loop counter at 0 in R1
      d3c:	e3a01000 	mov	r1, #0
 
 00000d40 <HPS_TIM_clear_INT_ASM_LOOP>:
 			
 HPS_TIM_clear_INT_ASM_LOOP:
-			CMP R1, #4					//if counter >= 4
+			CMP R1, #4							// check loop counter
      d40:	e3510004 	cmp	r1, #4
-			BGE HPS_TIM_clear_INT_ASM_DONE	//done
+			BGE HPS_TIM_clear_INT_ASM_DONE		// if the counter has reached the fourth (last) digit of the 4-bit input string, leave
      d44:	aa00000f 	bge	d88 <HPS_TIM_clear_INT_ASM_DONE>
-			AND R4, R0, #1
+			AND R4, R0, #1 						// put the rightmost bit of the input in R4
      d48:	e2004001 	and	r4, r0, #1
-			CMP R4, #0
+			CMP R4, #0							// check if the rightmost bit of the input is 1 or 0 (updates flags, which are used later in this block)
      d4c:	e3540000 	cmp	r4, #0
-			ASR R0, R0, #1				//Shift input by 1
+			ASR R0, R0, #1						// shift input string one bit to the right (TODO: should this be LSL? no need to preserve sign bit, since it gets ANDed away anyway)
      d50:	e1a000c0 	asr	r0, r0, #1
-			ADDEQ R1, R1, #1			//Increment counter if 0
+			ADDEQ R1, R1, #1					// if rightmost bit was zero, skip the process below. Increment counter
      d54:	02811001 	addeq	r1, r1, #1
 			BEQ HPS_TIM_clear_INT_ASM_LOOP	//Branch back to loop if 0
      d58:	0afffff8 	beq	d40 <HPS_TIM_clear_INT_ASM_LOOP>
 
-			//Load timer into R2 depending on which one it is
+			// load timer into R2, using the counter to determine which counter we're loading
 			CMP R1, #0
      d5c:	e3510000 	cmp	r1, #0
 			LDREQ R2, =TIM_0
@@ -1646,20 +1650,20 @@ HPS_TIM_clear_INT_ASM_LOOP:
 			LDREQ R2, =TIM_3
      d78:	059f201c 	ldreq	r2, [pc, #28]	; d9c <HPS_TIM_clear_INT_ASM_DONE+0x14>
 
-			LDR R4, [R2, #0xC]			//Reading F bit clears everything... 
+			LDR R4, [R2, #0xC]			// as stated in manual, reading the F bit clears everything 
      d7c:	e592400c 	ldr	r4, [r2, #12]
 
-			ADD R1, R1, #1				//Increment counter
+			ADD R1, R1, #1					// increment loop counter
      d80:	e2811001 	add	r1, r1, #1
-			B HPS_TIM_clear_INT_ASM_LOOP
+			B HPS_TIM_clear_INT_ASM_LOOP	// go back to the start of the loop
      d84:	eaffffed 	b	d40 <HPS_TIM_clear_INT_ASM_LOOP>
 
 00000d88 <HPS_TIM_clear_INT_ASM_DONE>:
 
 HPS_TIM_clear_INT_ASM_DONE:
-			POP {R1-R4}
+			POP {R1-R4}		// recover the registers that we stored on the stack
      d88:	e8bd001e 	pop	{r1, r2, r3, r4}
-			BX LR			
+			BX LR			// leave
      d8c:	e12fff1e 	bx	lr
 			ADDEQ R1, R1, #1			// if rightmost bit was zero, skip the process below. Increment counter
 			BEQ HPS_TIM_config_ASM_LOOP	// if rightmost bit was zero, skip the process below. Branch back to start of loop

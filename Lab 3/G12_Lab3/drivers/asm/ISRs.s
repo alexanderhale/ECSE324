@@ -32,16 +32,16 @@ HPS_GPIO1_ISR:
 	BX LR
 	
 HPS_TIM0_ISR:
-	PUSH {R14}					//Push LR to stack
+	PUSH {R14}							// push LR to stack
 	
-	MOV R0, #0x1
-	BL HPS_TIM_clear_INT_ASM			//Clear tim0
+	MOV R0, #0x1						// move 0000....00001 to R0 choose Timer 0
+	BL HPS_TIM_clear_INT_ASM			// clear timer 0 to get it ready
 
-	LDR R0, =hps_tim0_int_flag			//Load spot in memory into R0
-	MOV R1, #1					
-	STR R1, [R0]					//Set flag in memory to 1 
+	LDR R0, =hps_tim0_int_flag			// load address set aside for timer flag
+	MOV R1, #1							// load a 1 into R1
+	STR R1, [R0]						// store 1 into the flag address => sets flag to 1
 
-	POP {R14}					//Pop LR from stack
+	POP {R14}							// pop LR from stack
 	BX LR
 	
 HPS_TIM1_ISR:
@@ -57,16 +57,16 @@ FPGA_INTERVAL_TIM_ISR:
 	BX LR
 	
 FPGA_PB_KEYS_ISR:
-	PUSH {R14}					//Push LR to stack
+	PUSH {R14}						// push LR to stack
 
-	BL read_PB_edgecap_ASM			//Get pushbutton that was pressed
+	BL read_PB_edgecap_ASM			// get pushbutton that was pressed
 
-	LDR R1, =pb_int_flag
-	STR R0, [R1]				//Set flag to value of pb
+	LDR R1, =pb_int_flag			// load address set aside for pushbutton flag
+	STR R0, [R1]					// set the flag to the same value as the pushbutton that was pressed
 
-	BL PB_clear_edgecap_ASM			//Clear edgecap to reset interrupt
+	BL PB_clear_edgecap_ASM			// clear edgecap to reset interrupt. Pushbutton required is still stored in R0
 
-	POP {R14}					//Pop LR from stack
+	POP {R14}						// pop LR from stack
 	BX LR
 	
 FPGA_Audio_ISR:
