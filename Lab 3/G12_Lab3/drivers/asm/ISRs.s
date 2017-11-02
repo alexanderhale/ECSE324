@@ -35,11 +35,11 @@ HPS_TIM0_ISR:
 	PUSH {R14}					//Push LR to stack
 	
 	MOV R0, #0x1
-	BL HPS_TIM_clear_INT_ASM	//Clear tim0
+	BL HPS_TIM_clear_INT_ASM			//Clear tim0
 
-	LDR R0, =hps_tim0_int_flag
-	MOV R1, #1
-	STR R1, [R0]				//Set flag to 1
+	LDR R0, =hps_tim0_int_flag			//Load spot in memory into R0
+	MOV R1, #1					
+	STR R1, [R0]					//Set flag in memory to 1 
 
 	POP {R14}					//Pop LR from stack
 	BX LR
@@ -59,12 +59,12 @@ FPGA_INTERVAL_TIM_ISR:
 FPGA_PB_KEYS_ISR:
 	PUSH {R14}					//Push LR to stack
 
-	BL read_PB_edgecap_ASM		//Get pushbutton that was pressed
+	BL read_PB_edgecap_ASM			//Get pushbutton that was pressed
 
 	LDR R1, =pb_int_flag
 	STR R0, [R1]				//Set flag to value of pb
 
-	BL PB_clear_edgecap_ASM		//Clear edgecap to reset interrupt
+	BL PB_clear_edgecap_ASM			//Clear edgecap to reset interrupt
 
 	POP {R14}					//Pop LR from stack
 	BX LR
