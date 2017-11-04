@@ -75,7 +75,7 @@ CONFIG:
 								// it's ok that we overwrite the bits that are currently there, because we'll be loading new ones in later anyway
 	// set timeout (i.e. starting value)
 	LDR R5, [R0, #0x4]		// load second value from input struct (timeout) into R5
-	STR R5, [R2]			// store timeout value into the "load" memory location of our timer
+	STR R5, [R4]			// store timeout value into the "load" memory location of our timer
 
 	//  get M bit ready (M bit instructs timer to start at the value we loaded above when it restarts)
 	LDR R5, [R0, #0x8]		// load third value from input struct (LD_en = load enable bit = M) into R5
