@@ -17,10 +17,22 @@
 	.global FPGA_PS2_DUAL_ISR
 
 	.global hps_tim0_int_flag
+	.global hps_tim1_int_flag
+	.global hps_tim2_int_flag
+	.global hps_tim3_int_flag
 	.global pb_int_flag
 
 hps_tim0_int_flag:
 	.word 0x0
+
+hps_tim1_int_flag:
+	.word 0x0
+
+hps_tim2_int_flag:
+	.word 0x0
+
+hps_tim3_int_flag:
+.word 0x0
 
 pb_int_flag:
 	.word 0x0
@@ -45,12 +57,42 @@ HPS_TIM0_ISR:
 	BX LR
 	
 HPS_TIM1_ISR:
+	PUSH {R14}							// push LR to stack
+	
+	MOV R0, #0x2						// move 0000....00010 to R0 choose Timer 1
+	BL HPS_TIM_clear_INT_ASM			// clear timer 1 to get it ready
+
+	LDR R0, =hps_tim1_int_flag			// load address set aside for timer flag
+	MOV R1, #1							// load a 1 into R1
+	STR R1, [R0]						// store 1 into the flag address => sets flag to 1
+
+	POP {R14}							// pop LR from stack
 	BX LR
 	
 HPS_TIM2_ISR:
+	PUSH {R14}							// push LR to stack
+	
+	MOV R0, #0x4						// move 0000....00100 to R0 choose Timer 2
+	BL HPS_TIM_clear_INT_ASM			// clear timer 2 to get it ready
+
+	LDR R0, =hps_tim2_int_flag			// load address set aside for timer flag
+	MOV R1, #1							// load a 1 into R1
+	STR R1, [R0]						// store 1 into the flag address => sets flag to 1
+
+	POP {R14}							// pop LR from stack
 	BX LR
 	
 HPS_TIM3_ISR:
+	PUSH {R14}							// push LR to stack
+	
+	MOV R0, #0x8						// move 0000....01000 to R0 choose Timer 3
+	BL HPS_TIM_clear_INT_ASM			// clear timer 3 to get it ready
+
+	LDR R0, =hps_tim3_int_flag			// load address set aside for timer flag
+	MOV R1, #1							// load a 1 into R1
+	STR R1, [R0]						// store 1 into the flag address => sets flag to 1
+
+	POP {R14}							// pop LR from stack
 	BX LR
 	
 FPGA_INTERVAL_TIM_ISR:
