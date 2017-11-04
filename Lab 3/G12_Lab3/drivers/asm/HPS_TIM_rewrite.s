@@ -9,22 +9,40 @@
 
 // remember: input value in R0 is HPS_TIM_config_t *param
 HPS_TIM_config_ASM:
-	PUSH {R1-R8}		// store all registers used to be recovered later (except R0, which holds the input)
+	PUSH {R1-R8, R12}		// store all registers used to be recovered later (except R0, which holds the input)
 	MOV R1, #0			// start loop counter at 0 in R1
+	MOV R12, #1
 	LDR R2, [R0]		// load starting address of timer struct into R2
 	AND R2, R2, #0xF 	// remove everything except the last four bits, which is our encoded string of timers to use
+	B LOOP
 
-CONFIG_LOOP:
+HPS_TIM_read_INT_ASM:
+	PUSH {R1-R5, R12}		// store all registers used to be recovered later (except R0, which holds the input)
+	MOV R1, #0			// start loop counter at 0 in R1
+	MOV R12, #2
+	AND R2, R2, #0xF 	// remove everything except the last four bits, which is our encoded string of timers to use
+	B LOOP
+
+HPS_TIM_clear_ASM:
+	PUSH {R1-R5, R12}		// store all registers used to be recovered later (except R0, which holds the input)
+	MOV R1, #0			// start loop counter at 0 in R1
+	MOV R12, #3
+	LDR R2, [R0]		// load starting address of timer struct into R2
+	AND R2, R2, #0xF	// remove everything except the last four bits, which is our encoded string of timers to use
+	B LOOP
+
+
+LOOP:
 	CMP R1, #4			// check loop counter
-	BGE CONFIG_DONE		// if the counter has reached the fourth (last) digit of the 4-bit input string, leave
+	BGE DONE		// if the counter has reached the fourth (last) digit of the 4-bit input string, leave
 	AND R3, R2, #1		// put the rightmost bit of the input string in R3
 	LSR R2, R2, #1		// shift input string one bit to the right to be ready for the next loop
 	CMP R3, #0			// check if rightmost bit is 1 or zero (updates flags, which are used later in this block)
-	BGT CONFIG_ONE 		// if rightmost bit is 1, perform config for that timer
+	BGT LOOP_OUT 		// if rightmost bit is 1, perform config for that timer
 	ADD R1, R1, #1		// if rightmost bit is 1, skip the process below and go back to top of loop: increment counter
-	B CONFIG_LOOP		// back to top of loop
+	B LOOP			// back to top of loop
 
-CONFIG_ONE:
+LOOP_OUT:
 	// load timer base address into R4 using the counter
 	CMP R1, #0
 	LDREQ R4, =TIM_0
@@ -34,12 +52,30 @@ CONFIG_ONE:
 	LDREQ R4, =TIM_2
 	CMP R1, #3
 	LDREQ R4, =TIM_3
+	
+	CMP R12, #1
+	BEQ CONFIG 
+	CMP R12, #2
+	BEQ READ
+	CMP R12, #3
+	BEQ CLEAR
 
+LOOP_DONE:
+
+	CMP R12, #1
+	BEQ CONFIG_DONE
+	CMP R12, #2
+	BEQ READ_DONE 			//Should never be used
+	CMP R12, #3
+	BEQ CLEAR_DONE
+
+
+
+CONFIG:
 	// disable timer while configuring
 	MOV R5, #0x0 			// get some zeros ready
 	STR R5, [R4, #0x8]		// store the zeros into the control word in the chosen timer
 								// it's ok that we overwrite the bits that are currently there, because we'll be loading new ones in later anyway
-
 	// set timeout (i.e. starting value)
 	LDR R5, [R0, #0x4]		// load second value from input struct (timeout) into R5
 	STR R5, [R2]			// store timeout value into the "load" memory location of our timer
@@ -62,86 +98,35 @@ CONFIG_ONE:
 	STR R8, [R4, #0x8]		// store the control word into the control memory location of our timer
 
 	ADD R1, R1, #1			// increment loop counter
-	B CONFIG_LOOP			// go back to the start of the loop
+	B LOOP				// go back to the start of the loop
 
 CONFIG_DONE:
-	POP {R1-R8}				// recover the registers that we stored on the stack
+	POP {R1-R8, R12}				// recover the registers that we stored on the stack
 	BX LR 					// leave
 
 
 
-// remember: input value in R0 is HPS_TIM_t tim
+	// remember: input value in R0 is HPS_TIM_t tim
 	// only supports one timer => assumes the input string is one-hot encoded
 	// TODO: same loop structure as previous subroutine is used - maybe condense some code?
-HPS_TIM_read_INT_ASM:
-	PUSH {R1-R5}		// store all registers used to be recovered later (except R0, which holds the input)
-	MOV R1, #0			// start loop counter at 0 in R1
-	AND R2, R2, #0xF 	// remove everything except the last four bits, which is our encoded string of timers to use
 
-READ_LOOP:
-	CMP R1, #4			// check loop counter
-	BGE READ_DONE		// if the counter has reached the fourth (last) digit of the 4-bit input string, leave
-	AND R3, R2, #1		// put the rightmost bit of the input string in R3
-	LSR R2, R2, #1		// shift input string one bit to the right to be ready for the next loop
-	CMP R3, #0			// check if rightmost bit is 1 or zero (updates flags, which are used later in this block)
-	BGT READ_ONE 		// if rightmost bit is 1, perform config for that timer
-	ADD R1, R1, #1		// if rightmost bit is 1, skip the process below and go back to top of loop: increment counter
-	B READ_LOOP			// back to top of loop
-
-READ_ONE:
-	// load timer base address into R4 using the counter
-	CMP R1, #0
-	LDREQ R4, =TIM_0
-	CMP R1, #1
-	LDREQ R4, =TIM_1
-	CMP R1, #2
-	LDREQ R4, =TIM_2
-	CMP R1, #3
-	LDREQ R4, =TIM_3
-
+READ:
 	LDR R5, [R4, #0x10]			// load s-bit (interrupt status bit) from chosen timer into R3 using offset from base address
 	AND R0, R5, #1				// put the s-bit into the rightmost bit of R0, ensuring that all other bits are 0
-						 	// we're only supporting one timer, so since we already found that one timer, we can leave the loop
+	B READ_DONE				// we're only supporting one timer, so since we already found that one timer, we can leave the loop
+
 READ_DONE:
-	POP {R1-R5}				// recover the registers that we stored on the stack
+	POP {R1-R5, R12}			// recover the registers that we stored on the stack
 	BX LR 					// leave
 
-
-
-// remember: input value in R0 is HPS_TIM_t tim
+	// remember: input value in R0 is HPS_TIM_t tim
 	// supports multiple timers => can't assume that the input string is one-hot encoded
-HPS_TIM_clear_ASM:
-	PUSH {R1-R5}		// store all registers used to be recovered later (except R0, which holds the input)
-	MOV R1, #0			// start loop counter at 0 in R1
-	LDR R2, [R0]		// load starting address of timer struct into R2
-	AND R2, R2, #0xF 	// remove everything except the last four bits, which is our encoded string of timers to use
 
-CLEAR_LOOP:
-	CMP R1, #4			// check loop counter
-	BGE CLEAR_DONE		// if the counter has reached the fourth (last) digit of the 4-bit input string, leave
-	AND R3, R2, #1		// put the rightmost bit of the input string in R3
-	LSR R2, R2, #1		// shift input string one bit to the right to be ready for the next loop
-	CMP R3, #0			// check if rightmost bit is 1 or zero (updates flags, which are used later in this block)
-	BGT CLEAR_ONE 		// if rightmost bit is 1, perform config for that timer
-	ADD R1, R1, #1		// if rightmost bit is 1, skip the process below and go back to top of loop: increment counter
-	B CLEAR_LOOP		// back to top of loop
-
-CLEAR_ONE:
-	// load timer base address into R4 using the counter
-	CMP R1, #0
-	LDREQ R4, =TIM_0
-	CMP R1, #1
-	LDREQ R4, =TIM_1
-	CMP R1, #2
-	LDREQ R4, =TIM_2
-	CMP R1, #3
-	LDREQ R4, =TIM_3
-
+CLEAR:
 	LDR R5, [R4, #0xC]		// as stated in the manual, reading the F bit clears everything 
-
 	ADD R1, R1, #1			// increment loop counter
-	B CLEAR_LOOP			// go back to the start of the loop
+	B LOOP				// go back to the start of the loop
 
 CLEAR_DONE:
-	POP {R1-R5}				// recover the registers that we stored on the stack
+	POP {R1-R5, R12}				// recover the registers that we stored on the stack
 	BX LR 					// leave
