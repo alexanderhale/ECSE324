@@ -145,79 +145,82 @@ int main() {
 		}
 	} */
 
-	/* -------------	PART 2 Timer-based Stopwatch   ---------------- 
-	//Initialize first timer parameters
+	/* -------------	PART 2 Polling-based Stopwatch   ---------------- 
+	// configure the timer that displays the digits
 	HPS_TIM_config_t hps_tim;
 	hps_tim.tim = TIM0;
 	hps_tim.timeout = 1000000;
 	hps_tim.LD_en = 1;
 	hps_tim.INT_en = 0;
 	hps_tim.enable = 1;
+	HPS_TIM_config_ASM(&hps_tim);
 
-	HPS_TIM_config_ASM(&hps_tim); //Config timer 1
-
-	//Initialize second timer parameters
+	// configure the timer that detects button presses
 	HPS_TIM_config_t hps_tim_pb;
 	hps_tim_pb.tim = TIM1;
 	hps_tim_pb.timeout = 5000;
 	hps_tim_pb.LD_en = 1;
 	hps_tim_pb.INT_en = 0;
 	hps_tim_pb.enable = 1;
-
-	HPS_TIM_config_ASM(&hps_tim_pb); //config timer 2
+	HPS_TIM_config_ASM(&hps_tim_pb);
 
 	int push_buttons = 0;
-	int ms_count = 0;
-	int sec_count = 0;
-	int min_count = 0;
+	int ms = 0;
+	int s = 0;
+	int min = 0;
 
-	int timer_start = 0; //Bit that holds whether time is running
+	int tim_en = 0; //Bit that holds whether time is running
 
 	while(1) {
-		if (HPS_TIM_read_INT_ASM(TIM0) && timer_start) {
-			HPS_TIM_clear_INT_ASM(TIM0);
-			ms_count += 10; //Timer is for 10 milliseconds
 
-			//Ensure ms, sec and min are within their ranges
-			if (ms_count >= 1000) {
-				ms_count -= 1000;
-				sec_count++;
-				
-				if (sec_count >= 60) {
-					sec_count -= 60;
-					min_count++;
+		// if the stopwatch is on and there's something to read from the stopwatch timer, enter here
+		if (HPS_TIM_read_INT_ASM(TIM0) && tim_en) {
+			
+			HPS_TIM_clear_INT_ASM(TIM0);		// clear the timer
+			
+			ms += 10; 							// 10ms has passed since the last time we were here
 
-					if (min_count >= 60) {
-						min_count = 0;
-					}
-				}
+			// if we have overflow of milliseconds, increase the number of seconds
+			if (ms == 1000) {
+				ms = 0;
+				s++;
 			}
 
-			//Get corecsponding digit and convert to ASCII
-			HEX_write_ASM(HEX0, ((ms_count % 100) / 10));		// removed +48
-			HEX_write_ASM(HEX1, (ms_count / 100));
-			HEX_write_ASM(HEX2, (sec_count % 10));
-			HEX_write_ASM(HEX3, (sec_count / 10));
-			HEX_write_ASM(HEX4, (min_count % 10));
-			HEX_write_ASM(HEX5, (min_count / 10));
+			// if we have an overflow of seconds, increase the number of minutes
+			if (s == 60) {
+				s = 0;
+				min++
+			}
+
+			// if we have an overflow of minutes, go back to zero. No hour unit is available
+			if (min == 60) {
+				min = 0;
+			}
+
+			// write the digits to the hex displays
+			HEX_write_ASM(HEX0, ((ms % 100) / 10));
+			HEX_write_ASM(HEX1, (ms / 100));
+			HEX_write_ASM(HEX2, (s % 10));
+			HEX_write_ASM(HEX3, (s / 10));
+			HEX_write_ASM(HEX4, (min % 10));
+			HEX_write_ASM(HEX5, (min / 10));
 		}
 
-		if (HPS_TIM_read_INT_ASM(TIM1)) { //Timer to read push buttons
-			HPS_TIM_clear_INT_ASM(TIM1);
-			int pb = 0xF & read_PB_data_ASM();
+		// if there's something to read from the pushbutton timer, enter here
+		if (HPS_TIM_read_INT_ASM(TIM1)) {
+			
+			HPS_TIM_clear_INT_ASM(TIM1);		// clear the timer
+			int pb = 0xF & read_PB_data_ASM();	// get the last four digits of the pushbuttons
 
-			if ((pb & 1) && (!timer_start)) { //Start timer
-				timer_start = 1;
-			} else if ((pb & 2) && (timer_start)) { //Stop timer
-				timer_start = 0;
-			} else if (pb & 4) { //Reset timer
-				ms_count = 0;
-				sec_count = 0;
-				min_count = 0;
-
-				timer_start = 0; //Stop timer
-				
-				//Set every number to 0
+			if ((pb_int_flag & 1) && (!tim_en)) { 				// if PB0 is pressed and the timer is off, start the timer
+				tim_en = 1;
+			} else if ((pb_int_flag & 2) && (tim_en)) { 		// if PB1 is pressed and the timer is on, stop the timer
+				tim_en = 0;
+			} else if (pb_int_flag & 4) { 						// if PB2 is pressed at any time, reset the timer and stop it
+				ms = 0;
+				s = 0;
+				min = 0;
+				tim_en = 0;
 				HEX_write_ASM(HEX0 | HEX1 | HEX2 | HEX3 | HEX4 | HEX5, 0);
 			}
 		}
@@ -253,79 +256,82 @@ int main() {
 	}*/
 
 
-	/*	------------	PART 3 - Interrupt-based Stopwatch  --------------- */
-	int_setup(2, (int []) {73, 199}); //Enable interupts for push buttons and hps timer 0
+	/*	------------	PART 3 - Interrupt-based Stopwatch  --------------- 
+	int_setup(2, (int []) {73, 199});				// enable interrupts for timer with supplied code
+	enable_PB_INT_ASM(PB0 | PB1 | PB2);				// enable interrupts for pushbuttons with written code
+	
+	// variables that hold time counters and the timer enable boolean
+	int ms = 0;
+	int s = 0;
+	int min = 0;
+	int tim_en = 0;
 
-	enable_PB_INT_ASM(PB0 | PB1 | PB2);	//Enable interrupts for pushbuttons
-
-	//Initialize timer parameters
+	// configure the timer that updates the stopwatch displays
 	HPS_TIM_config_t hps_tim;
 	hps_tim.tim = TIM0;
 	hps_tim.timeout = 1000000;
 	hps_tim.LD_en = 1;
 	hps_tim.INT_en = 0;
 	hps_tim.enable = 1;
+	HPS_TIM_config_ASM(&hps_tim);
 
-	HPS_TIM_config_ASM(&hps_tim); //Config timer
-
-	// int push_buttons = 0;
-	int ms_count = 0;
-	int sec_count = 0;
-	int min_count = 0;
-
-	int timer_start = 0; //Bit that holds whether time is running
-
+	// loop forever
 	while(1) {
-		if (hps_tim0_int_flag) { //Check if timer interrupt occurs
-			hps_tim0_int_flag = 0;
 
-			if (timer_start) {
-				ms_count += 10; //Timer is for 10 milliseconds
+		// if we get a timer interrupt, enter this block
+		if (hps_tim0_int_flag) { 
 
-				//Ensure ms, sec and min are within their ranges
-				if (ms_count >= 1000) {
-					ms_count -= 1000;
-					sec_count++;
-				
-					if (sec_count >= 60) {
-						sec_count -= 60;
-						min_count++;
+			// if the timer is on, increase the counts of each unit and display them to the hex displays
+			if (tim_en) {
 
-						if (min_count >= 60) {
-							min_count = 0;
-						}
-					}
+				ms += 10; // 10ms has passed since the last time an interrupt was raised
+
+				// if we have overflow of milliseconds, increase the number of seconds
+				if (ms == 1000) {
+					ms = 0;
+					s++;
 				}
 
-				//Get corecsponding digit and convert to ASCII
-				HEX_write_ASM(HEX0, ((ms_count % 100) / 10));		// removed +48
-				HEX_write_ASM(HEX1, (ms_count / 100));
-				HEX_write_ASM(HEX2, (sec_count % 10));
-				HEX_write_ASM(HEX3, (sec_count / 10));
-				HEX_write_ASM(HEX4, (min_count % 10));
-				HEX_write_ASM(HEX5, (min_count / 10));
+				// if we have an overflow of seconds, increase the number of minutes
+				if (s == 60) {
+					s = 0;
+					min++
+				}
+
+				// if we have an overflow of minutes, go back to zero. No hour unit is available
+				if (min == 60) {
+					min = 0;
+				}
+
+				// write the digits to the hex displays
+				HEX_write_ASM(HEX0, ((ms % 100) / 10));
+				HEX_write_ASM(HEX1, (ms / 100));
+				HEX_write_ASM(HEX2, (s % 10));
+				HEX_write_ASM(HEX3, (s / 10));
+				HEX_write_ASM(HEX4, (min % 10));
+				HEX_write_ASM(HEX5, (min / 10));
 			}
+
+			hps_tim0_int_flag = 0;		// lower the timer interrupt flag
 		}
 
-		if (pb_int_flag != 0) { //Check if pb interrupt occurs
-			if ((pb_int_flag & 1) && (!timer_start)) { //Start timer
-				timer_start = 1;
-			} else if ((pb_int_flag & 2) && (timer_start)) { //Stop timer
-				timer_start = 0;
-			} else if (pb_int_flag & 4) { //Reset timer
-				ms_count = 0;
-				sec_count = 0;
-				min_count = 0;
-
-				timer_start = 0; //Stop timer
-				
-				//Set every number to 0
+		// look out for interrupts from the pushbuttons on every iteration
+		if (pb_int_flag > 0) { 
+			if ((pb_int_flag & 1) && (!tim_en)) { 				// if PB0 is pressed and the timer is off, start the timer
+				tim_en = 1;
+			} else if ((pb_int_flag & 2) && (tim_en)) { 		// if PB1 is pressed and the timer is on, stop the timer
+				tim_en = 0;
+			} else if (pb_int_flag & 4) { 						// if PB2 is pressed at any time, reset the timer and stop it
+				ms = 0;
+				s = 0;
+				min = 0;
+				tim_en = 0;
 				HEX_write_ASM(HEX0 | HEX1 | HEX2 | HEX3 | HEX4 | HEX5, 0);
 			}
 
-			pb_int_flag = 0;
+			pb_int_flag = 0;			// lower the pushbutton interrupt flag
 		}
-	}
+	}*/
 
 	return 0;
 }
