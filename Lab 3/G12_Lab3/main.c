@@ -146,6 +146,12 @@ int main() {
 	} */
 
 	/* -------------	PART 2 Polling-based Stopwatch   ---------------- */
+	// variables that hold time counters and the timer enable boolean
+	int ms = 0;
+	int s = 0;
+	int min = 0;
+	int tim_en = 0;
+
 	// configure the timer that displays the digits
 	HPS_TIM_config_t hps_tim;
 	hps_tim.tim = TIM0;
@@ -163,13 +169,6 @@ int main() {
 	hps_tim_pb.INT_en = 0;
 	hps_tim_pb.enable = 1;
 	HPS_TIM_config_ASM(&hps_tim_pb);
-
-	int push_buttons = 0;
-	int ms = 0;
-	int s = 0;
-	int min = 0;
-
-	int tim_en = 0; //Bit that holds whether time is running
 
 	while(1) {
 
