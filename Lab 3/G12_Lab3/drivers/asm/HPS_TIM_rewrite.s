@@ -11,7 +11,7 @@
 HPS_TIM_config_ASM:
 	PUSH {R1-R8, R12}		// store all registers used to be recovered later (except R0, which holds the input)
 	MOV R1, #0			// start loop counter at 0 in R1
-	MOV R12, #1
+	MOV R12, #1			// states that we are operating in config mode for loop
 	LDR R2, [R0]		// load starting address of timer struct into R2
 	AND R2, R2, #0xF 	// remove everything except the last four bits, which is our encoded string of timers to use
 	B LOOP
@@ -19,18 +19,17 @@ HPS_TIM_config_ASM:
 HPS_TIM_read_INT_ASM:
 	PUSH {R1-R5, R12}		// store all registers used to be recovered later (except R0, which holds the input)
 	MOV R1, #0			// start loop counter at 0 in R1
-	MOV R12, #2
+	MOV R12, #2			// states that we are operating in read mode for loop
 	AND R2, R2, #0xF 	// remove everything except the last four bits, which is our encoded string of timers to use
 	B LOOP
 
 HPS_TIM_clear_ASM:
 	PUSH {R1-R5, R12}		// store all registers used to be recovered later (except R0, which holds the input)
 	MOV R1, #0			// start loop counter at 0 in R1
-	MOV R12, #3
+	MOV R12, #3		// states that we are operating in clear mode for loop
 	LDR R2, [R0]		// load starting address of timer struct into R2
 	AND R2, R2, #0xF	// remove everything except the last four bits, which is our encoded string of timers to use
 	B LOOP
-
 
 LOOP:
 	CMP R1, #4			// check loop counter
@@ -54,22 +53,18 @@ LOOP_OUT:
 	LDREQ R4, =TIM_3
 	
 	CMP R12, #1
-	BEQ CONFIG 
+	BEQ CONFIG 		//begins config mode
 	CMP R12, #2
-	BEQ READ
+	BEQ READ		//begins read mode
 	CMP R12, #3
-	BEQ CLEAR
+	BEQ CLEAR		//begins clear mode
 
 LOOP_DONE:
 
 	CMP R12, #1
-	BEQ CONFIG_DONE
-	CMP R12, #2
-	BEQ READ_DONE 			//Should never be used
+	BEQ CONFIG_DONE			//finishes config mode
 	CMP R12, #3
-	BEQ CLEAR_DONE
-
-
+	BEQ CLEAR_DONE			//finishes clear mode
 
 CONFIG:
 	// disable timer while configuring
@@ -104,12 +99,6 @@ CONFIG_DONE:
 	POP {R1-R8, R12}				// recover the registers that we stored on the stack
 	BX LR 					// leave
 
-
-
-	// remember: input value in R0 is HPS_TIM_t tim
-	// only supports one timer => assumes the input string is one-hot encoded
-	// TODO: same loop structure as previous subroutine is used - maybe condense some code?
-
 READ:
 	LDR R5, [R4, #0x10]			// load s-bit (interrupt status bit) from chosen timer into R3 using offset from base address
 	AND R0, R5, #1				// put the s-bit into the rightmost bit of R0, ensuring that all other bits are 0
@@ -119,14 +108,11 @@ READ_DONE:
 	POP {R1-R5, R12}			// recover the registers that we stored on the stack
 	BX LR 					// leave
 
-	// remember: input value in R0 is HPS_TIM_t tim
-	// supports multiple timers => can't assume that the input string is one-hot encoded
-
 CLEAR:
 	LDR R5, [R4, #0xC]		// as stated in the manual, reading the F bit clears everything 
 	ADD R1, R1, #1			// increment loop counter
 	B LOOP				// go back to the start of the loop
 
 CLEAR_DONE:
-	POP {R1-R5, R12}				// recover the registers that we stored on the stack
+	POP {R1-R5, R12}			// recover the registers that we stored on the stack
 	BX LR 					// leave
