@@ -33,7 +33,7 @@ HPS_TIM_clear_ASM:
 
 LOOP:
 	CMP R1, #4			// check loop counter
-	BGE DONE		// if the counter has reached the fourth (last) digit of the 4-bit input string, leave
+	BGE LOOP_DONE		// if the counter has reached the fourth (last) digit of the 4-bit input string, leave
 	AND R3, R2, #1		// put the rightmost bit of the input string in R3
 	LSR R2, R2, #1		// shift input string one bit to the right to be ready for the next loop
 	CMP R3, #0			// check if rightmost bit is 1 or zero (updates flags, which are used later in this block)
