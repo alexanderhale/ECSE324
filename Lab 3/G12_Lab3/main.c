@@ -145,7 +145,7 @@ int main() {
 		}
 	} */
 
-	/* -------------	PART 2 Polling-based Stopwatch   ---------------- 
+	/* -------------	PART 2 Polling-based Stopwatch   ---------------- */
 	// configure the timer that displays the digits
 	HPS_TIM_config_t hps_tim;
 	hps_tim.tim = TIM0;
@@ -189,7 +189,7 @@ int main() {
 			// if we have an overflow of seconds, increase the number of minutes
 			if (s == 60) {
 				s = 0;
-				min++
+				min++;
 			}
 
 			// if we have an overflow of minutes, go back to zero. No hour unit is available
@@ -224,7 +224,7 @@ int main() {
 				HEX_write_ASM(HEX0 | HEX1 | HEX2 | HEX3 | HEX4 | HEX5, 0);
 			}
 		}
-	} */
+	}
 
 
 	/*	------------	PART 3 - INTERRUPTS EXAMPLE   --------------- 
