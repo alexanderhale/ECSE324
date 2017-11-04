@@ -21,6 +21,7 @@ HPS_TIM_read_INT_ASM:
 	PUSH {R1-R5, R12}		// store all registers used to be recovered later (except R0, which holds the input)
 	MOV R1, #0				// start loop counter at 0 in R1
 	MOV R12, #2				// states that we are operating in read mode for loop
+	LDR R2, [R0]
 	AND R2, R2, #0xF 		// remove everything except the last four bits, which is our encoded string of timers to use
 	B LOOP
 
@@ -37,12 +38,11 @@ LOOP:
 	CMP R1, #4			// check loop counter
 	BGE LOOP_DONE		// if the counter has reached the fourth (last) digit of the 4-bit input string, leave
 	AND R3, R2, #1		// put the rightmost bit of the input string in R3
-	LSR R2, R2, #1		// shift input string one bit to the right to be ready for the next loop
 	CMP R3, #0			// check if rightmost bit is 1 or zero (updates flags, which are used later in this block)
-	BGT LOOP_OUT 		// if rightmost bit is 1, perform config for that timer
-	ADD R1, R1, #1		// if rightmost bit is 1, skip the process below and go back to top of loop: increment counter
-	B LOOP				// back to top of loop
-
+	ASR R2, R2, #1		// shift input string one bit to the right to be ready for the next loop
+	ADDEQ R1, R1, #1		// if rightmost bit is 1, skip the process below and go back to top of loop: increment counter
+	BEQ LOOP				// back to top of loop
+	B LOOP_OUT
 LOOP_OUT:
 	// load timer base address into R4 using the counter
 	CMP R1, #0
@@ -65,12 +65,15 @@ LOOP_DONE:
 
 	CMP R12, #1
 	BEQ CONFIG_DONE			//finishes config mode
+	CMP R12, #2	
+	BEQ READ_DONE
 	CMP R12, #3
 	BEQ CLEAR_DONE			//finishes clear mode
 
 CONFIG:
 	// disable timer while configuring
-	MOV R5, #0x0 			// get some zeros ready
+	LDR R5, [R0, #0x8] 			// get some zeros ready
+	AND R5, R5, #0x6
 	STR R5, [R4, #0x8]		// store the zeros into the control word in the chosen timer
 								// it's ok that we overwrite the bits that are currently there, because we'll be loading new ones in later anyway
 	// set timeout (i.e. starting value)
@@ -104,7 +107,9 @@ CONFIG_DONE:
 READ:
 	LDR R5, [R4, #0x10]			// load s-bit (interrupt status bit) from chosen timer into R3 using offset from base address
 	AND R0, R5, #1				// put the s-bit into the rightmost bit of R0, ensuring that all other bits are 0
-								// we're only supporting one timer, so since we already found that one timer, we can leave the loop
+	B READ_DONE
+
+READ_DONE:								// we're only supporting one timer, so since we already found that one timer, we can leave the loop
 	POP {R1-R5, R12}			// recover the registers that we stored on the stack
 	BX LR 					// leave
 
