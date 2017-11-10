@@ -2,7 +2,7 @@
     <architecture>ARM Cortex-A9</architecture>
     <system>
         <sample_system_title>DE1-SoC Computer for ARM-A9</sample_system_title>
-        <cable>DE-SoC [USB-1]</cable>
+        <cable>Remote server DE-SoC: Unable to connect</cable>
         <processor>ARM_A9_HPS_arm_a9_0</processor>
         <reset_processor_during_load>true</reset_processor_during_load>
         <terminal>JTAG_UART_for_ARM_0</terminal>
@@ -19,6 +19,8 @@
             <source_file filepath="true">drivers/inc/ps2_keyboard.h</source_file>
             <source_file filepath="true">drivers/inc/pushbuttons.h</source_file>
             <source_file filepath="true">drivers/inc/slider_switches.h</source_file>
+            <source_file filepath="true">drivers/inc/AUDIO.h</source_file>
+            <source_file filepath="true">drivers/inc/AUDIO.h</source_file>
         </source_files>
         <options>
             <compiler_flags>-g -O0</compiler_flags>
