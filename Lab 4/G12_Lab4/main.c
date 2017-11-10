@@ -5,16 +5,21 @@
 #include "./drivers/inc/VGA.h"
 #include "./drivers/inc/ps2_keyboard.h"
 
-
+void test_pixel();
 int main() {
 	// ------------------ PART 1 - VGA --------------------- //
 	while(1) {
-		int number = 0x1FF & read_slider_switches_ASM();	// keep all 9 slider digits
+		test_pixel();
+
+
+
+
+		/*int number = 0x1FF & read_slider_switches_ASM();	// keep all 9 slider digits
 		int keys = 0xF & read_PB_data_ASM();				// keep all 4 key digits
 
 		// TODO: change to (if - else if) if we only want one at a time to be possible
 		if (0x1 & keys) {					// if first button is pressed
-			if (slider_switches) {			// if any switches are on
+			if (number) {			// if any switches are on
 				test_byte();
 			} else {
 				test_char();
@@ -28,15 +33,15 @@ int main() {
 		}
 		if (0x8 & keys) {					// if fourth keys is pressed
 			VGA_clear_pixelbuff_ASM();
-		}
+		}*/
 	}
 
-	// ------------------- PART 2 - PS/2 KEYBOARD --------- //
+	/* ------------------- PART 2 - PS/2 KEYBOARD --------- 
 	while(1) {
-		if (read_PS2_data_ASM(/*char to display, from keyboard*/)) {
-			
+		if (read_PS2_data_ASM(/*char to display, from keyboard)) {
+
 		}
-	}
+	}*/
 
 }
 

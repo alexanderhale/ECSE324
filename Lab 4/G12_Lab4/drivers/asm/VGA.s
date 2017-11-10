@@ -44,7 +44,7 @@ LOOP_INNER:
 
 		MOV R4, R1			// take y counter
 		ROR R4, #25			// rotate y counter into correct position
-		ORR R4, [R2]		// get base address in there
+		ORR R4, R2			// get base address in there		// TODO: check if this syntax works properly
 		ORR R4, R0 			// add in the x counter
 
 		STR R3, [R4] 		// store 0s into the location we determined
@@ -76,7 +76,7 @@ VGA_write_char_ASM:
 
 	MOV R4, R1			// take y value
 	ROR R4, #25			// rotate y value into correct position
-	ORR R4, [R5]		// get base address in there
+	ORR R4, R5			// get base address in there
 	ORR R4, R0 			// add in the x value
 	STR R2, [R4]		// store the input value to the address
 
@@ -108,7 +108,7 @@ VGA_write_byte_ASM:
 	LSR R3, #4		// remove rightmost bits from input
 	MOV R4, R1		// take y value
 	ROR R4, #25		// rotate y value into correct position
-	ORR R4, [R5]	// get base address in there
+	ORR R4, R5		// get base address in there
 	ORR R4, R0 		// add in the x counter
 	STR R2, [R4]	// store the input value to the address
 
@@ -120,11 +120,11 @@ VGA_write_byte_ASM:
 	MOVGT R1, #0		// if yes, send y back to 0 (top)
 
 	// store second four bits in memory location indicated by x and y
-	MOV R3, 0xF		// get 1s in the last 4 bits
+	MOV R3, #0xF	// get 1s in the last 4 bits
 	AND R1, R3		// keep last four bits of input
 	MOV R4, R1		// take y value
 	ROR R4, #25		// rotate y value into correct position
-	ORR R4, [R5]	// get base address in there
+	ORR R4, R5		// get base address in there
 	ORR R4, R0 		// add in the x value
 	STR R2, [R4]	// store the input value to the address
 	
@@ -156,7 +156,7 @@ VGA_draw_point_ASM: //Should be good
 
 	MOV R4, R1			// take y value
 	ROR R4, #25			// rotate y value into correct position
-	ORR R4, [R5]		// get base address in there
+	ORR R4, R5			// get base address in there
 	ORR R4, R0 			// add in the x value
 	STR R2, [R4]		// store the input value to the address
 
