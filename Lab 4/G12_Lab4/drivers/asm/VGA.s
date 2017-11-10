@@ -8,131 +8,161 @@
 	.global VGA_draw_point_ASM
 
 // set all valid memory locations in character buffer to 0
-	// inputs: R0 = 
+	// inputs: none
 VGA_clear_charbuff_ASM:
 	
-	PUSH {R0-R8,LR}
-	MOV R0, #59 //X address
-	MOV R1, #79	//Y address
-	LDR R2, =CHARACTER_buffer
+	PUSH {R0-R8,LR}				// store registers in use for recovery later
+	MOV R0, #59 				// start x counter at 59
+	MOV R1, #79					// start y counter at 79 
+	LDR R2, =CHARACTER_buffer	// base address
 	LDR R3, ZEROS
-	MOV R4, #128 //Y address multiplier
 	B LOOP_OUTER
 	
 // set all valid memory locations in pixel buffer to 0
+	// inputs: none
 VGA_clear_pixelbuff_ASM:
 
 	PUSH {R0-R8,LR}
-	MOV R0, #200 //figuring out how to get the #319 there, currently too big
-	MOV R1, #79
+	MOV R0, #300 			// start x counter at 319
+	ADD R0, R0, #19				// immediate value structure can't handle 319, use addition instead
+	MOV R1, #239			// start y counter at 239
 	MOV R8, R1
 	LDR R2, =PIXEL_buffer
 	LDR R3, ZEROS
-	MOV R4, #1024 //Y address buffer
 	B LOOP_OUTER
 
 LOOP_OUTER:
 		CMP R0, #0
-		BLT END_CLEAR 	//Outer loop counter, looks at x address
-		MOV R1, R8		//Resets inner loop
+		BLT END_CLEAR 		// Outer loop counter, looks at x address
+		MOV R1, R8			// Reset inner loop
 		B LOOP_INNER
 
 LOOP_INNER:
-		CMP R1, #0		//Inner loop, looks at y address
-		SUBLT R0,R0,#1	//Decrements outer loop
-		BLT LOOP_OUTER
-		B RUN
-RUN:
-		MLA R5, R1, R4, R0 //offset
-		STR R3, [R2,R5] //applied offset to base, stores 0's into that location in memory
-		SUB R1, R1, #1 //loop counter decrements
+		CMP R1, #0			// Inner loop, looks at y address
+		SUBLT R0,R0,#1		// Decrement outer loop
+		BLT LOOP_OUTER		// back to outer loop
+
+		MOV R4, R1			// take y counter
+		ROR R4, #25			// rotate y counter into correct position
+		ORR R4, [R2]		// get base address in there
+		ORR R4, R0 			// add in the x counter
+
+		STR R3, [R4] 		// store 0s into the location we determined
+		SUB R1, R1, #1 		// decrement y counter
 		B LOOP_INNER
 
 END_CLEAR: 
-	POP {R0-R8,LR}
-	BX LR
+	POP {R0-R8,LR}			// restore used registers
+	BX LR 					// leave
 
 
 // write ASCII code passed in 3rd input
 	// store value of 3rd input at address calculated with first 2 inputs
 	// check that the supplied coordinates are valid
-VGA_write_char_ASM: //Should be good
+	// inputs: R0 = x coordinate, R1 = y coordinate, R2 = ASCII code for char
+VGA_write_char_ASM:
 
-	PUSH {R0-R5, LR}
-	LDR R5,= CHARACTER_buffer
-	//CMP R0, #79
-	//BGT END_WRITE_CHAR
-	//CMP R0, #0
-	//BLT END_WRITE_CHAR
-	//CMP R1, #59
-	//BGT END_WRITE_CHAR
-	//CMP R1, #0
-	//BLT END_WRITE_CHAR
-	MOV R3, #128  
-	MLA R4, R1, R3, R0 //Address offset
-	STR R2, [R5,R4]	
-	B END_WRITE_CHAR
+	PUSH {R0-R5, LR}			// save the registers we're about to use
+	LDR R5, =CHARACTER_buffer	// nase address
+
+	CMP R0, #79				// check that x is within the allowed range
+	BGT END_WRITE_CHAR
+	CMP R0, #0
+	BLT END_WRITE_CHAR
+	CMP R1, #59				// check that y is within the allowed range
+	BGT END_WRITE_CHAR
+	CMP R1, #0
+	BLT END_WRITE_CHAR
+
+	MOV R4, R1			// take y value
+	ROR R4, #25			// rotate y value into correct position
+	ORR R4, [R5]		// get base address in there
+	ORR R4, R0 			// add in the x value
+	STR R2, [R4]		// store the input value to the address
 
 END_WRITE_CHAR:
-	POP {R0-R5, LR}
-	BX LR	
-
+	POP {R0-R5, LR}		// recover saved registers
+	BX LR	 			// leave
 
 
 // write hexadecimal representation of value passed in 3rd input
 	// this means that two characters are printed, starting at coordinates
 	// passed in through first 2 arguments
-VGA_write_byte_ASM: //think we need to have a char to byte converter, have not done yet
+	// inputs: R0 = x coordinate, R1 = y coordinate, R2 = byte to be written
+VGA_write_byte_ASM:
 
 	PUSH {R0-R5, LR}
-	LDR R5,= CHARACTER_buffer
-	CMP R0, #79
-	BGT END_WRITE_CHAR
-	CMP R0, #0
-	BLT END_WRITE_CHAR
-	CMP R1, #59
-	BGT END_WRITE_CHAR
-	CMP R1, #0
-	BLT END_WRITE_CHAR
-	MOV R3, #128
-	LDR R5, [R5, R0]  
-	MLA R4, R1, R3, R5 //Address
-	STR R2, [R4]	
-	B END_WRITE_BYTE
+	LDR R5, =CHARACTER_buffer
 
-END_WRITE_BYTE:
-	POP {R0-R5, LR}
-	BX LR	
+	CMP R0, #79			// check that x is within the allowed range
+	BGT END_WRITE_BYTE
+	CMP R0, #0
+	BLT END_WRITE_BYTE
+	CMP R1, #59			// check that y is within the allowed range
+	BGT END_WRITE_BYTE
+	CMP R1, #0
+	BLT END_WRITE_BYTE
+
+	// store first four bits in memory location indicated by input
+	MOV R3, R2		// copy input into another register
+	LSR R3, #4		// remove rightmost bits from input
+	MOV R4, R1		// take y value
+	ROR R4, #25		// rotate y value into correct position
+	ORR R4, [R5]	// get base address in there
+	ORR R4, R0 		// add in the x counter
+	STR R2, [R4]	// store the input value to the address
+
+	ADD R0, R0, #1	// increment x address by 1 to go to next grid spot
+	CMP R0, #79		// check if the x counter has reached the right side of the screen
+	MOVGT R0, #0	// if yes, send x back to 0 (left side)
+	ADDGT R1, #1	// if yes, increment y by 1
+	CMP R1, #59		// check if the y counter has reached the bottom of the screen
+	MOVGT R1, #0		// if yes, send y back to 0 (top)
+
+	// store second four bits in memory location indicated by x and y
+	MOV R3, 0xF		// get 1s in the last 4 bits
+	AND R1, R3		// keep last four bits of input
+	MOV R4, R1		// take y value
+	ROR R4, #25		// rotate y value into correct position
+	ORR R4, [R5]	// get base address in there
+	ORR R4, R0 		// add in the x value
+	STR R2, [R4]	// store the input value to the address
 	
 
+END_WRITE_BYTE:
+	POP {R0-R5, LR}	// recover saved registers
+	BX LR			// leave
+	
 
 // draw a point on the screen with the indicated colour, accessing
 // only pixel buffer memory
 	// similar to VGA_write_char_ASM
+	// inputs: R0 = x coordinate, R1 = y coordinate, R2 = colour
 VGA_draw_point_ASM: //Should be good
 
 	PUSH {R0-R5, LR}
-	LDR R5,= PIXEL_buffer
-	CMP R0, #200 //trying to figure out how to get the number 319 there
-	BGT END_WRITE_CHAR
+	LDR R5, =PIXEL_buffer
+
+	MOV R3, #300 			// use R3 as comparison register
+	ADD R3, R3, #19				// immediate value structure can't handle 319, use addition instead
+	CMP R0, R3				// check that x is within the allowed range
+	BGT END_DRAW_POINT
 	CMP R0, #0 
-	BLT END_WRITE_CHAR
-	CMP R1, #239
-	BGT END_WRITE_CHAR
+	BLT END_DRAW_POINT
+	CMP R1, #239			// check that y is within the allowed range
+	BGT END_DRAW_POINT
 	CMP R1, #0
-	BLT END_WRITE_CHAR
-	MOV R3, #1024  
-	MLA R4, R1, R3, R0 //Address
-	LDR R5, [R5,R4]
-	STR R2, [R5]	
-	B END_DRAW_POINT
+	BLT END_DRAW_POINT
+
+	MOV R4, R1			// take y value
+	ROR R4, #25			// rotate y value into correct position
+	ORR R4, [R5]		// get base address in there
+	ORR R4, R0 			// add in the x value
+	STR R2, [R4]		// store the input value to the address
 
 END_DRAW_POINT:
-	POP {R0-R5, LR}
-	BX LR	
+	POP {R0-R5, LR}		// recover saved registers
+	BX LR				// leave
 
-
-
-ZEROS:	.word 0x00000000
-
+ZEROS:	.word 0x0
 	.end

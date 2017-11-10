@@ -2,7 +2,7 @@
     <architecture>ARM Cortex-A9</architecture>
     <system>
         <sample_system_title>DE1-SoC Computer for ARM-A9</sample_system_title>
-        <cable>null</cable>
+        <cable>Remote server DE-SoC: Unable to connect</cable>
         <processor>ARM_A9_HPS_arm_a9_0</processor>
         <reset_processor_during_load>true</reset_processor_during_load>
         <terminal>JTAG_UART_for_ARM_0</terminal>
@@ -11,6 +11,9 @@
         <type>Assembly Program</type>
         <source_files>
             <source_file filepath="true">simple_program.s</source_file>
+            <source_file filepath="true">address_map_arm.s</source_file>
+            <source_file filepath="true">drivers/asm/VGA.s</source_file>
+            <source_file filepath="true">drivers/inc/VGA.h</source_file>
         </source_files>
         <options>
             <start_symbol>_start</start_symbol>
