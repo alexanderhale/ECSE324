@@ -12,11 +12,11 @@
 VGA_clear_charbuff_ASM:
 	
 	PUSH {R0-R8,LR}				// store registers in use for recovery later
-	MOV R0, #59 				// start x counter at 59
-	MOV R1, #79					// start y counter at 79
+	MOV R0, #79 				// start x counter at 59
+	MOV R1, #59					// start y counter at 79
 	MOV R8, R1					// copy of y counter for inner loop reset
 	LDR R2, =CHARACTER_buffer	// base address
-	LDRB R3, ZEROS					// TODO: check if this should be a byte
+	LDR R3, ZEROS					// TODO: check if this should be a byte
 
 CHAR_LOOP_O:
 	CMP R0, #0
@@ -51,7 +51,7 @@ VGA_clear_pixelbuff_ASM:
 	MOV R1, #239			// start y counter at 239
 	MOV R8, R1				// copy of y counter for inner loop reset
 	LDR R2, =PIXEL_buffer	// base address
-	LDRB R3, ZEROS				// TODO: check if this should be a byte
+	LDR R3, ZEROS				// TODO: check if this should be a byte
 
 LOOP_OUTER:
 		CMP R0, #0
@@ -70,7 +70,7 @@ LOOP_INNER:
 		LSL R6, #1			// shift one digit left
 		ORR R4, R6 			// add in the x counter
 
-		STR R3, [R4] 		// store 0s into the location we determined
+		STRH R3, [R4] 		// store 0s into the location we determined	// TODO: check if this should be STRB
 		SUB R1, R1, #1 		// decrement y counter
 		B LOOP_INNER
 
@@ -129,11 +129,14 @@ VGA_write_byte_ASM:
 	// store first four bits in memory location indicated by input
 	MOV R3, R2		// copy input into another register
 	LSR R3, #4		// remove rightmost bits from input
+	CMP R3, #10		// check if the hex digit is a letter or number
+	ADDGE R3, R3, #55	// make it the appropriate ASCII letter
+	ADDLT R3, R3, #48	// make it the appropriate ASCII number
 	MOV R4, R1		// take y value
 	ROR R4, #25		// rotate y value into correct position
 	ORR R4, R5		// get base address in there
 	ORR R4, R0 		// add in the x counter
-	STRB R2, [R4]	// store the input value to the address			// TODO: check that STRB is ok
+	STRB R3, [R4]	// store the input value to the address			// TODO: check that STRB is ok
 
 	ADD R0, R0, #1	// increment x address by 1 to go to next grid spot
 	CMP R0, #79		// check if the x counter has reached the right side of the screen
@@ -144,7 +147,10 @@ VGA_write_byte_ASM:
 
 	// store second four bits in memory location indicated by x and y
 	MOV R3, #0xF	// get 1s in the last 4 bits
-	AND R1, R3		// keep last four bits of input
+	AND R2, R3		// keep last four bits of input
+	CMP R2, #10		// check if the hex digit is a letter or number
+	ADDGE R2, R2, #55	// make it the appropriate ASCII letter
+	ADDLT R2, R2, #48	// make it the appropriate ASCII number
 	MOV R4, R1		// take y value
 	ROR R4, #25		// rotate y value into correct position
 	ORR R4, R5		// get base address in there
@@ -183,7 +189,7 @@ VGA_draw_point_ASM:
 	MOV R6, R0 			// make a copy of the x counter
 	LSL R6, #1			// shift one digit left
 	ORR R4, R6 			// add in the x counter
-	STRB R2, [R4]		// store the input value to the address		// TODO: check that STRB is ok
+	STRH R2, [R4]		// store the input value to the address		// TODO: check that STRB is ok
 
 END_DRAW_POINT:
 	POP {R0-R6, LR}		// recover saved registers

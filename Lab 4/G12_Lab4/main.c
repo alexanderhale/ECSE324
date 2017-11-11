@@ -40,7 +40,7 @@ void test_pixel(){
 
 int main() {
 	// ------------------ PART 1 - VGA --------------------- //
-	while(1) {
+	/*while(1) {
 		int number = 0x1FF & read_slider_switches_ASM();	// keep all 9 slider digits
 		int keys = 0xF & read_PB_data_ASM();				// keep all 4 key digits
 
@@ -51,42 +51,51 @@ int main() {
 			} else {
 				test_char();
 			}
-		}
-		if (0x2 & keys) {					// if second key is pressed
+		} else if (0x2 & keys) {					// if second key is pressed
 			test_pixel();
-		}
-		if (0x4 & keys) {					// if third key is pressed
+		} else if (0x4 & keys) {					// if third key is pressed
 			VGA_clear_charbuff_ASM();
-		}
-		if (0x8 & keys) {					// if fourth keys is pressed
+		} else if (0x8 & keys) {					// if fourth keys is pressed
 			VGA_clear_pixelbuff_ASM();
 		}
-	}
+	}*/
 
 	/* ------------------- PART 2 - PS/2 KEYBOARD --------- */
-	// TODO: check all of this. C ain't my first language
 	int x = 0;
 	int y = 0;
+	int * PS2_port = (int *) 0xFF200100;		// PS/2 port address
+	int previous = 0;
 	while(1) {
-		int * PS2_port = (int *) 0xFF200100;		// PS/2 port address
+		int keys = 0xF & read_PB_data_ASM();  		// keep all 4 key digits
 
-		// if the RVALID flag is 1, enter this if block
-		if (read_PS2_data_ASM(0xFF & *PS2_port)) {					// note: I originally had this as "read_PS2_data_ASM(PS2_port)"
-			VGA_write_byte_ASM(x += 3, y, 0xFF & *PS2_port);		// write the value stored in the first 8 bits of the PS2_data register
-		
-			// if x or y have wrapped around, reset them
-			if (x > 79) {
-				x = 0;
-				y++;
+		if (keys) {
+			VGA_clear_charbuff_ASM();
+		} else {
+			// if the RVALID flag is 1, enter this if block
+			if (read_PS2_data_ASM(PS2_port)) {
+				int current = 0xFF & *PS2_port;
 
-				if (y > 59) {
-					y = 0;
+				if (current < 240 && current != previous) {		// do not print break codes or the previously typed value
+					// the most recent input is a break code
+					VGA_write_byte_ASM(x += 3, y, current);		// write the value stored in the first 8 bits of the PS2_data register
+					
+					// if x or y have wrapped around, reset them
+					if (x > 79) {
+						x = 0;
+						y++;
+
+						if (y > 59) {
+							y = 0;
+						}
+					}
+					// store this value for future use
+					previous = current;
 				}
 			}
 		}
 	}
 
-	/* ------------------- PART 3 - AUDIO ------------------*/
+	/* ------------------- PART 3 - AUDIO ------------------
 	// TODO: check all of this. C ain't my first language
 	// sample rate = 48 000 samples / second
 	// square wave is 100 Hz
@@ -109,5 +118,5 @@ int main() {
 				}
 			}
 		}
-	}
+	}*/
 }

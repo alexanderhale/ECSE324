@@ -9,6 +9,6 @@
 				// at the address of the char pointer argument. Return
 				// 1 to indicate valid data.
 			// if invalid, return 0
-		int read_PS2_data_ASM(char data);
+		int read_PS2_data_ASM(int * data);
 
 	#endif
