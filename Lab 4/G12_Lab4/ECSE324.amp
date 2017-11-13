@@ -21,6 +21,8 @@
             <source_file filepath="true">drivers/inc/slider_switches.h</source_file>
             <source_file filepath="true">drivers/inc/AUDIO.h</source_file>
             <source_file filepath="true">drivers/inc/AUDIO.h</source_file>
+            <source_file filepath="true">drivers/inc/AUDIO.h</source_file>
+            <source_file filepath="true">drivers/asm/AUDIO.s</source_file>
         </source_files>
         <options>
             <compiler_flags>-g -O0</compiler_flags>

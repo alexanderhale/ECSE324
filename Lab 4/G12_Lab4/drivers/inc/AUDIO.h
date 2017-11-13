@@ -1,4 +1,3 @@
-// asdf
 #ifndef __AUDIO
 #define __AUDIO
 		

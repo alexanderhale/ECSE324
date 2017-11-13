@@ -4,6 +4,8 @@
 #include "./drivers/inc/slider_switches.h"
 #include "./drivers/inc/VGA.h"
 #include "./drivers/inc/ps2_keyboard.h"
+#include "./drivers/inc/AUDIO.h"
+
 
 void test_char() {
 	int x, y;
@@ -39,8 +41,8 @@ void test_pixel(){
 }
 
 int main() {
-	// ------------------ PART 1 - VGA --------------------- //
-	/*while(1) {
+	/* ------------------ PART 1 - VGA --------------------- 
+	while(1) {
 		int number = 0x1FF & read_slider_switches_ASM();	// keep all 9 slider digits
 		int keys = 0xF & read_PB_data_ASM();				// keep all 4 key digits
 
@@ -60,11 +62,16 @@ int main() {
 		}
 	}*/
 
-	/* ------------------- PART 2 - PS/2 KEYBOARD --------- */
+	/* ------------------- PART 2 - PS/2 KEYBOARD --------- 
 	int x = 0;
 	int y = 0;
-	int * PS2_port = (int *) 0xFF200100;		// PS/2 port address
-	int previous = 0;
+	int clock = 0;
+	int delay = 1;
+	char * data;		// PS/2 port address
+	char current = 0;
+	char previous = 0;
+	VGA_clear_charbuff_ASM();		// clear screen of old stuff
+
 	while(1) {
 		int keys = 0xF & read_PB_data_ASM();  		// keep all 4 key digits
 
@@ -72,31 +79,83 @@ int main() {
 			VGA_clear_charbuff_ASM();
 		} else {
 			// if the RVALID flag is 1, enter this if block
-			if (read_PS2_data_ASM(PS2_port)) {
-				int current = 0xFF & *PS2_port;
+			if (read_PS2_data_ASM(data)) {
+				char input = *data;
 
-				if (current < 240 && current != previous) {		// do not print break codes or the previously typed value
-					// the most recent input is a break code
-					VGA_write_byte_ASM(x += 3, y, current);		// write the value stored in the first 8 bits of the PS2_data register
-					
-					// if x or y have wrapped around, reset them
-					if (x > 79) {
-						x = 0;
-						y++;
-
-						if (y > 59) {
-							y = 0;
+				// typematic situation requires more logic, so put it here separately
+				if (input == current) {
+					if (previous == 0xF0 || previous == 0xFE || previous == 0xFA) {
+						// if the previous is a break code, print the new keystroke and update our list
+						previous = current;
+						current = input;
+						
+						VGA_write_byte_ASM(x += 3, y, current);		// write the new key press to the screen
+					} else {
+						// otherwise, a key is being held, so start the typematic process
+						
+						// if input data is the current input, do nothing (i.e. can only hit each key once)
+						clock += 1;		// increment "timer"
+						
+						if (delay) {
+							// if we're still in the typematic delay phase, wait until the "clock" gets to 20
+							if (clock < 8) {
+								clock++;
+							} else {
+								VGA_write_byte_ASM(x += 3, y, current);	// output current key
+								clock = 0;						// reset "clock"
+								delay = 0;						// indicate that we've left the typematic delay phase
+							}
+						} else {
+							if (clock < 2) {
+								clock++;
+							} else {
+								VGA_write_byte_ASM(x += 3, y, current);	// output current key
+								clock = 0;						// reset "clock"
+							}
 						}
 					}
-					// store this value for future use
-					previous = current;
+				} else {
+					// reset typematic variables
+					clock = 0;
+					delay = 1;
+
+					// all other cases go here
+					if (input == 0) {
+						// if input data is empty, do nothing
+					} else if (input == 0xF0 || input == 0xFE || input == 0xFA) {
+						// if input data is a break code, print nothing but update our list
+						previous = current;
+						current = input;
+					} else if (input == previous) {
+						// current status is: previous = key, current = break code, input = same key
+							// this must be the code sent after the break code, so we don't need to print anything
+							// we need to update our list
+						previous = current;
+						current = input;
+					} else {
+						// input is a new key press
+						// update list
+						previous = current;
+						current = input;
+						
+						VGA_write_byte_ASM(x += 3, y, current);		// write the new key press to the screen
+					}
+				}
+
+				// if x or y have wrapped around, reset them
+				if (x >= 78) {
+					x = 0;
+					y++;
+					
+					if (y > 59) {
+						y = 0;
+					}
 				}
 			}
 		}
-	}
+	}*/
 
-	/* ------------------- PART 3 - AUDIO ------------------
-	// TODO: check all of this. C ain't my first language
+	/* ------------------- PART 3 - AUDIO ------------------ */
 	// sample rate = 48 000 samples / second
 	// square wave is 100 Hz
 	// (48 000 samples / sec) / (100 cycles / sec) = 480 samples / cycle
@@ -118,5 +177,5 @@ int main() {
 				}
 			}
 		}
-	}*/
+	}
 }

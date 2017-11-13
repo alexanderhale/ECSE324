@@ -1,4 +1,3 @@
-// asdf
 #ifndef __ps2_keyboard
 #define __ps2_keyboard
 		
@@ -9,6 +8,6 @@
 				// at the address of the char pointer argument. Return
 				// 1 to indicate valid data.
 			// if invalid, return 0
-		int read_PS2_data_ASM(int * data);
+		int read_PS2_data_ASM(char * data);
 
 	#endif
