@@ -16,7 +16,7 @@ VGA_clear_charbuff_ASM:
 	MOV R1, #59					// start y counter at 79
 	MOV R8, R1					// copy of y counter for inner loop reset
 	LDR R2, =CHARACTER_buffer	// base address
-	LDR R3, ZEROS					// TODO: check if this should be a byte
+	LDR R3, ZEROS				// get some zeros ready
 
 CHAR_LOOP_O:
 	CMP R0, #0
@@ -33,7 +33,7 @@ CHAR_LOOP_I:
 	ORR R4, R2			// get base address in there
 	ORR R4, R0 			// add in the x counter
 
-	STRB R3, [R4] 		// store 0s into the location we determined		// TODO check if storing a byte resolved the problem
+	STRB R3, [R4] 		// store 0s into the location we determined
 	SUB R1, R1, #1 		// decrement y counter
 	B CHAR_LOOP_I
 
@@ -51,7 +51,7 @@ VGA_clear_pixelbuff_ASM:
 	MOV R1, #239			// start y counter at 239
 	MOV R8, R1				// copy of y counter for inner loop reset
 	LDR R2, =PIXEL_buffer	// base address
-	LDR R3, ZEROS				// TODO: check if this should be a byte
+	LDR R3, ZEROS			// get some zeros ready
 
 LOOP_OUTER:
 		CMP R0, #0
@@ -65,12 +65,12 @@ LOOP_INNER:
 
 		MOV R4, R1			// take y counter
 		ROR R4, #22			// rotate y counter into correct position
-		ORR R4, R2			// get base address in there		// TODO: check if this syntax works properly
+		ORR R4, R2			// get base address in there
 		MOV R6, R0 			// make a copy of the x counter
 		LSL R6, #1			// shift one digit left
 		ORR R4, R6 			// add in the x counter
 
-		STRH R3, [R4] 		// store 0s into the location we determined	// TODO: check if this should be STRB
+		STRH R3, [R4] 		// store 0s into the location we determined
 		SUB R1, R1, #1 		// decrement y counter
 		B LOOP_INNER
 
@@ -101,7 +101,7 @@ VGA_write_char_ASM:
 	ROR R4, #25			// rotate y value into correct position
 	ORR R4, R5			// get base address in there
 	ORR R4, R0 			// add in the x value
-	STRB R2, [R4]		// store the input value to the address			// TODO: check that STRB is ok
+	STRB R2, [R4]		// store the input value to the address
 
 END_WRITE_CHAR:
 	POP {R0-R5, LR}		// recover saved registers
@@ -136,7 +136,7 @@ VGA_write_byte_ASM:
 	ROR R4, #25		// rotate y value into correct position
 	ORR R4, R5		// get base address in there
 	ORR R4, R0 		// add in the x counter
-	STRB R3, [R4]	// store the input value to the address			// TODO: check that STRB is ok
+	STRB R3, [R4]	// store the input value to the address
 
 	ADD R0, R0, #1	// increment x address by 1 to go to next grid spot
 	CMP R0, #79		// check if the x counter has reached the right side of the screen
@@ -155,7 +155,7 @@ VGA_write_byte_ASM:
 	ROR R4, #25		// rotate y value into correct position
 	ORR R4, R5		// get base address in there
 	ORR R4, R0 		// add in the x value
-	STRB R2, [R4]	// store the input value to the address			// TODO: check that STRB is ok
+	STRB R2, [R4]	// store the input value to the address
 	
 
 END_WRITE_BYTE:
@@ -189,7 +189,7 @@ VGA_draw_point_ASM:
 	MOV R6, R0 			// make a copy of the x counter
 	LSL R6, #1			// shift one digit left
 	ORR R4, R6 			// add in the x counter
-	STRH R2, [R4]		// store the input value to the address		// TODO: check that STRB is ok
+	STRH R2, [R4]		// store the input value to the address
 
 END_DRAW_POINT:
 	POP {R0-R6, LR}		// recover saved registers
