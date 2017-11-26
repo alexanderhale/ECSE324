@@ -23,18 +23,6 @@ int signal(float f, int t) {
 	return volume * interpolated;
 }
 
-void wave(float f) {
-	int x, y;
-	short colour = 0;
-	// iterate through all of the pixels on the screen
-	for(y=0; y<=239; y++) {
-		for(x=0; x<=319; x++) {
-			// TODO: only draw if that pixel is part of the sin wave
-			VGA_draw_point_ASM(x, y, colour++);
-		}
-	}
-}
-
 int main() {
 	int samples = 0;
 	char* data;		// PS/2 port address
@@ -122,17 +110,8 @@ int main() {
 				}
 			}
 		}
-
-
-		// frequency adjustment
 		if (output == 1) {
-			if (input == 0x2A) {
-				// volume up
-				volume++;
-			} else if (input == 0x21) {
-				// volume down
-				volume--;
-			} else if (input == 0x1C) {
+			if (input == 0x1C) {
 				// hit A, play a C
 				f = 130.813;
 			} else if (input == 0x1B) {
@@ -152,6 +131,12 @@ int main() {
 				f = 246.942;
 			} else if (input == 0x4C) {
 				f = 261.626;
+			} else if (input == 0x2A) {
+				// volume up
+				volume++;
+			} else if (input == 0x21) {
+				// volume down
+				volume--;
 			} else {
 				f = 0;
 			}
@@ -160,50 +145,43 @@ int main() {
 			f = 0;
 			output = 0;
 		} else if (output == 3) {
-			// volume adjustment
-			if (input == 0x2A) {
+			float f1 = 0;
+			if (input == 0x1C) {
+				// hit A, play a C
+				f1 = 130.813;
+			} else if (input == 0x1B) {
+				// hit S, play a D
+				f1 = 146.832;
+			} else if (input == 0x23) {
+				// hit D, play an E
+				f1 = 164.814;
+			} else if (input == 0x2B) {
+				// hit F, play an F
+				f1 = 174.614;
+			} else if (input == 0x3B) {
+				f1 = 195.998;
+			} else if (input == 0x42) {
+				f1 = 220.000;
+			} else if (input == 0x4B) {
+				f1 = 246.942;
+			} else if (input == 0x4C) {
+				f1 = 261.626;
+			} else if (input == 0x2A) {
 				// volume up
 				volume++;
 			} else if (input == 0x21) {
 				// volume down
 				volume--;
 			} else {
-				// frequency adjustment
-				float f1 = 0;
-				if (input == 0x1C) {
-					// hit A, play a C
-					f1 = 130.813;
-				} else if (input == 0x1B) {
-					// hit S, play a D
-					f1 = 146.832;
-				} else if (input == 0x23) {
-					// hit D, play an E
-					f1 = 164.814;
-				} else if (input == 0x2B) {
-					// hit F, play an F
-					f1 = 174.614;
-				} else if (input == 0x3B) {
-					f1 = 195.998;
-				} else if (input == 0x42) {
-					f1 = 220.000;
-				} else if (input == 0x4B) {
-					f1 = 246.942;
-				} else if (input == 0x4C) {
-					f1 = 261.626;
-				} else {
-					f1 = 0;
-				}
-				f = (f+f1)/2;
+				f1 = 0;
 			}
+			f = (f+f1)/2;
 			output = 0;
 		}
 
-		// display wave to screen
-		// wave(f);		// can't run this every time - if we do, it's too slow!
-
 		// if frequency is 0, don't play anything
 		if (f) {
-			// generate audio sample
+			// generate sample
 			int endOfSignal = 48000 / f;
 			while (samples < endOfSignal) {		// iterate one period
 				// send a value

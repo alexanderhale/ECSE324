@@ -61,7 +61,7 @@ int main() {
 		}
 	}*/
 
-	/* ------------------- PART 2 - PS/2 KEYBOARD ---------
+	/* ------------------- PART 2 - PS/2 KEYBOARD --------- */
 	int x = 0;
 	int y = 0;
 	int clock = 0;
@@ -152,9 +152,9 @@ int main() {
 				}
 			}
 		}
-	} */
+	} 
 
-	/* ------------------- PART 3 - AUDIO ------------------ */
+	/* ------------------- PART 3 - AUDIO ------------------ 
 	// sample rate = 48 000 samples / second
 	// square wave is 100 Hz
 	// (48 000 samples / sec) / (100 cycles / sec) = 480 samples / cycle
@@ -176,5 +176,5 @@ int main() {
 				}
 			}
 		}
-	}
+	}*/
 }

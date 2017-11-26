@@ -44,16 +44,9 @@
             <use_small_c_library>false</use_small_c_library>
         </options>
         <linker_sections>
-            <linker_section name=".vectors">
-                <memory_device>ARM_DDR3_SDRAM.axi_slave</memory_device>
-                <base_address>0x00000000</base_address>
-                <end_address>0x0000003F</end_address>
-                <required_section/>
-                <fixed_base_address/>
-            </linker_section>
             <linker_section name=".text">
                 <memory_device>ARM_DDR3_SDRAM.axi_slave</memory_device>
-                <base_address>0x00000040</base_address>
+                <base_address>0x00000000</base_address>
                 <end_address>0x3FFFFFF7</end_address>
                 <required_section/>
             </linker_section>
