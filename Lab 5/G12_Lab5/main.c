@@ -24,15 +24,22 @@ int signal(float f, int t) {
 }
 
 void wave(float f) {
+	VGA_clear_pixelbuff_ASM();
 	int x, y;
 	short colour = 0;
 	// iterate through all of the pixels on the screen
-	for(y=0; y<=239; y++) {
+	int increment=48000/((320/50)*f);
+	int xposition=0;
 		for(x=0; x<=319; x++) {
 			// TODO: only draw if that pixel is part of the sin wave
-			VGA_draw_point_ASM(x, y, colour++);
+			y=sine[xposition]*(30/83688608)+120;			
+			VGA_draw_point_ASM(x, y, colour);
+			xposition=xposition+increment;
+			if (xposition>48000){
+				xposition=xposition-48000;
+			}
+			colour=colour*16;
 		}
-	}
 }
 
 int main() {
@@ -40,6 +47,7 @@ int main() {
 	char* data;		// PS/2 port address
 	float f = 0;	// frequency of note to play
 					// TODO: start at f = 0
+	float oldf = 0;
 	int clock = 0;
 	int delay = 1;
 	char current = 0;
@@ -198,8 +206,11 @@ int main() {
 			output = 0;
 		}
 
-		// display wave to screen
-		// wave(f);		// can't run this every time - if we do, it's too slow!
+		// display wave to screen ONLY IF the frequency has changed
+		if (oldf != f) {
+			oldf = f;
+			wave(f);
+		}
 
 		// if frequency is 0, don't play anything
 		if (f) {
@@ -208,9 +219,11 @@ int main() {
 			while (samples < endOfSignal) {		// iterate one period
 				// send a value
 				int s = signal(f, samples);
-				if (audio_write_data_ASM(s, s)) {						// TODO: decide whether keeping or removing this if condition changes the tune
+				audio_write_data_ASM(s, s);								// send the signal to be outputted
+																			// don't need to check if there's space because the 
+				//if (audio_write_data_ASM(s, s)) {						// decide whether keeping or removing this if condition changes the tune
 					samples++;	// increment number of samples sent
-				}
+				//}
 			}
 			samples = 0;
 		}
