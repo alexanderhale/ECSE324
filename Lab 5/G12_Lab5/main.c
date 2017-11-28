@@ -23,22 +23,22 @@ int signal(float f, int t) {
 	return volume * interpolated;
 }
 
-void wave(float f) {
+void wave(float f, int volume) {
 	VGA_clear_pixelbuff_ASM();
 	int x, y;
 	short colour = 0;
 	// iterate through all of the pixels on the screen
-	int increment=48000/((320/50)*f);
-	int xposition=0;
+	int increment=48000/((320/f)*50); //48000 is sine wave, divided by number of x pixels per full iteration at the frequency, based frequency is 50 Hz 
+	int xposition=0; //initial x position is set in the sine wave
 		for(x=0; x<=319; x++) {
 			// TODO: only draw if that pixel is part of the sin wave
-			y=sine[xposition]*(30/83688608)+120;			
+			y=sine[xposition]*(30/83688608)*(volume/4)+120; //Added volume multiplier, every time volume is increased by 4, amp doubles 			
 			VGA_draw_point_ASM(x, y, colour);
 			xposition=xposition+increment;
 			if (xposition>48000){
-				xposition=xposition-48000;
-			}
-			colour=colour*16;
+				xposition=xposition-48000; //Resets iteration of the sine wave
+			} 
+			colour=colour+128;
 		}
 }
 
@@ -209,7 +209,7 @@ int main() {
 		// display wave to screen ONLY IF the frequency has changed
 		if (oldf != f) {
 			oldf = f;
-			wave(f);
+			wave(f, volume);
 		}
 
 		// if frequency is 0, don't play anything
