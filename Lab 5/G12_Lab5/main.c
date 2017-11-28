@@ -26,19 +26,19 @@ int signal(float f, int t) {
 void wave(float f, int volume) {
 	VGA_clear_pixelbuff_ASM();
 	int x, y;
-	short colour = 0;
+	short colour = 16777215; //produces the color white
 	// iterate through all of the pixels on the screen
-	int increment=48000/((320/f)*50); //48000 is sine wave, divided by number of x pixels per full iteration at the frequency, based frequency is 50 Hz 
+	int increment=48000/((320.00/f)*50.00); //48000 is sine wave, divided by number of x pixels per full iteration at the frequency, based frequency is 50 Hz 
 	int xposition=0; //initial x position is set in the sine wave
 		for(x=0; x<=319; x++) {
 			// TODO: only draw if that pixel is part of the sin wave
-			y=sine[xposition]*(30/83688608)*(volume/4)+120; //Added volume multiplier, every time volume is increased by 4, amp doubles 			
+			y=-1*(int)((float)sine[xposition]*((float)30/(float)(sine[12000])))*((float)volume/(float)2)+120; //Added volume multiplier, amplitude increases by 15 per volume increase 			
 			VGA_draw_point_ASM(x, y, colour);
 			xposition=xposition+increment;
 			if (xposition>48000){
 				xposition=xposition-48000; //Resets iteration of the sine wave
 			} 
-			colour=colour+128;
+			//colour=colour+128;
 		}
 }
 
@@ -48,6 +48,7 @@ int main() {
 	float f = 0;	// frequency of note to play
 					// TODO: start at f = 0
 	float oldf = 0;
+	int oldv = 0; 
 	int clock = 0;
 	int delay = 1;
 	char current = 0;
@@ -137,7 +138,7 @@ int main() {
 			if (input == 0x2A) {
 				// volume up
 				volume++;
-			} else if (input == 0x21) {
+			} else if (input == 0x21 && volume>0) {
 				// volume down
 				volume--;
 			} else if (input == 0x1C) {
@@ -172,7 +173,7 @@ int main() {
 			if (input == 0x2A) {
 				// volume up
 				volume++;
-			} else if (input == 0x21) {
+			} else if (input == 0x21 && volume>0) {
 				// volume down
 				volume--;
 			} else {
@@ -207,8 +208,9 @@ int main() {
 		}
 
 		// display wave to screen ONLY IF the frequency has changed
-		if (oldf != f) {
+		if (oldf != f || oldv !=volume) {
 			oldf = f;
+			oldv = volume;
 			wave(f, volume);
 		}
 
