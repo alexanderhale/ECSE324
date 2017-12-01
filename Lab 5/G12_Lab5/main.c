@@ -19,27 +19,47 @@ int signal(float f, int t) {
 	float decimals = index - indexLeftOfDecimal;
 	float interpolated = (1-decimals)*sine[indexLeftOfDecimal] + (decimals)*sine[indexLeftOfDecimal+1];
 
-	// TODO: replace amplitude here with the volume control
+	// multiply signal by current volume to increase amplitude
 	return volume * interpolated;
 }
 
 void wave(float f, int volume) {
+	// clear the screen of old data
 	VGA_clear_pixelbuff_ASM();
+
 	int x, y;
-	short colour = 16777215; //produces the color white
+	short colour = 16777215; // white
+
 	// iterate through all of the pixels on the screen
-	int increment=48000/((320.00/f)*50.00); //48000 is sine wave, divided by number of x pixels per full iteration at the frequency, based frequency is 50 Hz 
-	int xposition=0; //initial x position is set in the sine wave
-		for(x=0; x<=319; x++) {
-			// TODO: only draw if that pixel is part of the sin wave
-			y=-1*(int)((float)sine[xposition]*((float)30/(float)(sine[12000])))*((float)volume/(float)2)+120; //Added volume multiplier, amplitude increases by 15 per volume increase 			
-			VGA_draw_point_ASM(x, y, colour);
-			xposition=xposition+increment;
-			if (xposition>48000){
-				xposition=xposition-48000; //Resets iteration of the sine wave
-			} 
-			//colour=colour+128;
-		}
+	int increment = 48000 / ((320.00 / f) * 50.00); //48000 is sine wave, divided by number of x pixels per full iteration at the frequency, based frequency is 50 Hz 
+		// 48000 = sample frequency
+		// 320 = number of spaces in the x direction in the pixel buffer
+		// 50 Hz = base frequency
+		// f = current signal frequency
+
+	int xposition = 0; //initial x position is set in the sine wave
+	
+	// iterate through the x direction of the pixel buffer
+	for(x = 0; x <= 319; x++) {
+		// generate the y position of the wave at the current x position
+			// uses the provided wavetable, sine[x]
+			// amplitude of wave on screen increases by 15 for each volume increment
+		y = -1*(int)((float)sine[xposition] * ((float)30 / (float)(sine[12000]))) * ((float)volume / (float)2) + 120;		
+		
+		// draw the point on the screen
+		VGA_draw_point_ASM(x, y, colour);
+		
+		// increase the x position by the appropriate increment for this frequency
+		xposition = xposition + increment;
+		
+		// reset when the number of samples is exceeded
+		if (xposition > 48000){
+			xposition = xposition - 48000; //Resets iteration of the sine wave
+		} 
+		
+		// change the wave colour as we go for extra #funtimes
+		//colour=colour+128;
+	}
 }
 
 int main() {
