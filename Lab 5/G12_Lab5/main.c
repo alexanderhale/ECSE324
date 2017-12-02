@@ -158,7 +158,7 @@ int main() {
 			if (input == 0x2A) {
 				// volume up
 				volume++;
-			} else if (input == 0x21 && volume>0) {
+			} else if (input == 0x21 && volume > 0) {
 				// volume down
 				volume--;
 			} else if (input == 0x1C) {
@@ -193,7 +193,7 @@ int main() {
 			if (input == 0x2A) {
 				// volume up
 				volume++;
-			} else if (input == 0x21 && volume>0) {
+			} else if (input == 0x21 && volume > 0) {
 				// volume down
 				volume--;
 			} else {
