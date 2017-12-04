@@ -26,7 +26,7 @@ float pow(float base, int octave){
 
 int signal(float f, int t, int octave) {
 	int temp = (int)((float)(f * t) * (float)pow(2.0, (octave - 3)));
-	int index = temp % 48000;
+	int index = temp % 48000;				// TODO: make this a float
 	int indexLeftOfDecimal = (int)index;
 	float decimals = index - indexLeftOfDecimal;
 	float interpolated = (1-decimals)*sine[indexLeftOfDecimal] + (decimals)*sine[indexLeftOfDecimal+1];
@@ -87,7 +87,7 @@ void wave(float f, int volume, int octave) {
 	// clear the screen of old data
 	VGA_clear_pixelbuff_ASM();
 
-	if (f) {									// only display anything if the frequency is above 0
+	if (f) {											// only display anything if the frequency is above 0
 		int x, y;
 		short colour = 16777215; // white
 
@@ -247,7 +247,11 @@ int main() {
 	float oldf = 0;			// old frequency (used for updating screen)
 	int oldv = 0; 			// old volume (used for updating screen)
 
+	int clock = 0;			// typematic variables
+	int delay = 1;
 	int bcode = 0;
+	char current = 0;		// store 3 codes from keyboard
+	char previous = 0;			// from oldest to newest: previous, current, input
 
 	int keystate[8] = {0, 0, 0, 0, 0, 0, 0, 0, 0};		// TODO: make sure we're still using this
 	float freqs[8] = {130.813, 146.832, 164.814, 174.614, 195.998, 220.000, 246.942, 261.626};
@@ -267,6 +271,8 @@ int main() {
 
 		// if the RVALID flag is 1, enter this if block
 		if (read_ps2_data_ASM(data)) {
+			VGA_write_byte_ASM(20 + delay++, 7, input);	// TODO: remove
+
 			if (bcode) {						// if the previous code was a break code, turn off the appropriate key in the array
 				if (input == 0x1C) {
 					keystate[0] = 0;
@@ -314,6 +320,12 @@ int main() {
 				} else if (input == 0x32 && octave > 1) {
 					octave--;
 				}
+			}
+
+			// TODO: remove
+			int t;
+			for (t = 0; t < 8; t++) {
+				VGA_write_char_ASM(t + 20, 5, keystate[t] + 48);
 			}
 		}
 
